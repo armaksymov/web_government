@@ -49,7 +49,7 @@
 
   - [ ] Step 4. Running the application.
   ```
-  flask --app app.py run --debug
+  python run.py
   ```
 
 ## Contact Us
