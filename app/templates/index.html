@@ -1,11 +1,112 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    </head>
-    <body>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    </body>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        .btn {
+            margin: -4px 16px -4px 16px;
+            background-color: #000000 !important;
+            border: #000000 !important;
+        }
+
+        .fa-solid {
+            margin-bottom: 2px;
+        }
+
+        .navbar {
+            background-color: #000000 !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container"></div>
+    <nav class="navbar fixed-bottom navbar-dark bg-dark">
+        <div class="container d-flex justify-content-center">
+            <a class="btn btn-dark btn-sm d-flex align-items-center flex-column" type="submit"
+                onclick="toggleButton(this)">
+                <div style="height: 32px;"><i class="bi bi-rss fs-4"></i></div>
+                <span style="font-size: small;">Feed</span>
+            </a>
+            <a class="btn btn-dark btn-sm d-flex align-items-center flex-column" type="submit"
+                onclick="toggleButton(this)">
+                <div style="height: 32px;"><i class="bi bi-file-earmark-text fs-4"></i></div>
+                <span style="font-size: small;">Documents</span>
+            </a>
+            <a class="btn btn-dark btn-sm d-flex align-items-center flex-column" type="submit"
+                onclick="toggleButton(this)">
+                <div style="height: 32px;"><i class="bi bi-lightning-charge fs-4"></i></div>
+                <span style="font-size: small;">Services</span>
+            </a>
+            <a class="btn btn-dark btn-sm d-flex align-items-center flex-column" type="submit"
+                onclick="toggleButton(this)">
+                <div style="height: 32px;"><i class="bi bi-person fs-4"></i></div>
+                <span style="font-size: small;">Profile</span>
+            </a>
+        </div>
+    </nav>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </script>
+    <script>
+        function toggleButton(clickedButton) {
+            document.querySelectorAll('.btn').forEach(function (btn) {
+                btn.classList.remove('active');
+
+                var icon = btn.querySelector('i');
+                var iconName = icon.classList[1];
+                resetIcon(icon, iconName);
+            });
+
+            clickedButton.classList.add('active');
+
+            var icon = clickedButton.querySelector('i');
+            var iconName = icon.classList[1];
+            fillIcon(icon, iconName);
+        }
+
+        function resetIcon(icon, iconName) {
+            switch (iconName) {
+                case 'bi-rss-fill':
+                    icon.classList.replace('bi-rss-fill', 'bi-rss');
+                    break;
+                case 'bi-file-earmark-text-fill':
+                    icon.classList.replace('bi-file-earmark-text-fill', 'bi-file-earmark-text');
+                    break;
+                case 'bi-lightning-charge-fill':
+                    icon.classList.replace('bi-lightning-charge-fill', 'bi-lightning-charge');
+                    break;
+                case 'bi-person-fill':
+                    icon.classList.replace('bi-person-fill', 'bi-person');
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        function fillIcon(icon, iconName) {
+            switch (iconName) {
+                case 'bi-rss':
+                    icon.classList.replace('bi-rss', 'bi-rss-fill');
+                    break;
+                case 'bi-file-earmark-text':
+                    icon.classList.replace('bi-file-earmark-text', 'bi-file-earmark-text-fill');
+                    break;
+                case 'bi-lightning-charge':
+                    icon.classList.replace('bi-lightning-charge', 'bi-lightning-charge-fill');
+                    break;
+                case 'bi-person':
+                    icon.classList.replace('bi-person', 'bi-person-fill');
+                    break;
+                default:
+                    break;
+            }
+        }
+    </script>
+</body>
+
 </html>
