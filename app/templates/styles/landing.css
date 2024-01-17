@@ -1,0 +1,22 @@
+#landing {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#navbarNav .btn-web-gov {
+    --bs-btn-bg: #5065a8;
+    --bs-btn-color: #5065a8;
+    --bs-btn-hover-bg: #ffffff00;
+    --bs-btn-hover-color: #5065a8;
+    --bs-btn-hover-border-color: #5065a8;
+}
+
+header {
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
+}
+
+header .container-fluid {
+    margin-top: -6rem;
+}
