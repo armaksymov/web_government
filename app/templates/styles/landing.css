@@ -10,11 +10,27 @@
     --bs-btn-hover-border-color: #5065a8;
 }
 
+#home {
+    background: radial-gradient(circle at left top, #b9777c, #e3f9f7e3, #c9cb85);;
+}
+
 header {
     background-repeat: no-repeat;
     background-attachment: scroll;
     background-position: center center;
     background-size: cover;
+}
+
+#intro {
+    background-color: #e8f5f4e3;
+}
+
+#about {
+    background-color: #f4f4ee;
+}
+
+#joinus {
+    background-color: #f5eced;
 }
 
 header .container-fluid {
