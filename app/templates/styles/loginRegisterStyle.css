@@ -1,0 +1,16 @@
+/* General Settings for our login/register pages */
+.pageStyler {
+    background-color: #f3ebe3; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Logo setup for the page */
+.our-logo {
+    min-width: 80%;
+}
+
+/* Beige and blue button */
+.custom-button {
+    background-color: #5464ac; 
+    color: #f3ebe3;
+}
