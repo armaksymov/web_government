@@ -1,3 +1,5 @@
+""" Main application module """
+
 from flask import Flask
 from app.routes.main import main_blueprint
 from app.routes.feed import feed_blueprint
