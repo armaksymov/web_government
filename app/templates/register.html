@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Metadata for character set and viewport -->
+    <meta charset="utf-8">
+    <title>web.gov</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/logo.png') }}">
+
+    <!-- Bootstrap CSS and Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Custom styles -->
+    <style>
+        /* Body background color adjustment */
+        body {
+            margin: 0;
+            background-attachment: fixed;
+            background: linear-gradient(125deg, #fdfafa, #ffdfdf);
+        }
+    </style>
+</head>
+
+<body style="padding-bottom: 24px;">
+    <section id="login" class="pageStyler">
+        <div class="container-fluid min-vh-100">
+            <div class="row gx-2 gx-md-3 gx-lg-4 gx-xl-5 mx-2 mx-md-3 mx-lg-4 mx-xl-5 d-flex justify-content-center align-items-center min-vh-100">
+                <!-- Logo Section -->
+                <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 text-center">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" class="img-fluid our-logo" alt="web.gov">
+                </div>
+
+                <!-- Registration Form Section -->
+                <div class="col-sm-12 col-md-10 col-lg-6 col-xl-6">
+                    <form>
+                        <p class="h1 fw-bold text-center mb-4">Register</p>
+
+                        <!-- First Name Input -->
+                        <div class="form-outline mb-4">
+                            <label class="form-label fw-bolder" for="logFormFirstName">First Name</label>
+                            <input type="text" id="logFormFirstName" class="form-control form-control-lg" placeholder="Enter your first name" />
+                        </div>
+
+                        <!-- Last Name Input -->
+                        <div class="form-outline mb-4">
+                            <label class="form-label fw-bolder" for="logFormLastName">Last Name</label>
+                            <input type="text" id="logFormLastName" class="form-control form-control-lg" placeholder="Enter your last name" />
+                        </div>
+
+                        <!-- Email Input -->
+                        <div class="form-outline mb-4">
+                            <label class="form-label fw-bolder" for="logFormEmail">Email Address</label>
+                            <input type="email" id="logFormEmail" class="form-control form-control-lg" placeholder="Enter your email address" />
+                        </div>
+
+                        <!-- Password Input -->
+                        <div class="form-outline mb-2">
+                            <label class="form-label fw-bolder" for="logFormPass">Password</label>
+                            <input type="password" id="logFormPass" class="form-control form-control-lg" placeholder="Enter your password" />
+                        </div>
+
+                        <!-- Registration Button Section -->
+                        <div class="d-flex justify-content-center text-center text-lg-start mt-4 pt-2">
+                            <button type="button" class="btn btn-dark btn-lg px-4 custom-button" onclick="sendRegistrationRequest()">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- jQuery and Bootstrap JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function sendRegistrationRequest() {
+            // Get first name, last name, email and password values
+            var fn = document.getElementById("logFormFirstName").value;
+            var ln = document.getElementById("logFormLastName").value;
+            var email = document.getElementById("logFormEmail").value;
+            var pass = document.getElementById("logFormPass").value;
+
+            // Create an object with the data
+            var data = {
+                first_name: fn,
+                last_name: ln,
+                email: email,
+                password: pass
+            };
+
+            // Send a POST request
+            fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                // Handle the response from the server
+                if (result.status === 0) {
+                    window.location = "/?id=" + result.id;
+                } else {
+                    // TODO: Display authentication failure
+                }
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+
+</html>
