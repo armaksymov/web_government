@@ -20,7 +20,7 @@ Note:
 from flask import Flask
 from app.routes.services import services_blueprint
 
-app = Flask(__name__, template_folder='app/templates')
+app = Flask(__name__, template_folder='app/templates', static_folder='app/static')
 app.register_blueprint(services_blueprint)
 
 if __name__ == "__main__":

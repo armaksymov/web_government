@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, url_for
 
 services_blueprint = Blueprint('services', __name__)
 
@@ -51,3 +51,23 @@ def profile():
     - render_template: HTML response with the content of profile.html.
     """
     return render_template("profile.html")
+
+@services_blueprint.route("/login")
+def login():
+    """
+    Render the login.html template.
+
+    Returns:
+    - render_template: HTML response with the content of login.html.
+    """
+    return render_template("login.html")
+
+@services_blueprint.route("/register")
+def register():
+    """
+    Render the register.html template.
+
+    Returns:
+    - render_template: HTML response with the content of register.html.
+    """
+    return render_template("register.html")
