@@ -39,7 +39,7 @@
     </style>
 </head>
 
-<body>
+<body onload="$('#container').load('feed');">
     <!-- Container for dynamic content -->
     <div id="container" style="padding: 32px;"></div>
 
@@ -50,7 +50,7 @@
             <!-- Feed button -->
             <a class="btn btn-dark btn-sm d-flex align-items-center flex-column" type="submit"
                 onclick="load(this, 'feed')">
-                <div style="height: 32px;"><i class="bi bi-rss fs-4"></i></div>
+                <div style="height: 32px;"><i class="bi bi-rss-fill fs-4"></i></div>
                 <span style="font-size: small;">Feed</span>
             </a>
 
