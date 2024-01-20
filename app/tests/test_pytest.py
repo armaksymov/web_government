@@ -1,6 +1,12 @@
-def test_increment():
-    assert True
+"""
+    A module containing unit tests for the application
 
-# This test is designed to fail for demonstration purposes.
-def test_decrement():
+    To run the tests run:
+        python -m pytest app/tests/test_pytest.py
+"""
+from __future__ import annotations
+
+
+def test_sample():
+    """ Just the sample application test. To be replaced with real test """
     assert True
