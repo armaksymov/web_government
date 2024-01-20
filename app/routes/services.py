@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for
+from flask import Blueprint, render_template, request, jsonify
 
 services_blueprint = Blueprint('services', __name__)
 
@@ -10,6 +10,10 @@ def index():
     Returns:
     - render_template: HTML response with the content of index.html.
     """
+    account_id = request.args.get('id')
+
+    # TODO: Utilize the account id
+
     return render_template("index.html")
 
 @services_blueprint.route("/feed")
@@ -62,6 +66,34 @@ def login():
     """
     return render_template("login.html")
 
+@services_blueprint.route("/login", methods=["POST"])
+def authenticate():
+    """
+    Authenticate the user based on the provided JSON data.
+
+    JSON Request:
+    - email: User's email address.
+    - password: User's password.
+
+    Returns:
+    - jsonify: JSON response indicating the status of the authentication.
+      Format: {"status": int, "id": str}
+    """
+    data = request.get_json()
+
+    # TODO: Authenticate the account based on the received data
+
+    # For demonstration purposes, let's assume authentication was successful
+    status = 200
+    account_id = "some_unique_id"  # TODO: Replace this with the actual account ID
+
+    response_data = {
+        "status": status,
+        "id": account_id
+    }
+
+    return jsonify(response_data)
+
 @services_blueprint.route("/register")
 def register():
     """
@@ -71,3 +103,33 @@ def register():
     - render_template: HTML response with the content of register.html.
     """
     return render_template("register.html")
+
+@services_blueprint.route("/register", methods=["POST"])
+def account_registration():
+    """
+    Create a new user account based on the provided JSON data.
+
+    JSON Request:
+    - firstName: User's first name.
+    - lastName: User's last name.
+    - email: User's email address.
+    - password: User's password.
+
+    Returns:
+    - jsonify: JSON response indicating the status of the account creation.
+      Format: {"status": int, "id": str}
+    """
+    data = request.get_json()
+
+    # TODO: Create the account based on the received data
+
+    # For demonstration purposes, let's assume account creation was successful
+    status = 200
+    account_id = "some_unique_id"  # TODO: Replace this with the actual account ID
+
+    response_data = {
+        "status": status,
+        "id": account_id
+    }
+
+    return jsonify(response_data)
