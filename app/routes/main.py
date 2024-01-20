@@ -2,8 +2,9 @@
 This module defines the main blueprint for the Flask application.
 """
 
-from flask import Blueprint, request, render_template, jsonify
-
+from flask import current_app, Blueprint, request, render_template, jsonify
+import bcrypt
+from ..services.auth_service import authenticate_user, register_user
 main_blueprint = Blueprint("main", __name__)
 
 
@@ -102,18 +103,9 @@ class Main:
         - jsonify: JSON response indicating the status of the authentication.
           Format: {"status": int, "id": str}
         """
-
-        # data = request.get_json()
-
-        # Authenticate the account based on the received data
-
-        # For demonstration purposes, let's assume authentication was successful
-        status = 0  # Replace this with the actual operation status
-        account_id = "some_unique_id"  # Replace this with the actual account ID
-
-        response_data = {"status": status, "id": account_id}
-
-        return jsonify(response_data)
+        data = request.get_json()
+        response = authenticate_user(data['email'], data['password'])
+        return jsonify(response)
 
     @staticmethod
     @main_blueprint.route("/register")
@@ -144,14 +136,12 @@ class Main:
           Format: {"status": int, "id": str}
         """
 
-        # data = request.get_json()
+        data = request.get_json()
+        response = register_user(data['first_name'], data['last_name'], data['email'], data['password'])
+        return jsonify(response)
 
-        # Create the account based on the received data
+       
+    
 
-        # For demonstration purposes, let's assume account creation was successful
-        status = 0  # Replace this with the actual operation status
-        account_id = "some_unique_id"  # Replace this with the actual account ID
+    
 
-        response_data = {"status": status, "id": account_id}
-
-        return jsonify(response_data)

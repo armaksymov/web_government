@@ -19,9 +19,15 @@ Note:
 
 from flask import Flask
 from app.routes.main import main_blueprint
+from flask_pymongo import PyMongo
 
 app = Flask(__name__, template_folder="app/templates", static_folder="app/static")
 app.register_blueprint(main_blueprint)
+
+# MongoDB connection setup
+app.config["MONGO_URI"] = "mongodb://localhost:27017/web_government"
+mongo = PyMongo(app)
+app.mongo = mongo
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
