@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify
 
-services_blueprint = Blueprint('services', __name__)
+services_blueprint = Blueprint("services", __name__)
+
 
 @services_blueprint.route("/")
 def index():
@@ -10,11 +11,12 @@ def index():
     Returns:
     - render_template: HTML response with the content of index.html.
     """
-    account_id = request.args.get('id')
+    account_id = request.args.get("id")
 
     # TODO: Utilize the account id
 
     return render_template("index.html")
+
 
 @services_blueprint.route("/feed")
 def feed():
@@ -26,6 +28,7 @@ def feed():
     """
     return render_template("feed.html")
 
+
 @services_blueprint.route("/documents")
 def documents():
     """
@@ -35,6 +38,7 @@ def documents():
     - render_template: HTML response with the content of documents.html.
     """
     return render_template("documents.html")
+
 
 @services_blueprint.route("/services")
 def services():
@@ -46,6 +50,7 @@ def services():
     """
     return render_template("services.html")
 
+
 @services_blueprint.route("/profile")
 def profile():
     """
@@ -56,6 +61,7 @@ def profile():
     """
     return render_template("profile.html")
 
+
 @services_blueprint.route("/login")
 def login():
     """
@@ -65,6 +71,7 @@ def login():
     - render_template: HTML response with the content of login.html.
     """
     return render_template("login.html")
+
 
 @services_blueprint.route("/login", methods=["POST"])
 def authenticate():
@@ -87,12 +94,10 @@ def authenticate():
     status = 200
     account_id = "some_unique_id"  # TODO: Replace this with the actual account ID
 
-    response_data = {
-        "status": status,
-        "id": account_id
-    }
+    response_data = {"status": status, "id": account_id}
 
     return jsonify(response_data)
+
 
 @services_blueprint.route("/register")
 def register():
@@ -103,6 +108,7 @@ def register():
     - render_template: HTML response with the content of register.html.
     """
     return render_template("register.html")
+
 
 @services_blueprint.route("/register", methods=["POST"])
 def account_registration():
@@ -127,9 +133,6 @@ def account_registration():
     status = 200
     account_id = "some_unique_id"  # TODO: Replace this with the actual account ID
 
-    response_data = {
-        "status": status,
-        "id": account_id
-    }
+    response_data = {"status": status, "id": account_id}
 
     return jsonify(response_data)
