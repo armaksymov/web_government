@@ -4,6 +4,7 @@
 <head>
     <!-- Metadata for character set and viewport -->
     <meta charset="utf-8">
+    <title>web.gov</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS and Bootstrap Icons -->
@@ -80,14 +81,14 @@
             var fn = document.getElementById("logFormFirstName").value;
             var ln = document.getElementById("logFormLastName").value;
             var email = document.getElementById("logFormEmail").value;
-            var password = document.getElementById("logFormPass").value;
+            var pass = document.getElementById("logFormPass").value;
 
             // Create an object with the data
             var data = {
-                firstname: fn,
-                lastname: ln,
+                first_name: fn,
+                last_name: ln,
                 email: email,
-                pass: password
+                password: pass
             };
 
             // Send a POST request
@@ -101,7 +102,7 @@
             .then(response => response.json())
             .then(result => {
                 // Handle the response from the server
-                if (result.status === 200) {
+                if (result.status === 0) {
                     window.location = "/?id=" + result.id;
                 } else {
                     // TODO: Display authentication failure
