@@ -39,4 +39,4 @@ jobs:
 
     - name: Running Test Suite
       run: |
-        python -m pytest test_unittests.py
+        python -m pytest app/tests/test_pytest.py
