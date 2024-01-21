@@ -95,6 +95,7 @@
             // Get email and password values
             var email = document.getElementById("logFormEmail").value;
             var pass = document.getElementById("logFormPass").value;
+            var ep = document.getElementById("ErrorPrompt").style;
 
             // Create an object with the data
             var data = {
@@ -116,10 +117,6 @@
                     if (result.status === 0) {
                         window.location = "/?id=" + result.id;
                     } else {
-                        // TODO: Display authentication failure
-
-                        var ep = document.getElementById("ErrorPrompt").style;
-
                         ep.visibility = "visible"
                     }
                 })
