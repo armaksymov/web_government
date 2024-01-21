@@ -19,7 +19,7 @@ class Main:
 
     @staticmethod
     @main_blueprint.route("/")
-    def index():
+    def index_page():
         """
         Render the index.html template.
 
@@ -33,7 +33,7 @@ class Main:
 
     @staticmethod
     @main_blueprint.route("/feed")
-    def feed():
+    def feed_page():
         """
         Render the feed.html template.
 
@@ -45,7 +45,7 @@ class Main:
 
     @staticmethod
     @main_blueprint.route("/documents")
-    def documents():
+    def documents_page():
         """
         Render the documents.html template.
 
@@ -57,7 +57,7 @@ class Main:
 
     @staticmethod
     @main_blueprint.route("/services")
-    def services():
+    def services_page():
         """
         Render the services.html template.
 
@@ -69,7 +69,7 @@ class Main:
 
     @staticmethod
     @main_blueprint.route("/profile")
-    def profile():
+    def profile_page():
         """
         Render the profile.html template.
 
@@ -81,7 +81,7 @@ class Main:
 
     @staticmethod
     @main_blueprint.route("/login")
-    def login():
+    def login_page():
         """
         Render the login.html template.
 
@@ -113,7 +113,7 @@ class Main:
 
     @staticmethod
     @main_blueprint.route("/register")
-    def register():
+    def register_page():
         """
         Render the register.html template.
 
