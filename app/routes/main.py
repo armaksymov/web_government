@@ -41,7 +41,10 @@ class Main:
         - render_template: HTML response with the content of feed.html.
         """
 
-        return render_template("feed.html")
+        # Fetch account information and display the user name
+        name_value = "</>" + " 👋"
+
+        return render_template("feed.html", Name=name_value)
 
     @staticmethod
     @main_blueprint.route("/documents")

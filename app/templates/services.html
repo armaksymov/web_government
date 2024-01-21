@@ -1,1 +1,110 @@
 <h1>Services</h1>
+
+<style>
+    .input-group-text {
+        background-color: #ffffff;
+        border-right: 0px;
+        border-radius: 12px;
+    }
+
+    .form-control {
+        border-left: 0px;
+        border-radius: 12px;
+    }
+
+    .form-control:focus {
+        box-shadow: none;
+        border-color: #dee2e6;
+    }
+
+    .scrollable-container {
+        max-height: 100vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .icon-bg {
+        background-color: #000000;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .icon-color {
+        color: white;
+    }
+
+    .transparent-card {
+        background-color: rgba(255, 255, 255, 0.75);
+        border: 1px solid #ffffff;
+        border-radius: 12px;
+    }
+
+    .card-col {
+        flex: 0 0 50%;
+        max-width: 50%;
+
+    }
+
+    .custom-container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .card-link {
+        text-decoration: none;
+    }
+</style>
+
+<div class="input-group flex-nowrap pt-4">
+    <span class="input-group-text" id="addon-wrapping"><i class="bi bi-search"></i></span>
+    <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="addon-wrapping">
+</div>
+
+<div class="container custom-container mt-4">
+    <div class="scrollable-container" id="scrollable-container">
+        <div class="row g-4">
+            <div class="col card-col">
+                <a href="utility_bill_payments" class="card-link">
+                    <div class="card transparent-card">
+                        <div class="card-body">
+                            <div class="icon-bg">
+                                <i class="bi bi-lightbulb icon-color fs-5"></i>
+                            </div>
+                            <p class="mt-4 fw-bold card-text">Utility bill payments</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="col card-col">
+                <a href="property_tax_payments" class="card-link">
+                    <div class="card transparent-card">
+                        <div class="card-body">
+                            <div class="icon-bg">
+                                <i class="bi bi-house icon-color fs-5"></i>
+                            </div>
+                            <p class="mt-4 fw-bold card-text">Property tax payments</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col card-col">
+                <a href="license_and_registration" class="card-link">
+                    <div class="card transparent-card">
+                        <div class="card-body">
+                            <div class="icon-bg">
+                                <i class="bi bi-car-front icon-color fs-5"></i>
+                            </div>
+                            <p class="mt-4 fw-bold card-text">License & registration</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
