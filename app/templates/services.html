@@ -68,7 +68,7 @@
     <div class="scrollable-container" id="scrollable-container">
         <div class="row g-4">
             <div class="col card-col">
-                <a href="utility_bill_payments" class="card-link">
+                <a onclick="redirect('utility_bill_payments')" class="card-link">
                     <div class="card transparent-card">
                         <div class="card-body">
                             <div class="icon-bg">
@@ -79,9 +79,9 @@
                     </div>
                 </a>
             </div>
-            
+
             <div class="col card-col">
-                <a href="property_tax_payments" class="card-link">
+                <a onclick="redirect('property_tax_payments')" class="card-link">
                     <div class="card transparent-card">
                         <div class="card-body">
                             <div class="icon-bg">
@@ -94,7 +94,7 @@
             </div>
 
             <div class="col card-col">
-                <a href="license_and_registration" class="card-link">
+                <a onclick="redirect('license_and_registration')" class="card-link">
                     <div class="card transparent-card">
                         <div class="card-body">
                             <div class="icon-bg">
@@ -108,3 +108,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    function redirect(page) {
+        // Load dynamic content into the container
+        $('#container').load(page);
+    }
+</script>

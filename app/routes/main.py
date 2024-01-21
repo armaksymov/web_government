@@ -149,3 +149,40 @@ class Main:
         )
 
         return jsonify(response)
+
+    @staticmethod
+    @main_blueprint.route("/license_and_registration")
+    def license_and_registration_page():
+        """
+        Render the license_and_registration.html template.
+
+        Returns:
+        - render_template: HTML response with the content of license_and_registration.html.
+        """
+
+        return render_template("license_and_registration.html")
+
+
+    @staticmethod
+    @main_blueprint.route("/property_tax_payments")
+    def property_tax_payments_page():
+        """
+        Render the property_tax_payments.html template.
+
+        Returns:
+        - render_template: HTML response with the content of property_tax_payments.html.
+        """
+
+        return render_template("property_tax_payments.html")
+
+    @staticmethod
+    @main_blueprint.route("/utility_bill_payments")
+    def utility_bill_payments_page():
+        """
+        Render the utility_bill_payments.html template.
+
+        Returns:
+        - render_template: HTML response with the content of utility_bill_payments.html.
+        """
+
+        return render_template("utility_bill_payments.html")
