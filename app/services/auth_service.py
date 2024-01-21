@@ -46,7 +46,7 @@ def register_user(first_name, last_name, email, password):
 
     # Check if email already exists
     if users_collection.find_one({"email": email}):
-        return {"status": 1, "message": "Email already exists"}
+        return {"status": 2, "id": None}
 
     hashed_password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
 
@@ -61,4 +61,4 @@ def register_user(first_name, last_name, email, password):
         user_id = users_collection.insert_one(user_account).inserted_id
         return {"status": 0, "id": str(user_id)}
     except Exception as reg_error:
-        return {"status": 1, "message": str(reg_error)}
+        return {"status": 1, "id": None}

@@ -29,10 +29,12 @@
 <body>
     <section id="login" class="pageStyler">
         <div class="container-fluid min-vh-100">
-            <div class="row gx-2 gx-md-3 gx-lg-4 gx-xl-5 mx-2 mx-md-3 mx-lg-4 mx-xl-5 d-flex justify-content-center align-items-center min-vh-100">
+            <div
+                class="row gx-2 gx-md-3 gx-lg-4 gx-xl-5 mx-2 mx-md-3 mx-lg-4 mx-xl-5 d-flex justify-content-center align-items-center min-vh-100">
                 <!-- Logo Section -->
                 <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 text-center">
-                    <img src="{{ url_for('static', filename='images/logo.png') }}" class="img-fluid our-logo" alt="web.gov">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" class="img-fluid our-logo"
+                        alt="web.gov">
                 </div>
 
                 <!-- Login Form Section -->
@@ -40,16 +42,22 @@
                     <form>
                         <p class="h1 fw-bold text-center mb-4">Login</p>
 
+                        <!-- Error Prompt -->
+                        <p id="ErrorPrompt" class="h6 text-center mb-4" style="color: #ac5754; visibility: hidden;">
+                            The email address/password entered is incorrect!</p>
+
                         <!-- Email Input -->
                         <div class="form-outline mb-4">
                             <label class="form-label fw-bolder" for="logFormEmail">Email Address</label>
-                            <input type="email" id="logFormEmail" class="form-control form-control-lg" placeholder="Enter your email address" />
+                            <input type="email" id="logFormEmail" class="form-control form-control-lg"
+                                placeholder="Enter your email address" />
                         </div>
 
                         <!-- Password Input -->
                         <div class="form-outline mb-2">
                             <label class="form-label fw-bolder" for="logFormPass">Password</label>
-                            <input type="password" id="logFormPass" class="form-control form-control-lg" placeholder="Enter your password" />
+                            <input type="password" id="logFormPass" class="form-control form-control-lg"
+                                placeholder="Enter your password" />
                         </div>
 
                         <!-- Remember me and Forgot Password Section -->
@@ -63,12 +71,14 @@
 
                         <!-- Login Button Section -->
                         <div class="d-flex justify-content-center text-center text-lg-start mt-4 pt-2">
-                            <button type="button" class="btn btn-dark btn-lg px-4 custom-button" onclick="sendLoginRequest()">Login</button>
+                            <button type="button" class="btn btn-dark btn-lg px-4 custom-button"
+                                onclick="sendLoginRequest()">Login</button>
                         </div>
 
                         <!-- Register Link Section -->
                         <div class="d-flex justify-content-center text-center text-lg-start pt-2">
-                            <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="register" class="link" style="color: #5464ac;">Register here</a>.</p>
+                            <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="register"
+                                    class="link" style="color: #5464ac;">Register here</a>.</p>
                         </div>
                     </form>
                 </div>
@@ -100,19 +110,23 @@
                 },
                 body: JSON.stringify(data)
             })
-            .then(response => response.json())
-            .then(result => {
-                // Handle the response from the server
-                if (result.status === 0) {
-                    window.location = "/?id=" + result.id;
-                } else {
-                    // TODO: Display authentication failure
-                }
-            })
-            .catch(error => {
-                // Handle errors
-                console.error('Error:', error);
-            });
+                .then(response => response.json())
+                .then(result => {
+                    // Handle the response from the server
+                    if (result.status === 0) {
+                        window.location = "/?id=" + result.id;
+                    } else {
+                        // TODO: Display authentication failure
+
+                        var ep = document.getElementById("ErrorPrompt").style;
+
+                        ep.visibility = "visible"
+                    }
+                })
+                .catch(error => {
+                    // Handle errors
+                    console.error('Error:', error);
+                });
         }
     </script>
 </body>
