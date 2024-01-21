@@ -18,8 +18,8 @@ Note:
 """
 
 from flask import Flask
-from app.routes.main import main_blueprint
 from flask_pymongo import PyMongo
+from app.routes.main import main_blueprint
 
 app = Flask(__name__, template_folder="app/templates", static_folder="app/static")
 app.register_blueprint(main_blueprint)

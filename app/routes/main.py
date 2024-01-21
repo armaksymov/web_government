@@ -137,11 +137,6 @@ class Main:
         """
 
         data = request.get_json()
-        response = register_user(data['first_name'], data['last_name'], data['email'], data['password'])
+        response = register_user(data['first_name'], data['last_name'],
+                                  data['email'], data['password'])
         return jsonify(response)
-
-       
-    
-
-    
-
