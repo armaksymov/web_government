@@ -10,7 +10,7 @@
   - Project Source Code: The heart of our project. The source code for the logic and user interfaces of our application.
   - Testing and Validation: Test scripts, testing data, and all the validation procedures we used to ensure the reliability and performance of our application.
   - Issues: The record of all the issues we raised and encountered while working on this project, our discussions and comments. Feel free to open an issue if you have any questions or suggestions.
-  - Wikis and ReadMes: The place to go for an elaborate description of our application, its' modules and all the details. This ReadMe is one of the files you may want to read through to get a feel of what we are trying to acomplish here.
+  - Wikis and ReadMes: The place to go for an elaborate description of our application, its' modules and all the details. This ReadMe is one of the files you may want to read through to get a feel of what we are trying to accomplish here.
 
 ## Team Members
   - Abdelrahman Hashad
@@ -23,7 +23,7 @@
   - Provide a solution with a secure log on and registration features, to allow users use their username and password, as well as banking application to connect to their account.
   - Pull personal user data either from user registration prompts or from the banking registration data.
   - Provide users with the list of their private documents and allow them to add custom documents and safely store them.
-  - Allow users access various governmental services including, but not limited to: paying fines, paying off tickets, filing taxes, requesting criminal or backgroung records, etc.
+  - Allow users access various governmental services including, but not limited to: paying fines, paying off tickets, filing taxes, requesting criminal or background records, etc.
 
 ## Getting Started
   To get a feel of our application, please feel free to download the latest release by navigating to the releases tab and selecting the freshest version.
