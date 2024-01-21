@@ -29,10 +29,12 @@
 <body style="padding-bottom: 24px;">
     <section id="login" class="pageStyler">
         <div class="container-fluid min-vh-100">
-            <div class="row gx-2 gx-md-3 gx-lg-4 gx-xl-5 mx-2 mx-md-3 mx-lg-4 mx-xl-5 d-flex justify-content-center align-items-center min-vh-100">
+            <div
+                class="row gx-2 gx-md-3 gx-lg-4 gx-xl-5 mx-2 mx-md-3 mx-lg-4 mx-xl-5 d-flex justify-content-center align-items-center min-vh-100">
                 <!-- Logo Section -->
                 <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 text-center">
-                    <img src="{{ url_for('static', filename='images/logo.png') }}" class="img-fluid our-logo" alt="web.gov">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" class="img-fluid our-logo"
+                        alt="web.gov">
                 </div>
 
                 <!-- Registration Form Section -->
@@ -40,33 +42,42 @@
                     <form>
                         <p class="h1 fw-bold text-center mb-4">Register</p>
 
+                        <!-- Error Prompt -->
+                        <p id="ErrorPrompt" class="h6 text-center mb-4" style="color: #ac5754; visibility: hidden;">
+                            The email address entered is already registered!</p>
+
                         <!-- First Name Input -->
                         <div class="form-outline mb-4">
                             <label class="form-label fw-bolder" for="logFormFirstName">First Name</label>
-                            <input type="text" id="logFormFirstName" class="form-control form-control-lg" placeholder="Enter your first name" />
+                            <input type="text" id="logFormFirstName" class="form-control form-control-lg"
+                                placeholder="Enter your first name" />
                         </div>
 
                         <!-- Last Name Input -->
                         <div class="form-outline mb-4">
                             <label class="form-label fw-bolder" for="logFormLastName">Last Name</label>
-                            <input type="text" id="logFormLastName" class="form-control form-control-lg" placeholder="Enter your last name" />
+                            <input type="text" id="logFormLastName" class="form-control form-control-lg"
+                                placeholder="Enter your last name" />
                         </div>
 
                         <!-- Email Input -->
                         <div class="form-outline mb-4">
                             <label class="form-label fw-bolder" for="logFormEmail">Email Address</label>
-                            <input type="email" id="logFormEmail" class="form-control form-control-lg" placeholder="Enter your email address" />
+                            <input type="email" id="logFormEmail" class="form-control form-control-lg"
+                                placeholder="Enter your email address" />
                         </div>
 
                         <!-- Password Input -->
                         <div class="form-outline mb-2">
                             <label class="form-label fw-bolder" for="logFormPass">Password</label>
-                            <input type="password" id="logFormPass" class="form-control form-control-lg" placeholder="Enter your password" />
+                            <input type="password" id="logFormPass" class="form-control form-control-lg"
+                                placeholder="Enter your password" />
                         </div>
 
                         <!-- Registration Button Section -->
                         <div class="d-flex justify-content-center text-center text-lg-start mt-4 pt-2">
-                            <button type="button" class="btn btn-dark btn-lg px-4 custom-button" onclick="sendRegistrationRequest()">Register</button>
+                            <button type="button" class="btn btn-dark btn-lg px-4 custom-button"
+                                onclick="sendRegistrationRequest()">Register</button>
                         </div>
                     </form>
                 </div>
@@ -85,6 +96,7 @@
             var ln = document.getElementById("logFormLastName").value;
             var email = document.getElementById("logFormEmail").value;
             var pass = document.getElementById("logFormPass").value;
+            var ep = document.getElementById("ErrorPrompt").style;
 
             // Create an object with the data
             var data = {
@@ -102,19 +114,22 @@
                 },
                 body: JSON.stringify(data)
             })
-            .then(response => response.json())
-            .then(result => {
-                // Handle the response from the server
-                if (result.status === 0) {
-                    window.location = "/?id=" + result.id;
-                } else {
-                    // TODO: Display authentication failure
-                }
-            })
-            .catch(error => {
-                // Handle errors
-                console.error('Error:', error);
-            });
+                .then(response => response.json())
+                .then(result => {
+                    // Handle the response from the server
+                    if (result.status === 0) {
+                        window.location = "/?id=" + result.id;
+                    } else if (result.status === 2) {
+                        ep.visibility = "visible"
+                    } else {
+                        ep.content = "An error has occurred while registering your account, please try again later."
+                        ep.visibility = "visible"
+                    }
+                })
+                .catch(error => {
+                    // Handle errors
+                    console.error('Error:', error);
+                });
         }
     </script>
 </body>
