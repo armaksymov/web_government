@@ -2,9 +2,11 @@
 This module defines the main blueprint for the Flask application.
 """
 
-from flask import current_app, Blueprint, request, render_template, jsonify
 import bcrypt
-from ..services.auth_service import authenticate_user, register_user
+from app.services.auth_service import *
+from flask import current_app, Blueprint, request, render_template, jsonify
+
+
 main_blueprint = Blueprint("main", __name__)
 
 
@@ -103,8 +105,10 @@ class Main:
         - jsonify: JSON response indicating the status of the authentication.
           Format: {"status": int, "id": str}
         """
+
         data = request.get_json()
-        response = authenticate_user(data['email'], data['password'])
+        response = authenticate_user(data["email"], data["password"])
+
         return jsonify(response)
 
     @staticmethod
@@ -137,6 +141,8 @@ class Main:
         """
 
         data = request.get_json()
-        response = register_user(data['first_name'], data['last_name'],
-                                  data['email'], data['password'])
+        response = register_user(
+            data["first_name"], data["last_name"], data["email"], data["password"]
+        )
+
         return jsonify(response)

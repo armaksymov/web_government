@@ -8,5 +8,7 @@ from __future__ import annotations
 
 
 def test_sample():
-    """ Just the sample application test. To be replaced with real test """
+    """
+    Just the sample application test. To be replaced with real test
+    """
     assert True

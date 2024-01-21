@@ -3,8 +3,9 @@ This module contains the implementation for the user authentication
 on login as well the user registration
 """
 
-from flask import current_app
 import bcrypt
+from flask import current_app
+
 
 def authenticate_user(email, password):
     """
@@ -17,16 +18,17 @@ def authenticate_user(email, password):
     Returns:
     - dict: the authentication status and the user ID if successful
     """
+
     users_collection = current_app.mongo.db.users
     user = users_collection.find_one({"email": email})
 
-    if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
-        return {"status": 0, "id": str(user['_id'])}
-        
+    if user and bcrypt.checkpw(password.encode("utf-8"), user["password"]):
+        return {"status": 0, "id": str(user["_id"])}
+
     return {"status": 1, "id": None}
 
-def register_user(first_name, last_name, email, password):
 
+def register_user(first_name, last_name, email, password):
     """
     Register a new user
 
@@ -38,21 +40,21 @@ def register_user(first_name, last_name, email, password):
 
     Returns:
     - dict: status of the registration and user ID if successful
-    
     """
+
     users_collection = current_app.mongo.db.users
 
     # Check if email already exists
     if users_collection.find_one({"email": email}):
         return {"status": 1, "message": "Email already exists"}
 
-    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    hashed_password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
 
     user_account = {
         "first_name": first_name,
         "last_name": last_name,
         "email": email,
-        "password": hashed_password
+        "password": hashed_password,
     }
 
     try:
