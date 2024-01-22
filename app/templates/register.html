@@ -103,7 +103,7 @@
             var ln = document.getElementById("logFormLastName").value;
             var email = document.getElementById("logFormEmail").value;
             var pass = document.getElementById("logFormPass").value;
-            var ep = document.getElementById("ErrorPrompt").style;
+            var ep = document.getElementById("ErrorPrompt");
 
             // Create an object with the data
             var data = {
@@ -126,16 +126,32 @@
                     // Handle the response from the server
                     if (result.status === 0) {
                         window.location = "/?id=" + result.id;
-                    } else if (result.status === 2) {
-                        ep.visibility = "visible"
                     } else {
-                        ep.content = "An error has occurred while registering your account, please try again later."
-                        ep.visibility = "visible"
+                        let errorMessage = "";
+                        switch(result.status){
+                            case 2:
+                                errorMessage = "Please fill in all the fields.";
+                                break;
+                            case 3:
+                                errorMessage = "Invalid email format.";
+                                break;
+                            case 4:
+                                errorMessage = "The entered email is already registered";
+                                break;
+                            default:
+                                errorMessage = "An error occured. Please try again later.";
+                        }
+                        ep.textContent = errorMessage;
+                        ep.style.visibility = "visible";
+                        ep.style.color = "red";
                     }
                 })
                 .catch(error => {
                     // Handle errors
                     console.error('Error:', error);
+                    ep.textContent = "An error occured. Please try again later.";
+                    ep.style.visibility = "visible";
+                    ep.style.color= "red";
                 });
         }
     </script>
