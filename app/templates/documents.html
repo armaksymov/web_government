@@ -60,7 +60,7 @@
 
                     <div class="col">
                         <h2 class="mb-0" style="white-space: nowrap;">Passport</h2>
-                        <h6 class="small" style="white-space: nowrap;">N/A</h6>
+                        <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['number'] }}</h6>
                     </div>
                     <i class="bi bi-passport fs-1"></i>
                 </div>
@@ -68,7 +68,7 @@
                 <div class="card-body" style="margin-bottom: -26px;">
                     <div class="col">
                         <h6 class="fw-bold" style="white-space: nowrap;">Full Name</h6>
-                        <h6 class="small" style="white-space: nowrap;">N/A</h6>
+                        <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['full_name'] }}</h6>
                     </div>
                 </div>
 
@@ -76,11 +76,11 @@
                     <div class="row d-flex justify-content-center">
                         <div class="col">
                             <h6 class="fw-bold" style="white-space: nowrap;">Place of Birth</h6>
-                            <h6 class="small" style="white-space: nowrap;">N/A</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['place_of_birth'] }}</h6>
                         </div>
                         <div class="col" style="text-wrap: nowrap; margin-left: 36px;">
                             <h6 class="fw-bold" style="white-space: nowrap;">Date of Birth</h6>
-                            <h6 class="small" style="white-space: nowrap;">N/A</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['date_of_birth'] }}</h6>
                         </div>
                     </div>
                 </div>
@@ -89,11 +89,11 @@
                     <div class="row d-flex justify-content-center">
                         <div class="col">
                             <h6 class="fw-bold" style="white-space: nowrap;">Date of Issue</h6>
-                            <h6 class="small" style="white-space: nowrap;">N/A</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['date_of_issue'] }}</h6>
                         </div>
                         <div class="col" style="text-wrap: nowrap; margin-left: 40px;">
                             <h6 class="fw-bold" style="white-space: nowrap;">Date of Expiry</h6>
-                            <h6 class="small" style="white-space: nowrap;">N/A</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['date_of_expiry'] }}</h6>
                         </div>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                     <div class="row d-flex justify-content-center">
                         <div class="col">
                             <h6 class="fw-bold" style="white-space: nowrap;">Issuing Authority</h6>
-                            <h6 class="small" style="white-space: nowrap;">N/A</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['issuing_authority'] }}</h6>
                         </div>
                     </div>
                 </div>
@@ -115,7 +115,7 @@
 
                     <div class="col">
                         <h2 class="mb-0" style="white-space: nowrap;">Driver's License</h2>
-                        <h6 class="small" style="white-space: nowrap;">N/A</h6>
+                        <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['number'] }}</h6>
                     </div>
                     <i class="bi bi-person-vcard fs-1"></i>
                 </div>
@@ -123,14 +123,14 @@
                 <div class="card-body" style="margin-bottom: -26px;">
                     <div class="col">
                         <h6 class="fw-bold" style="white-space: nowrap;">Full Name</h6>
-                        <h6 class="small" style="white-space: nowrap;">N/A</h6>
+                        <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['full_name'] }}</h6>
                     </div>
                 </div>
 
                 <div class="card-body" style="margin-bottom: -26px;">
                     <div class="col">
                         <h6 class="fw-bold" style="white-space: nowrap;">Date of Birth</h6>
-                        <h6 class="small" style="white-space: nowrap;">N/A</h6>
+                        <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['date_of_birth'] }}</h6>
                     </div>
                 </div>
 
@@ -138,11 +138,11 @@
                     <div class="row d-flex justify-content-center">
                         <div class="col">
                             <h6 class="fw-bold" style="white-space: nowrap;">Date of Issue</h6>
-                            <h6 class="small" style="white-space: nowrap;">N/A</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['date_of_issue'] }}</h6>
                         </div>
                         <div class="col" style="margin-left: 40px;">
                             <h6 class="fw-bold" style="white-space: nowrap;">Date of Expiry</h6>
-                            <h6 class="small" style="white-space: nowrap;">N/A</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['date_of_expiry'] }}</h6>
                         </div>
                     </div>
                 </div>
@@ -151,16 +151,16 @@
                     <div class="row">
                         <div class="col">
                             <h6 class="fw-bold" style="white-space: nowrap;">Sex</h6>
-                            <h6 class="small" style="white-space: nowrap;">N/A</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['sex'] }}</h6>
                         </div>
                         <div class="col">
                             <h6 class="fw-bold" style="white-space: nowrap;">Blood Type</h6>
-                            <h6 class="small" style="white-space: nowrap;">N/A</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['blood_type'] }}</h6>
                         </div>
 
                         <div class="col">
                             <h6 class="fw-bold" style="white-space: nowrap;">Weight</h6>
-                            <h6 class="small" style="white-space: nowrap;">N/A</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['weight'] }} kg</h6>
                         </div>
                     </div>
                 </div>

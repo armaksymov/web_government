@@ -2,9 +2,9 @@
 This module defines the main blueprint for the Flask application.
 """
 
-import bcrypt
 from app.services.auth_service import *
-from flask import current_app, Blueprint, request, render_template, jsonify
+from app.services.information_service import *
+from flask import Blueprint, request, render_template, jsonify
 
 
 main_blueprint = Blueprint("main", __name__)
@@ -56,7 +56,9 @@ class Main:
         - render_template: HTML response with the content of documents.html.
         """
 
-        return render_template("documents.html")
+        documents = get_documents(Main.ACCOUNT_ID)
+
+        return render_template("documents.html", documents_data=documents)
 
     @staticmethod
     @main_blueprint.route("/services")
@@ -161,7 +163,6 @@ class Main:
         """
 
         return render_template("license_and_registration.html")
-
 
     @staticmethod
     @main_blueprint.route("/property_tax_payments")
