@@ -50,12 +50,16 @@ def register_user(first_name, last_name, email, password):
     Returns:
     - dict: status of the registration and user ID if successful
     """
+    if not all([first_name,last_name,email,password]):
+        return {"status": 2} # status 2: missing fields
+    
+    if not is_valid_email(email):
+        return{"status":3} #status 3 : invalid email format
 
     users_collection = current_app.mongo.db.users
 
-    # Check if email already exists
     if users_collection.find_one({"email": email}):
-        return {"status": 2, "id": None}
+        return {"status": 4, "id": None}# status 4: email already exist
 
     hashed_password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
 
@@ -69,5 +73,5 @@ def register_user(first_name, last_name, email, password):
     try:
         user_id = users_collection.insert_one(user_account).inserted_id
         return {"status": 0, "id": str(user_id)}
-    except Exception as reg_error:
-        return {"status": 1, "id": None}
+    except Exception:
+        return {"status": 5, "id": None}# registration error
