@@ -50,8 +50,7 @@
                         <p class="h1 fw-bold text-center mb-4">Login</p>
 
                         <!-- Error Prompt -->
-                        <p id="ErrorPrompt" class="h6 text-center mb-4" style="color: #ac5754; visibility: hidden;">
-                            Incorrect email address or password. Please check your credentials.</p>
+                        <p id="ErrorPrompt" class="h6 text-center mb-4" style="color: #ac5754; visibility: hidden;"></p>
 
                         <!-- Email Input -->
                         <div class="form-outline mb-4">
@@ -63,14 +62,16 @@
                         <!-- Password Input -->
                         <div class="form-outline mb-2">
                             <label class="form-label fw-bolder" for="logFormPass">Password</label>
-                            <input type="password" id="logFormPass" class="form-control transparent-input form-control-lg"
+                            <input type="password" id="logFormPass"
+                                class="form-control transparent-input form-control-lg"
                                 placeholder="Enter your password" />
                         </div>
 
                         <!-- Remember me and Forgot Password Section -->
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="form-check mb-0">
-                                <input class="form-check-input transparent-input me-2" type="checkbox" value="" id="logFormRemember" />
+                                <input class="form-check-input transparent-input me-2" type="checkbox" value=""
+                                    id="logFormRemember" />
                                 <label class="form-check-label" for="logFormRemember">Remember me</label>
                             </div>
                             <a class="fw-bold link" style="color: #5464ac;">Forgot your password?</a>
@@ -124,31 +125,29 @@
                     if (result.status === 0) {
                         window.location = "/?id=" + result.id;
                     } else {
-                        let errorMessage ="";
-                        switch(result.status){
+                        let errorMessage = "";
+                        switch (result.status) {
                             case 1:
-                                errorMessage="Incorrect email or password.";
+                                errorMessage = "Incorrect email address or password. Please check your credentials.";
                                 break;
                             case 2:
-                                errorMessage="Please enter both email and password";
+                                errorMessage = "Please provide both your email and password.";
                                 break;
                             case 3:
-                                errorMessage ="Invalid email format";
+                                errorMessage = "The email format entered is invalid.";
                                 break;
                             default:
-                                errorMessage="An error occured. Please try again later";
+                                errorMessage = "An unexpected error occurred. Please attempt the operation again later.";
                         }
                         ep.textContent = errorMessage;
-                        ep.style.visibility="visible";
-                        ep.style.color="red";
+                        ep.style.visibility = "visible";
                     }
                 })
                 .catch(error => {
                     // Handle errors
                     console.error('Error:', error);
-                    ep.textContent = "An error occured. Please try again later.";
-                    ep.style.visibility="visible";
-                    ep.style.color="red";
+                    ep.textContent = "An unexpected error occurred. Please attempt the operation again later.";
+                    ep.style.visibility = "visible";
                 });
         }
     </script>

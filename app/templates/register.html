@@ -50,20 +50,21 @@
                         <p class="h1 fw-bold text-center mb-4">Register</p>
 
                         <!-- Error Prompt -->
-                        <p id="ErrorPrompt" class="h6 text-center mb-4" style="color: #ac5754; visibility: hidden;">
-                            The email address provided is already registered. Please use a different email address.</p>
+                        <p id="ErrorPrompt" class="h6 text-center mb-4" style="color: #ac5754; visibility: hidden;"></p>
 
                         <!-- First Name Input -->
                         <div class="form-outline mb-4">
                             <label class="form-label fw-bolder" for="logFormFirstName">First Name</label>
-                            <input type="text" id="logFormFirstName" class="form-control transparent-input form-control-lg"
+                            <input type="text" id="logFormFirstName"
+                                class="form-control transparent-input form-control-lg"
                                 placeholder="Enter your first name" />
                         </div>
 
                         <!-- Last Name Input -->
                         <div class="form-outline mb-4">
                             <label class="form-label fw-bolder" for="logFormLastName">Last Name</label>
-                            <input type="text" id="logFormLastName" class="form-control transparent-input form-control-lg"
+                            <input type="text" id="logFormLastName"
+                                class="form-control transparent-input form-control-lg"
                                 placeholder="Enter your last name" />
                         </div>
 
@@ -77,7 +78,8 @@
                         <!-- Password Input -->
                         <div class="form-outline mb-2">
                             <label class="form-label fw-bolder" for="logFormPass">Password</label>
-                            <input type="password" id="logFormPass" class="form-control transparent-input form-control-lg"
+                            <input type="password" id="logFormPass"
+                                class="form-control transparent-input form-control-lg"
                                 placeholder="Enter your password" />
                         </div>
 
@@ -128,30 +130,28 @@
                         window.location = "/?id=" + result.id;
                     } else {
                         let errorMessage = "";
-                        switch(result.status){
+                        switch (result.status) {
                             case 2:
-                                errorMessage = "Please fill in all the fields.";
+                                errorMessage = "Please ensure all required fields are filled in.";
                                 break;
                             case 3:
-                                errorMessage = "Invalid email format.";
+                                errorMessage = "The email format entered is invalid.";
                                 break;
                             case 4:
-                                errorMessage = "The entered email is already registered";
+                                errorMessage = "The email address provided is already registered. Please use a different email address.";
                                 break;
                             default:
-                                errorMessage = "An error occured. Please try again later.";
+                                errorMessage = "An unexpected error occurred. Please attempt the operation again later.";
                         }
                         ep.textContent = errorMessage;
                         ep.style.visibility = "visible";
-                        ep.style.color = "red";
                     }
                 })
                 .catch(error => {
                     // Handle errors
                     console.error('Error:', error);
-                    ep.textContent = "An error occured. Please try again later.";
+                    ep.textContent = "An unexpected error occurred. Please attempt the operation again later.";
                     ep.style.visibility = "visible";
-                    ep.style.color= "red";
                 });
         }
     </script>
