@@ -102,7 +102,7 @@
             // Get email and password values
             var email = document.getElementById("logFormEmail").value;
             var pass = document.getElementById("logFormPass").value;
-            var ep = document.getElementById("ErrorPrompt").style;
+            var ep = document.getElementById("ErrorPrompt");
 
             // Create an object with the data
             var data = {
@@ -124,12 +124,31 @@
                     if (result.status === 0) {
                         window.location = "/?id=" + result.id;
                     } else {
-                        ep.visibility = "visible"
+                        let errorMessage ="";
+                        switch(result.status){
+                            case 1:
+                                errorMessage="Incorrect email or password.";
+                                break;
+                            case 2:
+                                errorMessage="Please enter both email and password";
+                                break;
+                            case 3:
+                                errorMessage ="Invalid email format";
+                                break;
+                            default:
+                                errorMessage="An error occured. Please try again later";
+                        }
+                        ep.textContent = errorMessage;
+                        ep.style.visibility="visible";
+                        ep.style.color="red";
                     }
                 })
                 .catch(error => {
                     // Handle errors
                     console.error('Error:', error);
+                    ep.textContent = "An error occured. Please try again later.";
+                    ep.style.visibility="visible";
+                    ep.style.color="red";
                 });
         }
     </script>
