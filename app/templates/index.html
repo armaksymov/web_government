@@ -14,8 +14,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
     <!-- External library for touch gestures -->
-    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 
     <!-- Custom styles -->
     <style>
@@ -36,10 +38,24 @@
             background-color: #000000 !important;
         }
 
+        .navbar-custom {
+            position: sticky;
+            bottom: 0;
+            width: 100%;
+            z-index: 1000;
+            /* Ensure the navbar stays on top of other content */
+        }
+
+        .wrapper {
+            flex: 1;
+        }
+
         /* Body background color adjustment */
         body {
             margin: 0;
             height: 100vh;
+            display: flex;
+            flex-direction: column;
             background: radial-gradient(circle at left bottom, #fffff4, #ebfffd, #ecedff);
         }
     </style>
@@ -47,10 +63,14 @@
 
 <body onload="$('#container').load('feed');">
     <!-- Container for dynamic content -->
-    <div id="container" style="padding: 32px;"></div>
+    <div class="wrapper">
+        <!-- Your content goes here -->
+        <div id="container" style="padding: 32px;">
+        </div>
+    </div>
 
     <!-- Bottom fixed navigation bar with buttons -->
-    <nav class="navbar fixed-bottom navbar-dark bg-dark">
+    <nav class="navbar fixed-bottom navbar-dark bg-dark navbar-custom">
         <div class="container d-flex justify-content-center">
 
             <!-- Feed button -->

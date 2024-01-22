@@ -2,12 +2,15 @@
 
 <!-- Internal Styles -->
 <style>
+    /* Resetting default styles and setting up full height and width */
     html,
     body {
         height: 100%;
+        width: 100%;
         margin: 0;
     }
 
+    /* Centering the container in the middle of the page */
     .container-centered {
         position: absolute;
         top: 50%;
@@ -15,29 +18,46 @@
         transform: translate(-50%, -50%);
     }
 
+    /* Styling for the Swiper container */
+    .swiper-container {
+        width: 32px;
+        height: auto;
+    }
+
+    /* Styling for individual cards */
     .card {
         border: 0px solid;
         border-radius: 12px;
         width: 360px;
     }
 
+    /* Styling for card bodies */
     .card-body {
         padding: 26px;
         display: flex;
         justify-content: space-between;
     }
+
+    /* Swiper Styles */
+    .swiper-slide {
+        background-size: cover;
+        background-position: center;
+    }
 </style>
 
-<!-- Carousel container -->
-<div id="documentsCarousel" class="carousel slide container-centered" data-bs-ride="carousel">
-    <div class="carousel-inner">
+<!-- Container for centering the content -->
+<div class="container-centered outer-container">
 
-        <!-- Carousel Item 1 -->
-        <div class="carousel-item active">
-            <div class="card" style="background: radial-gradient(circle at right top, #fffdf4, #b7badd);">
+    <!-- Swiper container for document carousel -->
+    <div class="swiper-container" id="documentsCarousel">
+
+        <!-- Swiper wrapper for individual slides -->
+        <div class="swiper-wrapper" style="width: 32px;">
+
+            <!-- Passport Document Card -->
+            <div class="card swiper-slide" style="background: radial-gradient(circle at right top, #fffdf4, #b7badd);">
                 <div class="card-body align-items-center" style="margin-bottom: -26px;">
 
-                    <!-- Document Title and Icon -->
                     <div class="col">
                         <h2 class="mb-0" style="white-space: nowrap;">Passport</h2>
                         <h6 class="small" style="white-space: nowrap;">N/A</h6>
@@ -45,7 +65,6 @@
                     <i class="bi bi-passport fs-1"></i>
                 </div>
 
-                <!-- Document Details -->
                 <div class="card-body" style="margin-bottom: -26px;">
                     <div class="col">
                         <h6 class="fw-bold" style="white-space: nowrap;">Full Name</h6>
@@ -53,7 +72,6 @@
                     </div>
                 </div>
 
-                <!-- Place and Date of Birth -->
                 <div class="card-body" style="margin-bottom: -26px;">
                     <div class="row d-flex justify-content-center">
                         <div class="col">
@@ -67,7 +85,6 @@
                     </div>
                 </div>
 
-                <!-- Issue and Expiry Dates -->
                 <div class="card-body" style="margin-bottom: -26px;">
                     <div class="row d-flex justify-content-center">
                         <div class="col">
@@ -81,7 +98,6 @@
                     </div>
                 </div>
 
-                <!-- Issuing Authority -->
                 <div class="card-body">
                     <div class="row d-flex justify-content-center">
                         <div class="col">
@@ -90,15 +106,13 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Carousel Item 2 -->
-        <div class="carousel-item">
-            <div class="card" style="background: radial-gradient(circle at right top, #fdfff0, #b7ddd4);">
+            </div>
+
+            <!-- Driver's License Document Card -->
+            <div class="card swiper-slide" style="background: radial-gradient(circle at right top, #fdfff0, #b7ddd4);">
                 <div class="card-body align-items-center" style="margin-bottom: -26px;">
 
-                    <!-- Document Title and Icon -->
                     <div class="col">
                         <h2 class="mb-0" style="white-space: nowrap;">Driver's License</h2>
                         <h6 class="small" style="white-space: nowrap;">N/A</h6>
@@ -106,7 +120,6 @@
                     <i class="bi bi-person-vcard fs-1"></i>
                 </div>
 
-                <!-- Document Details -->
                 <div class="card-body" style="margin-bottom: -26px;">
                     <div class="col">
                         <h6 class="fw-bold" style="white-space: nowrap;">Full Name</h6>
@@ -114,7 +127,6 @@
                     </div>
                 </div>
 
-                <!-- Date of Birth -->
                 <div class="card-body" style="margin-bottom: -26px;">
                     <div class="col">
                         <h6 class="fw-bold" style="white-space: nowrap;">Date of Birth</h6>
@@ -122,7 +134,6 @@
                     </div>
                 </div>
 
-                <!-- Issue and Expiry Dates -->
                 <div class="card-body" style="margin-bottom: -26px;">
                     <div class="row d-flex justify-content-center">
                         <div class="col">
@@ -136,7 +147,6 @@
                     </div>
                 </div>
 
-                <!-- Additional Details -->
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
@@ -154,23 +164,29 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
+
+        <!-- Swiper pagination -->
+        <div class="swiper-pagination"></div>
     </div>
 </div>
 
-<!-- Custom script for touch gestures on the carousel -->
 <script>
-    var myCarousel = document.getElementById('documentsCarousel');
-    var hammer = new Hammer(myCarousel);
-
-    // Swipe left event
-    hammer.on('swipeleft', function () {
-        $('#documentsCarousel').carousel('next');
-    });
-
-    // Swipe right event
-    hammer.on('swiperight', function () {
-        $('#documentsCarousel').carousel('prev');
+    var swiper = new Swiper('#documentsCarousel', {
+        effect: 'cards',
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        spaceBetween: 16,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
     });
 </script>
