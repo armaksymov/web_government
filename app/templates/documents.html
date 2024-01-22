@@ -1,1 +1,176 @@
 <h1>Documents</h1>
+
+<!-- Internal Styles -->
+<style>
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+    }
+
+    .container-centered {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .card {
+        border: 0px solid;
+        border-radius: 12px;
+        width: 360px;
+    }
+
+    .card-body {
+        padding: 26px;
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
+
+<!-- Carousel container -->
+<div id="documentsCarousel" class="carousel slide container-centered" data-bs-ride="carousel">
+    <div class="carousel-inner">
+
+        <!-- Carousel Item 1 -->
+        <div class="carousel-item active">
+            <div class="card" style="background: radial-gradient(circle at right top, #fffdf4, #b7badd);">
+                <div class="card-body align-items-center" style="margin-bottom: -26px;">
+
+                    <!-- Document Title and Icon -->
+                    <div class="col">
+                        <h2 class="mb-0">Passport</h2>
+                        <h6 class="small">N/A</h6>
+                    </div>
+                    <i class="bi bi-passport fs-1"></i>
+                </div>
+
+                <!-- Document Details -->
+                <div class="card-body" style="margin-bottom: -26px;">
+                    <div class="col">
+                        <h6 class="fw-bold">Full Name</h6>
+                        <h6 class="small">N/A</h6>
+                    </div>
+                </div>
+
+                <!-- Place and Date of Birth -->
+                <div class="card-body" style="margin-bottom: -26px;">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col">
+                            <h6 class="fw-bold" style="text-wrap: nowrap;">Place of Birth</h6>
+                            <h6 class="small">N/A</h6>
+                        </div>
+                        <div class="col" style="text-wrap: nowrap; margin-left: 36px;">
+                            <h6 class="fw-bold">Date of Birth</h6>
+                            <h6 class="small">N/A</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Issue and Expiry Dates -->
+                <div class="card-body" style="margin-bottom: -26px;">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col">
+                            <h6 class="fw-bold">Date of Issue</h6>
+                            <h6 class="small">N/A</h6>
+                        </div>
+                        <div class="col" style="text-wrap: nowrap; margin-left: 40px;">
+                            <h6 class="fw-bold">Date of Expiry</h6>
+                            <h6 class="small">N/A</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Issuing Authority -->
+                <div class="card-body">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col">
+                            <h6 class="fw-bold">Issuing Authority</h6>
+                            <h6 class="small">N/A</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carousel Item 2 -->
+        <div class="carousel-item">
+            <div class="card" style="background: radial-gradient(circle at right top, #fdfff0, #b7ddd4);">
+                <div class="card-body align-items-center" style="margin-bottom: -26px;">
+
+                    <!-- Document Title and Icon -->
+                    <div class="col">
+                        <h2 class="mb-0">Driver's License</h2>
+                        <h6 class="small">N/A</h6>
+                    </div>
+                    <i class="bi bi-person-vcard fs-1"></i>
+                </div>
+
+                <!-- Document Details -->
+                <div class="card-body" style="margin-bottom: -26px;">
+                    <div class="col">
+                        <h6 class="fw-bold">Full Name</h6>
+                        <h6 class="small">N/A</h6>
+                    </div>
+                </div>
+
+                <!-- Date of Birth -->
+                <div class="card-body" style="margin-bottom: -26px;">
+                    <div class="col">
+                        <h6 class="fw-bold">Date of Birth</h6>
+                        <h6 class="small">N/A</h6>
+                    </div>
+                </div>
+
+                <!-- Issue and Expiry Dates -->
+                <div class="card-body" style="margin-bottom: -26px;">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col">
+                            <h6 class="fw-bold">Date of Issue</h6>
+                            <h6 class="small">N/A</h6>
+                        </div>
+                        <div class="col" style="text-wrap: nowrap; margin-left: 40px;">
+                            <h6 class="fw-bold">Date of Expiry</h6>
+                            <h6 class="small">N/A</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Details -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h6 class="fw-bold">Sex</h6>
+                            <h6 class="small">N/A</h6>
+                        </div>
+                        <div class="col" style="text-wrap: nowrap;">
+                            <h6 class="fw-bold">Blood Type</h6>
+                            <h6 class="small">N/A</h6>
+                        </div>
+
+                        <div class="col" style="text-wrap: nowrap;">
+                            <h6 class="fw-bold">Weight</h6>
+                            <h6 class="small">N/A</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Custom script for touch gestures on the carousel -->
+<script>
+    var myCarousel = document.getElementById('documentsCarousel');
+    var hammer = new Hammer(myCarousel);
+
+    // Swipe left event
+    hammer.on('swipeleft', function () {
+        $('#documentsCarousel').carousel('next');
+    });
+
+    // Swipe right event
+    hammer.on('swiperight', function () {
+        $('#documentsCarousel').carousel('prev');
+    });
+</script>
