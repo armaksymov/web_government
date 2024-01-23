@@ -127,6 +127,27 @@ def register_user(first_name, last_name, email, password):
 
     try:
         user_id = users_collection.insert_one(user_account).inserted_id
-        return {"status": 0, "id": str(user_id)}
     except Exception:
         return {"status": 5, "id": None}  # registration error
+    
+    user_details_collection = current_app.mongo.db.user_details
+    user_details = generate_random_data()
+    user_details['user_id'] = str(user_id)
+
+    try:
+        user_details_collection.insert_one(user_details)
+    except Exception:
+        return {"status": 6, "id": None}  # error inserting user details
+
+    full_name = f"{first_name} {last_name}"
+    document_data = generate_random_document_data(full_name)
+
+    documents_collection = current_app.mongo.db.documents
+    document_data['user_id'] = str(user_id)  # link document to user
+
+    try:
+        documents_collection.insert_one(document_data)
+    except Exception:
+        return {"status": 7, "id": None}  # error in inserting document details
+    
+    return {"status": 0, "id": str(user_id)}
