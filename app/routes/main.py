@@ -27,7 +27,7 @@ class Main:
         - render_template: HTML response with the content of index.html.
         """
 
-        session['account_id']=request.args.get("id")
+        session["account_id"] = request.args.get("id")
 
         return render_template("index.html")
 
@@ -55,10 +55,10 @@ class Main:
         Returns:
         - render_template: HTML response with the content of documents.html.
         """
-        account_id=session.get('acount_id')
+        account_id = session.get("acount_id")
         if account_id is None:
-            return "Error: Account id is not set",400
-        
+            return "Error: Account id is not set", 400
+
         documents = get_documents(account_id)
 
         return render_template("documents.html", documents_data=documents)
@@ -192,3 +192,11 @@ class Main:
         utility_bills = get_utility_bills(Main.ACCOUNT_ID)
 
         return render_template("utility_bill_payments.html", bills_data=utility_bills)
+
+    @staticmethod
+    @main_blueprint.route("/utility_bill_payments", methods=["POST"])
+    def pay_utility_bill():
+        data = request.get_json()
+        response = pay_utility_bill(Main.ACCOUNT_ID, data["bill"])
+
+        return jsonify(response)
