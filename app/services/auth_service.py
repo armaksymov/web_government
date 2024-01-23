@@ -14,6 +14,16 @@ from flask import current_app
 
 
 def is_valid_email(email):
+    """
+    Email validation against the standard email regex
+
+    Args:
+    - email (string)
+
+    Returns:
+    - boolean: the boolean value representing the regex match
+    """
+
     email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
     return re.match(email_regex, email) is not None
 
@@ -56,13 +66,14 @@ def generate_random_document_data(full_name, passport_number, driver_license_num
     -dict: the generated data
     """
 
-    def random_date(start_year, end_year): return str(
-        datetime.date(
-            random.randint(start_year, end_year),
-            random.randint(1, 12),
-            random.randint(1, 28),
-        ),
-    )
+    def random_date(start_year, end_year):
+        return str(
+            datetime.date(
+                random.randint(start_year, end_year),
+                random.randint(1, 12),
+                random.randint(1, 28),
+            ),
+        )
 
     return {
         'passport': {

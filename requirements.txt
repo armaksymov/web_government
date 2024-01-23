@@ -1,6 +1,7 @@
+astroid==3.0.2
 bcrypt==4.1.2
 Flask==3.0.0
 Flask-PyMongo==2.3.0
-pylint==2.17.6
+pylint==3.0.3
 pymongo==4.6.1
 pytest==7.2.2

@@ -217,6 +217,19 @@ class Main:
     @staticmethod
     @main_blueprint.route('/pay_utility_bill', methods=['POST'])
     def pay_utility_bill():
+        """
+        Pay unility bill based on the Account ID and provided JSON data.
+
+        Account ID stored in session
+
+        JSON Request:
+        - Utility Bill Information
+
+        Returns:
+        - jsonify: JSON response indicating the status of the bill payment.
+          Format: {"status": int, "id": str}
+        """
+
         data = request.get_json()
         response = pay_utility_bill(Main.ACCOUNT_ID, data['bill'])
 

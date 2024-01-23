@@ -1,3 +1,6 @@
+"""
+    This module contains methods to request data from the database.
+"""
 from __future__ import annotations
 
 import logging
@@ -7,6 +10,16 @@ from flask import current_app
 
 
 def get_utility_bills(account_id):
+    """
+        This method get_utility_bills returns a dictionary with bill information
+
+        Arguments:
+        1. account_id - Unique Internal Client Identifier within our system
+
+        Returns:
+        1. A dictionary containing data on utility bills.
+    """
+
     utility_bills = {
         'electricity': {
             'due': '01 Jan 2024',
@@ -26,6 +39,17 @@ def get_utility_bills(account_id):
 
 
 def pay_utility_bill(account_id, bill_name):
+    """
+        This method pay_utility_bill returns a status code of bill payment
+
+        Arguments:
+        1. account_id - Unique Internal Client Identifier within our system
+        2. bill_name - Name of the bill user is paying
+
+        Returns:
+        1. A status code reflecting the success of bill payment.
+    """
+
     response = {
         'status': 0,
     }
@@ -34,6 +58,20 @@ def pay_utility_bill(account_id, bill_name):
 
 
 def get_account_information(account_id):
+    """
+        This method get_account_information returns a dictionary with user data
+
+        Arguments:
+        1. account_id - Unique Internal Client Identifier within our system
+
+        Returns:
+        1. A dictionary with the following user data:
+            - Account finding status (0 - success, 1 - not found)
+            - First Name
+            - Last Name
+            - Email Address
+    """
+
     users_collection = current_app.mongo.db.users
 
     user = users_collection.find_one({'_id': account_id})
@@ -50,6 +88,19 @@ def get_account_information(account_id):
 
 
 def get_documents(account_id):
+    """
+        This method get_documents returns a dictionary with user documents
+
+        Arguments:
+        1. account_id - Unique Internal Client Identifier within our system
+
+        Returns:
+        1. A dictionary with the following user documents:
+            - Document finding status (0 - success, 1 - not found)
+            - Passport
+            - Driver's License
+    """
+
     documents_collection = current_app.mongo.db.documents
 
     if not ObjectId.is_valid(account_id):
