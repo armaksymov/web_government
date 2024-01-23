@@ -5,6 +5,9 @@ on login as well the user registration
 import re
 import bcrypt
 from flask import current_app
+import random
+import string
+import datetime
 
 
 def is_valid_email(email):
@@ -37,6 +40,14 @@ def authenticate_user(email, password):
         return {"status": 0, "id": str(user["_id"])}
 
     return {"status": 1, "id": None}
+
+def generate_random_data():
+   
+    random_data= {
+        "passport_number": "P" + ''.join(random.choices(string.digits, k=9)),
+        "driver_license":''.join(random.choices(string.digits, k=9))
+    }
+    return random_data
 
 
 def register_user(first_name, last_name, email, password):
