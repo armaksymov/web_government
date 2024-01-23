@@ -23,6 +23,7 @@ from app.routes.main import main_blueprint
 
 app = Flask(__name__, template_folder="app/templates", static_folder="app/static")
 app.register_blueprint(main_blueprint)
+app.secret_key = "ChuppapiMunyanyo"
 
 # MongoDB connection setup
 app.config["MONGO_URI"] = "mongodb://localhost:27017/web_government"
