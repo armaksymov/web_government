@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>Online Governmental Services</title>
-    <link rel="icon" href="images/logo-cut.jpeg">
+    <link rel="icon" href="{{ url_for('static', filename='images/logo-cut.jpeg') }}">
 
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
@@ -20,7 +20,7 @@
     <script src="https://kit.fontawesome.com/aea9fedfee.js" crossorigin="anonymous"></script>
 
     <!-- Linking custom stylesheet -->
-    <link href="styles/landing.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='styles/landing.css') }}" rel="stylesheet">
 
     <!-- Linking Typed.js -->
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
@@ -48,7 +48,7 @@
                 <div class="row text-center align-items-center">
                     
                     <div class="col-8 col-sm-6 col-md-5 col-lg-5 col-xl-4 mx-auto">
-                        <img class="img-fluid" src="images/logo_no_bg (1).png">
+                        <img class="img-fluid" src="{{ url_for('static', filename='images/logo_no_bg (1).png') }}">
                     </div>
 
                     <!-- Props to Matt Boldt for the creation of Typed.js -->

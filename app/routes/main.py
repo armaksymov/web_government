@@ -19,6 +19,18 @@ class Main:
 
     @staticmethod
     @main_blueprint.route("/")
+    def landing_page():
+        """
+        Render the landing.html template.
+
+        Returns:
+        - render_template: HTML response with the content of landing.html.
+        """
+
+        return render_template("landing.html")
+
+    @staticmethod
+    @main_blueprint.route("/dashboard")
     def index_page():
         """
         Render the index.html template.
