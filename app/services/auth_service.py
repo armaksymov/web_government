@@ -49,6 +49,47 @@ def generate_random_data():
     }
     return random_data
 
+def generate_random_document_data(full_name):
+    """
+    Generate the data for the documents
+
+    Args:
+    -full_name (str)
+
+    Returns:
+    -dict: the generated data
+    """
+
+    random_date = lambda start_year,end_year: str(datetime.date(
+        random.randint(start_year,end_year),
+        random.randint(1,12),
+        random.randint(1,28)
+    ))
+
+    return{
+        "passport": {
+            "number": "P" + ''.join(random.choices(string.digits, k=9)),
+            "full_name": full_name,
+            "place_of_birth": "Essex",
+            "date_of_birth": random_date(1960, 2024),
+            "date_of_issue": random_date(2014, 2024),
+            "date_of_expiry": random_date(2020, 2034),
+            "issuing_authority": "Sussex Passport Office",
+        },
+        "driver_license": {
+            "number": ''.join(random.choices(string.digits, k=9)),
+            "full_name": full_name,
+            "date_of_birth": random_date(1960, 2024),
+            "date_of_issue": random_date(2010, 2024),
+            "date_of_expiry": random_date(2020, 2034),
+            "sex": random.choice(["Male", "Female"]),
+            "blood_type": random.choice(["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"]),
+            "weight": random.randint(50, 100),
+        }
+
+    }
+
+    
 
 def register_user(first_name, last_name, email, password):
     """
