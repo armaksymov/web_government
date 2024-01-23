@@ -1,0 +1,137 @@
+<!-- This is the main heading of the page -->
+<h1>Utility Bill Payments</h1>
+
+<!-- Styles for the transparent card, icon colors, and payment button -->
+<style>
+    .transparent-card {
+        background-color: rgba(255, 255, 255, 0.75);
+        border: 1px solid #ffffff;
+        border-radius: 12px;
+    }
+
+    .icon-color {
+        color: white;
+    }
+
+    .icon-bg {
+        background-color: #000000;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-pay {
+        font-weight: bold;
+        font-size: large;
+        border-radius: 12px;
+        border: 0px solid;
+        color: white;
+        transition: background-color 0.3s ease;
+    }
+
+    /* Styles for the paid state of the payment button */
+    .btn-pay.paid {
+        background-color: #f0f0f0;
+        color: #6c757d;
+        pointer-events: none;
+    }
+</style>
+
+<!-- First card for Electricity Bill -->
+<div class="col card-col mt-4">
+    <!-- Transparent card with dynamic 'paid' class based on payment status -->
+    <div class="card transparent-card {% if bills_data['electricity']['is_paid'] %}paid{% endif %}"
+        id="electricity-card">
+
+        <div class="card-body">
+            <!-- Icon background with lightning charge icon -->
+            <div class="icon-bg">
+                <i class="bi bi-lightning-charge icon-color fs-5"></i>
+            </div>
+            <!-- Bill details and payment button for Electricity Bill -->
+            <h4 class="mt-4 fw-bold card-text">Electricity Bill</h4>
+            <h6 class="mt-2 fw-bold card-text text-muted">Invoice Date: {{ bills_data['electricity']['issued'] }}</h6>
+            <h6 class="mt-2 fw-bold card-text text-muted">Due Date: {{ bills_data['electricity']['due'] }}</h6>
+            <button
+                class="mt-4 col-12 btn-pay btn btn-success {% if bills_data['electricity']['is_paid'] %}paid{% endif %}"
+                onclick="processPayment(this, 'electricity-card', 'electricity')">
+                {% if bills_data['electricity']['is_paid'] %}
+                <i class="bi bi-info-circle"></i> Already Paid
+                {% else %}
+                Pay ${{ bills_data['electricity']['amount'] }}
+                {% endif %}
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Second card for Internet & Cable Bill -->
+<div class="col card-col mt-4">
+    <!-- Transparent card with dynamic 'paid' class based on payment status -->
+    <div class="card transparent-card {% if bills_data['internet_and_cable']['is_paid'] %}paid{% endif %}"
+        id="internet-card">
+        <div class="card-body">
+            <!-- Icon background with plug icon -->
+            <div class="icon-bg">
+                <i class="bi bi-plug icon-color fs-5"></i>
+            </div>
+            <!-- Bill details and payment button for Internet & Cable Bill -->
+            <h4 class="mt-4 fw-bold card-text">Internet & Cable Bill</h4>
+            <h6 class="mt-2 fw-bold card-text text-muted">Invoice Date: {{ bills_data['internet_and_cable']['issued'] }}
+            </h6>
+            <h6 class="mt-2 fw-bold card-text text-muted">Due Date: {{ bills_data['internet_and_cable']['due'] }}</h6>
+            <button
+                class="mt-4 col-12 btn-pay btn btn-success {% if bills_data['internet_and_cable']['is_paid'] %}paid{% endif %}"
+                onclick="processPayment(this, 'internet-card', 'internet_and_cable')">
+                {% if bills_data['internet_and_cable']['is_paid'] %}
+                <i class="bi bi-info-circle"></i> Already Paid
+                {% else %}
+                Pay ${{ bills_data['internet_and_cable']['amount'] }}
+                {% endif %}
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript script for processing payments and updating UI -->
+<script>
+    function processPayment(button, cardId, billName) {
+        // Change button text to indicate processing
+        button.innerHTML = 'Processing...';
+
+        // TODO: Set is_paid to true in the db.
+        // Create an object with the data
+        var data = {
+            bill: billName
+        };
+
+        // Send a POST request
+        fetch('/pay_utility_bill', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(result => {
+                // Handle the response from the server
+                if (result.status === 0) {
+                    button.innerHTML = '<i class="bi bi-check-circle"></i> Payment Successful';
+
+                    // Add 'paid' class to the card to grey it out
+                    document.getElementById(cardId).classList.add('paid');
+                } else {
+                    button.innerHTML = '<i class="bi bi-x-circle"></i> Payment Unsuccessful';
+                }
+            })
+            .catch(error => {
+                // Handle errors
+                button.innerHTML = '<i class="bi bi-x-circle"></i> Payment Unsuccessful';
+                console.error('Error:', error);
+            });
+    }
+</script>

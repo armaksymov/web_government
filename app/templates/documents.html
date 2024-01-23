@@ -1,0 +1,193 @@
+<h1>Documents</h1>
+
+<!-- Internal Styles -->
+<style>
+    /* Resetting default styles and setting up full height and width */
+    html,
+    body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+    }
+
+    /* Centering the container in the middle of the page */
+    .container-centered {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    /* Styling for the Swiper container */
+    .swiper-container {
+        width: 32px;
+        height: auto;
+    }
+
+    /* Styling for individual cards */
+    .card {
+        border: 0px solid;
+        border-radius: 12px;
+        width: 360px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Styling for card bodies */
+    .card-body {
+        padding: 26px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    /* Swiper Styles */
+    .swiper-slide {
+        background-size: cover;
+        background-position: center;
+    }
+</style>
+
+<!-- Container for centering the content -->
+<div class="container-centered outer-container">
+
+    <!-- Swiper container for document carousel -->
+    <div class="swiper-container" id="documentsCarousel">
+
+        <!-- Swiper wrapper for individual slides -->
+        <div class="swiper-wrapper" style="width: 32px;">
+
+            <!-- Passport Document Card -->
+            <div class="card swiper-slide" style="background: radial-gradient(circle at right top, #fffdf4, #b7badd);">
+                <div class="card-body align-items-center" style="margin-bottom: -26px;">
+
+                    <div class="col">
+                        <h2 class="mb-0" style="white-space: nowrap;">Passport</h2>
+                        <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['number'] }}</h6>
+                    </div>
+                    <i class="bi bi-passport fs-1"></i>
+                </div>
+
+                <div class="card-body" style="margin-bottom: -26px;">
+                    <div class="col">
+                        <h6 class="fw-bold" style="white-space: nowrap;">Full Name</h6>
+                        <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['full_name'] }}</h6>
+                    </div>
+                </div>
+
+                <div class="card-body" style="margin-bottom: -26px;">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col">
+                            <h6 class="fw-bold" style="white-space: nowrap;">Place of Birth</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['place_of_birth'] }}</h6>
+                        </div>
+                        <div class="col" style="text-wrap: nowrap; margin-left: 36px;">
+                            <h6 class="fw-bold" style="white-space: nowrap;">Date of Birth</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['date_of_birth'] }}</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body" style="margin-bottom: -26px;">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col">
+                            <h6 class="fw-bold" style="white-space: nowrap;">Date of Issue</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['date_of_issue'] }}</h6>
+                        </div>
+                        <div class="col" style="text-wrap: nowrap; margin-left: 40px;">
+                            <h6 class="fw-bold" style="white-space: nowrap;">Date of Expiry</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['date_of_expiry'] }}</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col">
+                            <h6 class="fw-bold" style="white-space: nowrap;">Issuing Authority</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['issuing_authority'] }}</h6>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Driver's License Document Card -->
+            <div class="card swiper-slide" style="background: radial-gradient(circle at right top, #fdfff0, #b7ddd4);">
+                <div class="card-body align-items-center" style="margin-bottom: -26px;">
+
+                    <div class="col">
+                        <h2 class="mb-0" style="white-space: nowrap;">Driver's License</h2>
+                        <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['number'] }}</h6>
+                    </div>
+                    <i class="bi bi-person-vcard fs-1"></i>
+                </div>
+
+                <div class="card-body" style="margin-bottom: -26px;">
+                    <div class="col">
+                        <h6 class="fw-bold" style="white-space: nowrap;">Full Name</h6>
+                        <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['full_name'] }}</h6>
+                    </div>
+                </div>
+
+                <div class="card-body" style="margin-bottom: -26px;">
+                    <div class="col">
+                        <h6 class="fw-bold" style="white-space: nowrap;">Date of Birth</h6>
+                        <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['date_of_birth'] }}</h6>
+                    </div>
+                </div>
+
+                <div class="card-body" style="margin-bottom: -26px;">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col">
+                            <h6 class="fw-bold" style="white-space: nowrap;">Date of Issue</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['date_of_issue'] }}</h6>
+                        </div>
+                        <div class="col" style="margin-left: 40px;">
+                            <h6 class="fw-bold" style="white-space: nowrap;">Date of Expiry</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['date_of_expiry'] }}</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h6 class="fw-bold" style="white-space: nowrap;">Sex</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['sex'] }}</h6>
+                        </div>
+                        <div class="col">
+                            <h6 class="fw-bold" style="white-space: nowrap;">Blood Type</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['blood_type'] }}</h6>
+                        </div>
+
+                        <div class="col">
+                            <h6 class="fw-bold" style="white-space: nowrap;">Weight</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['weight'] }} kg</h6>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Swiper pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
+</div>
+
+<script>
+    var swiper = new Swiper('#documentsCarousel', {
+        effect: 'cards',
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        spaceBetween: 16,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
+</script>

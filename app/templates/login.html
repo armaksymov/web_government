@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Metadata for character set and viewport -->
+    <meta charset="utf-8">
+    <title>web.gov</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/logo.png') }}">
+
+    <!-- Bootstrap CSS and Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Custom styles -->
+    <style>
+        /* Body background color adjustment */
+        body {
+            margin: 0;
+            background-attachment: fixed;
+            background: radial-gradient(circle at left bottom, #fffff4, #ebfffd, #ecedff);
+        }
+
+        /* Custom CSS for transparent input fields */
+        .transparent-input {
+            background-color: rgba(255, 255, 255, 0.75);
+            border: 1px solid #ced4da;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <section id="login" class="pageStyler">
+        <div class="container-fluid min-vh-100">
+            <div
+                class="row gx-2 gx-md-3 gx-lg-4 gx-xl-5 mx-2 mx-md-3 mx-lg-4 mx-xl-5 d-flex justify-content-center align-items-center min-vh-100">
+                <!-- Logo Section -->
+                <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 text-center">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" class="img-fluid our-logo"
+                        alt="web.gov">
+                </div>
+
+                <!-- Login Form Section -->
+                <div class="col-sm-12 col-md-10 col-lg-6 col-xl-6">
+                    <form>
+                        <p class="h1 fw-bold text-center mb-4">Login</p>
+
+                        <!-- Error Prompt -->
+                        <p id="ErrorPrompt" class="h6 text-center mb-4" style="color: #ac5754; visibility: hidden;"></p>
+
+                        <!-- Email Input -->
+                        <div class="form-outline mb-4">
+                            <label class="form-label fw-bolder" for="logFormEmail">Email Address</label>
+                            <input type="email" id="logFormEmail" class="form-control transparent-input form-control-lg"
+                                placeholder="Enter your email address" />
+                        </div>
+
+                        <!-- Password Input -->
+                        <div class="form-outline mb-2">
+                            <label class="form-label fw-bolder" for="logFormPass">Password</label>
+                            <input type="password" id="logFormPass"
+                                class="form-control transparent-input form-control-lg"
+                                placeholder="Enter your password" />
+                        </div>
+
+                        <!-- Remember me and Forgot Password Section -->
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="form-check mb-0">
+                                <input class="form-check-input transparent-input me-2" type="checkbox" value=""
+                                    id="logFormRemember" />
+                                <label class="form-check-label" for="logFormRemember">Remember me</label>
+                            </div>
+                            <a class="fw-bold link" style="color: #5464ac;">Forgot your password?</a>
+                        </div>
+
+                        <!-- Login Button Section -->
+                        <div class="d-flex justify-content-center text-center text-lg-start mt-4 pt-2">
+                            <button type="button" class="btn btn-dark btn-lg px-4 custom-button"
+                                onclick="sendLoginRequest()">Sign In</button>
+                        </div>
+
+                        <!-- Register Link Section -->
+                        <div class="d-flex justify-content-center text-center text-lg-start pt-2">
+                            <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="register"
+                                    class="link" style="color: #5464ac;">Sign Up here</a>.</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- jQuery and Bootstrap JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function sendLoginRequest() {
+            // Get email and password values
+            var email = document.getElementById("logFormEmail").value;
+            var pass = document.getElementById("logFormPass").value;
+            var ep = document.getElementById("ErrorPrompt");
+
+            // Create an object with the data
+            var data = {
+                email: email,
+                password: pass
+            };
+
+            // Send a POST request
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(result => {
+                    // Handle the response from the server
+                    if (result.status === 0) {
+                        window.location = "/?id=" + result.id;
+                    } else {
+                        let errorMessage = "";
+                        switch (result.status) {
+                            case 1:
+                                errorMessage = "Incorrect email address or password. Please check your credentials.";
+                                break;
+                            case 2:
+                                errorMessage = "Please provide both your email and password.";
+                                break;
+                            case 3:
+                                errorMessage = "The email format entered is invalid.";
+                                break;
+                            default:
+                                errorMessage = "An unexpected error occurred. Please attempt the operation again later.";
+                        }
+                        ep.textContent = errorMessage;
+                        ep.style.visibility = "visible";
+                    }
+                })
+                .catch(error => {
+                    // Handle errors
+                    console.error('Error:', error);
+                    ep.textContent = "An unexpected error occurred. Please attempt the operation again later.";
+                    ep.style.visibility = "visible";
+                });
+        }
+    </script>
+</body>
+
+</html>
