@@ -5,7 +5,7 @@ This module defines the main blueprint for the Flask application.
 from app.services.auth_service import *
 from app.services.information_service import *
 from flask import Blueprint, request, render_template, jsonify
-
+from flask import session
 
 main_blueprint = Blueprint("main", __name__)
 
@@ -27,7 +27,7 @@ class Main:
         - render_template: HTML response with the content of index.html.
         """
 
-        Main.ACCOUNT_ID = request.args.get("id")
+        session['account_id']=request.args.get("id")
 
         return render_template("index.html")
 
@@ -55,8 +55,11 @@ class Main:
         Returns:
         - render_template: HTML response with the content of documents.html.
         """
-
-        documents = get_documents(Main.ACCOUNT_ID)
+        account_id=session.get('acount_id')
+        if account_id is None:
+            return "Error: Account id is not set",400
+        
+        documents = get_documents(account_id)
 
         return render_template("documents.html", documents_data=documents)
 
