@@ -39,3 +39,33 @@ def get_documents(account_id):
         documents = {"status": 1}
 
     return documents
+
+def get_user_data(account_id):
+    """
+    Retrieve all user data from the database.
+
+    Args:
+    - account_id (str): CLIENT ID.
+
+    Returns:
+    - dict: basic user data combined with additional user details.
+    """
+    mongo_db = current_app.mongo
+
+    users_collection = mongo_db.db.users#get users collection
+    basic_info = users_collection.find_one({"_id": account_id})
+
+    user_details_collection = mongo_db.db.user_details#get users_details collection
+    additional_info = user_details_collection.find_one({"user_id": account_id})
+
+    if basic_info and additional_info:
+        basic_info.pop('_id', None)
+        additional_info.pop('_id', None)
+        additional_info.pop('user_id', None)#remove the user ID
+
+        #merge both information
+        user_data = {**basic_info, **additional_info}
+
+        return user_data
+    else:
+        return {"status": 1}
