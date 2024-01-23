@@ -194,7 +194,7 @@ class Main:
         return render_template("utility_bill_payments.html", bills_data=utility_bills)
 
     @staticmethod
-    @main_blueprint.route("/utility_bill_payments", methods=["POST"])
+    @main_blueprint.route("/pay_utility_bill", methods=["POST"])
     def pay_utility_bill():
         data = request.get_json()
         response = pay_utility_bill(Main.ACCOUNT_ID, data["bill"])

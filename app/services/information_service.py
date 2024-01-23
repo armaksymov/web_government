@@ -23,7 +23,11 @@ def get_utility_bills(account_id):
 
 
 def pay_utility_bill(account_id, bill_name):
-    return NotImplementedError
+    response = {
+        "status": 0
+    }
+
+    return response
 
 
 def get_account_information(account_id):
