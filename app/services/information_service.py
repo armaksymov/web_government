@@ -1,11 +1,18 @@
-def get_account_information(account_id):
-    account_information = {
-        "status": 0,
-        "first_name": "",
-        "last_name": "",
-        "email": "",
-    }
+from flask import current_app
 
+def get_account_information(account_id):
+    users_collection = current_app.mongo.db.users
+
+    user = users_collection.find_one({"_id": account_id})
+    if user:
+        account_information = {
+            "status": 0,
+            "first_name": user.get("first_name", ""),
+            "last_name": user.get("last_name", ""),
+            "email": user.get("email", ""),
+        }
+    else:
+        account_information = {"status": 1} #not found
     return account_information
 
 
