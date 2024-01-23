@@ -5,7 +5,7 @@
   This repository serves as a central hub for the collaborative efforts of our team in designing and implementing this application.
 
 ## Repository Contents
-  This repository contains various resources and code related to our Web Government Application. 
+  This repository contains various resources and code related to our Web Government Application.
   Here's a brief overview of what you can find here:
   - Project Source Code: The heart of our project. The source code for the logic and user interfaces of our application.
   - Testing and Validation: Test scripts, testing data, and all the validation procedures we used to ensure the reliability and performance of our application.
