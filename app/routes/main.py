@@ -55,7 +55,7 @@ class Main:
         Returns:
         - render_template: HTML response with the content of documents.html.
         """
-        account_id=session.get('acount_id')
+        account_id=session.get('account_id')
         if account_id is None:
             return "Error: Account id is not set",400
         
