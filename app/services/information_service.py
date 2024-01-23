@@ -1,4 +1,6 @@
 from flask import current_app
+from bson import ObjectId
+import logging
 
 def get_account_information(account_id):
     users_collection = current_app.mongo.db.users
@@ -17,27 +19,23 @@ def get_account_information(account_id):
 
 
 def get_documents(account_id):
-    documents = {
-        "status": 0,
-        "passport": {
-            "number": "P000000000",
-            "full_name": "John Doe",
-            "place_of_birth": "Cityville",
-            "date_of_birth": "01 Jan 1980",
-            "date_of_issue": "01 Jan 2020",
-            "date_of_expiry": "01 Jan 2030",
-            "issuing_authority": "Cityville Passport Office",
-        },
-        "driver_license": {
-            "number": "000000000",
-            "full_name": "John Doe",
-            "date_of_birth": "01 Jan 1980",
-            "date_of_issue": "01 Jan 2010",
-            "date_of_expiry": "01 Jan 2030",
-            "sex": "Male",
-            "blood_type": "O+",
-            "weight": 90,
-        },
-    }
+    documents_collection = current_app.mongo.db.documents
+
+    if not ObjectId.is_valid(account_id):
+        logging.error(f"Invalid account_id format: {account_id}")
+        return {"status": 1}
+
+    account_obj_id = ObjectId(account_id)
+
+    doc = documents_collection.find_one({"user_id": str(account_obj_id)})#get the documents for each user
+    if doc:
+        documents = {
+            "status": 0,
+            "passport": doc.get("passport", {}),
+            "driver_license": doc.get("driver_license", {}),
+        }
+    else:
+        logging.error(f"No documents found for user_id: {account_id}")
+        documents = {"status": 1}
 
     return documents
