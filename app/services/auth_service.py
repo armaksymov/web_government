@@ -41,15 +41,7 @@ def authenticate_user(email, password):
 
     return {"status": 1, "id": None}
 
-def generate_random_data():
-   
-    random_data= {
-        "passport_number": "P" + ''.join(random.choices(string.digits, k=9)),
-        "driver_license":''.join(random.choices(string.digits, k=9))
-    }
-    return random_data
-
-def generate_random_document_data(full_name):
+def generate_random_document_data(full_name,passport_number,driver_license_number):
     """
     Generate the data for the documents
 
@@ -68,7 +60,7 @@ def generate_random_document_data(full_name):
 
     return{
         "passport": {
-            "number": "P" + ''.join(random.choices(string.digits, k=9)),
+            "number": passport_number,
             "full_name": full_name,
             "place_of_birth": "Essex",
             "date_of_birth": random_date(1960, 2024),
@@ -77,7 +69,7 @@ def generate_random_document_data(full_name):
             "issuing_authority": "Sussex Passport Office",
         },
         "driver_license": {
-            "number": ''.join(random.choices(string.digits, k=9)),
+            "number": driver_license_number,
             "full_name": full_name,
             "date_of_birth": random_date(1960, 2024),
             "date_of_issue": random_date(2010, 2024),
@@ -130,24 +122,27 @@ def register_user(first_name, last_name, email, password):
     except Exception:
         return {"status": 5, "id": None}  # registration error
     
+    passport_number = "P" + ''.join(random.choices(string.digits, k=9))  
+    driver_license_number = ''.join(random.choices(string.digits, k=9))  
+
+    user_details = {
+        "user_id": str(user_id),
+        "passport_number": passport_number, 
+        "driver_license_number": driver_license_number,
+    }
+    
+    full_name = f"{first_name} {last_name}"
+    document_data = generate_random_document_data(full_name, passport_number, driver_license_number)
+    document_data['user_id'] = str(user_id)#link the documents data to each user
+
     user_details_collection = current_app.mongo.db.user_details
-    user_details = generate_random_data()
-    user_details['user_id'] = str(user_id)
+    documents_collection = current_app.mongo.db.documents
 
     try:
         user_details_collection.insert_one(user_details)
-    except Exception:
-        return {"status": 6, "id": None}  # error inserting user details
-
-    full_name = f"{first_name} {last_name}"
-    document_data = generate_random_document_data(full_name)
-
-    documents_collection = current_app.mongo.db.documents
-    document_data['user_id'] = str(user_id)  # link document to user
-
-    try:
         documents_collection.insert_one(document_data)
     except Exception:
-        return {"status": 7, "id": None}  # error in inserting document details
-    
+        users_collection.delete_one({"_id": user_id})#roll back if details or documents insertion is failed
+        return {"status": 6, "id": None}  #error inserting user details
+
     return {"status": 0, "id": str(user_id)}
