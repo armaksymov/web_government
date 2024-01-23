@@ -189,4 +189,6 @@ class Main:
         - render_template: HTML response with the content of utility_bill_payments.html.
         """
 
-        return render_template("utility_bill_payments.html")
+        utility_bills = get_utility_bills(Main.ACCOUNT_ID)
+
+        return render_template("utility_bill_payments.html", bills_data=utility_bills)
