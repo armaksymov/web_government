@@ -20,7 +20,7 @@
 
     /* Styling for the Swiper container */
     .swiper-container {
-        width: 32px;
+        width: 56px;
         height: auto;
     }
 
@@ -30,6 +30,7 @@
         border-radius: 12px;
         width: 360px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 42px;
     }
 
     /* Styling for card bodies */
@@ -56,7 +57,7 @@
         <div class="swiper-wrapper" style="width: 32px;">
 
             <!-- Passport Document Card -->
-            <div class="card swiper-slide" style="background: radial-gradient(circle at right top, #fffdf4, #b7badd);">
+            <div class="card swiper-slide" style="background: radial-gradient(circle at right top, #fffcec, #aab1ff);">
                 <div class="card-body align-items-center" style="margin-bottom: -26px;">
 
                     <div class="col">
@@ -69,7 +70,8 @@
                 <div class="card-body" style="margin-bottom: -26px;">
                     <div class="col">
                         <h6 class="fw-bold" style="white-space: nowrap;">Full Name</h6>
-                        <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['full_name'] }}</h6>
+                        <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['full_name'] }}
+                        </h6>
                     </div>
                 </div>
 
@@ -77,11 +79,13 @@
                     <div class="row d-flex justify-content-center">
                         <div class="col">
                             <h6 class="fw-bold" style="white-space: nowrap;">Place of Birth</h6>
-                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['place_of_birth'] }}</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{
+                                documents_data['passport']['place_of_birth'] }}</h6>
                         </div>
                         <div class="col" style="text-wrap: nowrap; margin-left: 36px;">
                             <h6 class="fw-bold" style="white-space: nowrap;">Date of Birth</h6>
-                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['date_of_birth'] }}</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{
+                                documents_data['passport']['date_of_birth'] }}</h6>
                         </div>
                     </div>
                 </div>
@@ -90,11 +94,13 @@
                     <div class="row d-flex justify-content-center">
                         <div class="col">
                             <h6 class="fw-bold" style="white-space: nowrap;">Date of Issue</h6>
-                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['date_of_issue'] }}</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{
+                                documents_data['passport']['date_of_issue'] }}</h6>
                         </div>
                         <div class="col" style="text-wrap: nowrap; margin-left: 40px;">
                             <h6 class="fw-bold" style="white-space: nowrap;">Date of Expiry</h6>
-                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['date_of_expiry'] }}</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{
+                                documents_data['passport']['date_of_expiry'] }}</h6>
                         </div>
                     </div>
                 </div>
@@ -103,7 +109,8 @@
                     <div class="row d-flex justify-content-center">
                         <div class="col">
                             <h6 class="fw-bold" style="white-space: nowrap;">Issuing Authority</h6>
-                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['issuing_authority'] }}</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{
+                                documents_data['passport']['issuing_authority'] }}</h6>
                         </div>
                     </div>
                 </div>
@@ -111,12 +118,13 @@
             </div>
 
             <!-- Driver's License Document Card -->
-            <div class="card swiper-slide" style="background: radial-gradient(circle at right top, #fdfff0, #b7ddd4);">
+            <div class="card swiper-slide" style="background: radial-gradient(circle at right top, #fffcec, #b8ffee);">
                 <div class="card-body align-items-center" style="margin-bottom: -26px;">
 
                     <div class="col">
                         <h2 class="mb-0" style="white-space: nowrap;">Driver's License</h2>
-                        <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['number'] }}</h6>
+                        <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['number'] }}
+                        </h6>
                     </div>
                     <i class="bi bi-person-vcard fs-1"></i>
                 </div>
@@ -124,14 +132,16 @@
                 <div class="card-body" style="margin-bottom: -26px;">
                     <div class="col">
                         <h6 class="fw-bold" style="white-space: nowrap;">Full Name</h6>
-                        <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['full_name'] }}</h6>
+                        <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['full_name']
+                            }}</h6>
                     </div>
                 </div>
 
                 <div class="card-body" style="margin-bottom: -26px;">
                     <div class="col">
                         <h6 class="fw-bold" style="white-space: nowrap;">Date of Birth</h6>
-                        <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['date_of_birth'] }}</h6>
+                        <h6 class="small" style="white-space: nowrap;">{{
+                            documents_data['driver_license']['date_of_birth'] }}</h6>
                     </div>
                 </div>
 
@@ -139,11 +149,13 @@
                     <div class="row d-flex justify-content-center">
                         <div class="col">
                             <h6 class="fw-bold" style="white-space: nowrap;">Date of Issue</h6>
-                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['date_of_issue'] }}</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{
+                                documents_data['driver_license']['date_of_issue'] }}</h6>
                         </div>
                         <div class="col" style="margin-left: 40px;">
                             <h6 class="fw-bold" style="white-space: nowrap;">Date of Expiry</h6>
-                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['date_of_expiry'] }}</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{
+                                documents_data['driver_license']['date_of_expiry'] }}</h6>
                         </div>
                     </div>
                 </div>
@@ -152,16 +164,86 @@
                     <div class="row">
                         <div class="col">
                             <h6 class="fw-bold" style="white-space: nowrap;">Sex</h6>
-                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['sex'] }}</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['sex'] }}
+                            </h6>
                         </div>
                         <div class="col">
                             <h6 class="fw-bold" style="white-space: nowrap;">Blood Type</h6>
-                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['blood_type'] }}</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{
+                                documents_data['driver_license']['blood_type'] }}</h6>
                         </div>
 
                         <div class="col">
                             <h6 class="fw-bold" style="white-space: nowrap;">Weight</h6>
-                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['weight'] }} kg</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['weight']
+                                }} kg</h6>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Health Card -->
+            <div class="card swiper-slide" style="background: radial-gradient(circle at right top, #fffcec, #ffbaba);">
+                <div class="card-body align-items-center" style="margin-bottom: -26px;">
+
+                    <div class="col">
+                        <h2 class="mb-0" style="white-space: nowrap;">Health Card</h2>
+                        <h6 class="small" style="white-space: nowrap;">{{ documents_data['health_card']['number'] }}
+                        </h6>
+                    </div>
+                    <i class="bi bi-heart-pulse fs-1"></i>
+                </div>
+
+                <div class="card-body" style="margin-bottom: -26px;">
+                    <div class="col">
+                        <h6 class="fw-bold" style="white-space: nowrap;">Full Name</h6>
+                        <h6 class="small" style="white-space: nowrap;">{{ documents_data['health_card']['full_name'] }}
+                        </h6>
+                    </div>
+                    <div class="col" style="text-wrap: nowrap; margin-left: 6px;">
+                        <h6 class="fw-bold" style="white-space: nowrap;">Policy Number</h6>
+                        <h6 class="small" style="white-space: nowrap;">{{
+                            documents_data['health_card']['policy_number'] }}</h6>
+                    </div>
+                </div>
+
+                <div class="card-body" style="margin-bottom: -26px;">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col">
+                            <h6 class="fw-bold" style="white-space: nowrap;">Date of Birth</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{
+                                documents_data['health_card']['date_of_birth'] }}</h6>
+                        </div>
+                        <div class="col" style="text-wrap: nowrap; margin-left: 36px;">
+                            <h6 class="fw-bold" style="white-space: nowrap;">Date of Issue</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{
+                                documents_data['health_card']['date_of_issue'] }}</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body" style="margin-bottom: -26px;">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col">
+                            <h6 class="fw-bold" style="white-space: nowrap;">Insurance Provider</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{
+                                documents_data['health_card']['insurance_provider'] }}</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col">
+                            <h6 class="fw-bold" style="white-space: nowrap;">Blood Type</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{
+                                documents_data['health_card']['blood_type'] }}</h6>
+                        </div>
+                        <div class="col-8">
+                            <h6 class="fw-bold" style="white-space: nowrap;">COVID Vaccination Status</h6>
+                            <h6 class="small" style="white-space: nowrap;">{{
+                                documents_data['health_card']['covid_vaccination_status'] }}</h6>
                         </div>
                     </div>
                 </div>

@@ -74,29 +74,29 @@
         <div class="container d-flex justify-content-center">
 
             <!-- Feed button -->
-            <a class="btn btn-navbar btn-dark btn-sm d-flex align-items-center flex-column" type="submit"
-                onclick="load(this, 'feed')">
+            <a class="btn btn-navbar nav-btn btn-dark btn-sm d-flex align-items-center flex-column" type="submit"
+                onclick="load(this, 'feed')" data-navtype="feed">
                 <div style="height: 32px;"><i class="bi bi-rss-fill fs-4"></i></div>
                 <span style="font-size: small;">Feed</span>
             </a>
 
             <!-- Documents button -->
-            <a class="btn btn-navbar btn-dark btn-sm d-flex align-items-center flex-column" type="submit"
-                onclick="load(this, 'documents')">
+            <a class="btn btn-navbar nav-btn btn-dark btn-sm d-flex align-items-center flex-column" type="submit"
+                onclick="load(this, 'documents')" data-navtype="documents">
                 <div style="height: 32px;"><i class="bi bi-file-earmark-text fs-4"></i></div>
                 <span style="font-size: small;">Documents</span>
             </a>
 
             <!-- Services button -->
-            <a class="btn btn-navbar btn-dark btn-sm d-flex align-items-center flex-column" type="submit"
-                onclick="load(this, 'services')">
+            <a class="btn btn-navbar nav-btn btn-dark btn-sm d-flex align-items-center flex-column" type="submit"
+                onclick="load(this, 'services')" data-navtype="services">
                 <div style="height: 32px;"><i class="bi bi-lightning-charge fs-4"></i></div>
                 <span style="font-size: small;">Services</span>
             </a>
 
             <!-- Profile button -->
-            <a class="btn btn-navbar btn-dark btn-sm d-flex align-items-center flex-column" type="submit"
-                onclick="load(this, 'profile')">
+            <a class="btn btn-navbar nav-btn btn-dark btn-sm d-flex align-items-center flex-column" type="submit"
+                onclick="load(this, 'profile')" data-navtype="profile">
                 <div style="height: 32px;"><i class="bi bi-person fs-4"></i></div>
                 <span style="font-size: small;">Profile</span>
             </a>
@@ -114,7 +114,7 @@
             $('#container').load(page);
 
             // Remove 'active' class from all buttons and reset icons
-            document.querySelectorAll('.btn').forEach(function (btn) {
+            document.querySelectorAll('.nav-btn').forEach(function (btn) {
                 btn.classList.remove('active');
 
                 var icon = btn.querySelector('i');
@@ -128,6 +128,28 @@
             var icon = button.querySelector('i');
             var iconName = icon.classList[1];
             fillIcon(icon, iconName);
+        }
+
+        function redirect_to(page, navtype) {
+            $('#container').load(page);
+
+            document.querySelectorAll('.nav-btn').forEach(function (btn) {
+                btn.classList.remove('active');
+
+                var icon = btn.querySelector('i');
+                var iconName = icon.classList[1];
+                resetIcon(icon, iconName);
+            });
+
+            // I want to fill the nav-btn based on the navtype give which can be 'feed', 'documents', 'services' or 'profile'. 
+            var buttonToFill = document.querySelector('.nav-btn[data-navtype="' + navtype + '"]');
+            if (buttonToFill) {
+                buttonToFill.classList.add('active');
+
+                var icon = buttonToFill.querySelector('i');
+                var iconName = icon.classList[1];
+                fillIcon(icon, iconName);
+            }
         }
 
         // Function to reset icon to its default state

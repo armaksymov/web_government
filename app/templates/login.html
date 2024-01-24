@@ -123,7 +123,7 @@
                 .then(result => {
                     // Handle the response from the server
                     if (result.status === 0) {
-                        window.location = "/?id=" + result.id;
+                        window.location = "/dashboard?id=" + result.id;
                     } else {
                         let errorMessage = "";
                         switch (result.status) {

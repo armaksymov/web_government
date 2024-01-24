@@ -8,6 +8,24 @@ import logging
 from bson import ObjectId
 from flask import current_app
 
+def get_property_taxes(account_id):
+    property_taxes = {
+        'number': '532251286',
+        'issued': '01 Jan 2024',
+        'due': '10 Jan 2024',
+        'tax_rate': 2.5,
+        'value': 64779,
+        'is_paid': False,
+    }
+
+    return property_taxes
+
+def pay_property_tax(account_id):
+    response = {
+        'status': 0,
+    }
+
+    return response
 
 def get_utility_bills(account_id):
     """
@@ -117,6 +135,7 @@ def get_documents(account_id):
             'status': 0,
             'passport': doc.get('passport', {}),
             'driver_license': doc.get('driver_license', {}),
+            'health_card': doc.get('health_card', {})
         }
     else:
         logging.error(f"No documents found for user_id: {account_id}")

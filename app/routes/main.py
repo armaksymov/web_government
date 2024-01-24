@@ -63,7 +63,7 @@ class Main:
         if user_id:
             users_collection = current_app.mongo.db.users
             user = users_collection.find_one({'_id': ObjectId(user_id)})
-            name_value = user.get('first_name', 'User') + ' 👋'
+            name_value = user.get('first_name', 'User')
 
         return render_template('feed.html', Name=name_value)
 
@@ -186,7 +186,9 @@ class Main:
         - render_template: HTML response with the content of license_and_registration.html.
         """
 
-        return render_template('license_and_registration.html')
+        utility_bills = get_utility_bills(Main.ACCOUNT_ID)
+
+        return render_template('license_and_registration.html', bills_data=utility_bills)
 
     @staticmethod
     @main_blueprint.route('/property_tax_payments')
@@ -198,7 +200,29 @@ class Main:
         - render_template: HTML response with the content of property_tax_payments.html.
         """
 
-        return render_template('property_tax_payments.html')
+        property_taxes = get_property_taxes(Main.ACCOUNT_ID)
+
+        return render_template('property_tax_payments.html', property_taxes_data=property_taxes)
+    
+    @staticmethod
+    @main_blueprint.route('/pay_property_tax', methods=['POST'])
+    def pay_property_tax():
+        """
+        Pay property tax based on the Account ID and provided JSON data.
+
+        Account ID stored in session
+
+        JSON Request:
+        - Utility Bill Information
+
+        Returns:
+        - jsonify: JSON response indicating the status of the bill payment.
+          Format: {"status": int, "id": str}
+        """
+
+        response = pay_property_tax(Main.ACCOUNT_ID)
+
+        return jsonify(response)
 
     @staticmethod
     @main_blueprint.route('/utility_bill_payments')
