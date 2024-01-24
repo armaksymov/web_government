@@ -1,1 +1,111 @@
-<h1>Welcome, {{Name}}</h1>
+<h1>Welcome, {{Name}}! 👋</h1>
+
+<style>
+    .custom-container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .transparent-card {
+        background-color: rgba(255, 255, 255, 0.75);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        border-radius: 12px;
+        margin-bottom: 42px;
+    }
+
+    .icon-bg {
+        background-color: #000000;
+        border-radius: 40%;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .icon-color {
+        color: white;
+    }
+
+    .quick-action-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .quick-action-text {
+        word-wrap: break-word;
+        max-width: 100px;
+    }
+
+    .card-link {
+        text-decoration: none;
+        color: black;
+    }
+</style>
+
+<div class="container custom-container mt-4">
+    <h4>New Messages</h4>
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide card transparent-card">
+                <div class="card-body">
+                    <p class="fw-bold card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                </div>
+            </div>
+
+            <div class="swiper-slide card transparent-card">
+                <div class="card-body">
+                    <p class="fw-bold card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <div class="row mt-2" style="align-items: center;">
+        <a onclick="redirect_to('utility_bill_payments', 'services')" class="col card-link">
+            <div class="col quick-action-col quick-action">
+                <i class="icon-bg bi bi-lightbulb icon-color fs-1"></i>
+                <p class="quick-action-text small fw-bold" style="margin-top: 12px;">Utility Bills</p>
+            </div>
+        </a>
+
+        <a onclick="redirect_to('property_tax_payments', 'services')" class="col card-link">
+            <div class="col quick-action-col quick-action">
+                <i class="icon-bg bi bi-cash-stack icon-color fs-1"></i>
+                <p class="quick-action-text small fw-bold" style="margin-top: 12px;">Tax Payments</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<script>
+    var swiper = new Swiper(".mySwiper", {
+        effect: "coverflow",
+        slidesPerView: 1,
+        loop: true,
+        autoplay: {
+            delay: 4000,
+            disableOnInteraction: false,
+        },
+        coverflowEffect: {
+            rotate: 64,
+            depth: 100,
+            slideShadows: false,
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+    });
+</script>

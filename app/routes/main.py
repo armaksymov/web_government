@@ -63,7 +63,7 @@ class Main:
         if user_id:
             users_collection = current_app.mongo.db.users
             user = users_collection.find_one({'_id': ObjectId(user_id)})
-            name_value = user.get('first_name', 'User') + ' 👋'
+            name_value = user.get('first_name', 'User')
 
         return render_template('feed.html', Name=name_value)
 
@@ -186,7 +186,9 @@ class Main:
         - render_template: HTML response with the content of license_and_registration.html.
         """
 
-        return render_template('license_and_registration.html')
+        utility_bills = get_utility_bills(Main.ACCOUNT_ID)
+
+        return render_template('license_and_registration.html', bills_data=utility_bills)
 
     @staticmethod
     @main_blueprint.route('/property_tax_payments')
