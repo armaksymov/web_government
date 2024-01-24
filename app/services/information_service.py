@@ -8,6 +8,25 @@ import logging
 from bson import ObjectId
 from flask import current_app
 
+def get_property_taxes(account_id):
+    property_taxes = {
+        'number': '532251286',
+        'issued': '01 Jan 2024',
+        'due': '10 Jan 2024',
+        'tax_rate': '18',
+        'value': '64,779',
+        'is_paid': False,
+        'amount': '6,853'
+    }
+
+    return property_taxes
+
+def pay_property_tax(account_id):
+    response = {
+        'status': 0,
+    }
+
+    return response
 
 def get_utility_bills(account_id):
     """

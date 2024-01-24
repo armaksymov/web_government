@@ -200,7 +200,29 @@ class Main:
         - render_template: HTML response with the content of property_tax_payments.html.
         """
 
-        return render_template('property_tax_payments.html')
+        property_taxes = get_property_taxes(Main.ACCOUNT_ID)
+
+        return render_template('property_tax_payments.html', property_taxes_data=property_taxes)
+    
+    @staticmethod
+    @main_blueprint.route('/pay_property_tax', methods=['POST'])
+    def pay_property_tax():
+        """
+        Pay property tax based on the Account ID and provided JSON data.
+
+        Account ID stored in session
+
+        JSON Request:
+        - Utility Bill Information
+
+        Returns:
+        - jsonify: JSON response indicating the status of the bill payment.
+          Format: {"status": int, "id": str}
+        """
+
+        response = pay_property_tax(Main.ACCOUNT_ID)
+
+        return jsonify(response)
 
     @staticmethod
     @main_blueprint.route('/utility_bill_payments')
