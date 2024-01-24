@@ -35,8 +35,8 @@
     }
 
     .quick-action-text {
-        word-wrap: break-word;
-        max-width: 100px;
+        text-wrap: nowrap;
+        max-width: 128px;
     }
 
     .card-link {
@@ -73,6 +73,13 @@
             <div class="col quick-action-col quick-action">
                 <i class="icon-bg bi bi-lightbulb icon-color fs-1"></i>
                 <p class="quick-action-text small fw-bold" style="margin-top: 12px;">Utility Bills</p>
+            </div>
+        </a>
+
+        <a onclick="redirect_to('license_and_registration', 'services')" class="col card-link">
+            <div class="col quick-action-col quick-action">
+                <i class="icon-bg bi bi-car-front icon-color fs-1"></i>
+                <p class="quick-action-text small fw-bold" style="margin-top: 12px;">Renew License</p>
             </div>
         </a>
 
