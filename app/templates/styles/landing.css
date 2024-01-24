@@ -3,11 +3,11 @@
 }
 
 .btn-web-gov {
-    --bs-btn-bg: #5065a8;
+    --bs-btn-bg: #000000;
     --bs-btn-color: #fff;
-    --bs-btn-hover-bg: #fff;
-    --bs-btn-hover-color: #5065a8;
-    --bs-btn-hover-border-color: #5065a8;
+    --bs-btn-hover-bg: #ffffff00;
+    --bs-btn-hover-color: #000000;
+    --bs-btn-hover-border-color: #000000;
 }
 
 #home {
