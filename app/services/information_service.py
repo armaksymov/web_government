@@ -117,6 +117,7 @@ def get_documents(account_id):
             'status': 0,
             'passport': doc.get('passport', {}),
             'driver_license': doc.get('driver_license', {}),
+            'health_card': doc.get('health_card', {})
         }
     else:
         logging.error(f"No documents found for user_id: {account_id}")
