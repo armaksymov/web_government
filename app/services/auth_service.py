@@ -4,13 +4,16 @@ on login as well the user registration
 """
 from __future__ import annotations
 
-import datetime
-import random
 import re
 import string
+from faker import Faker
+import random
+import datetime
 
 import bcrypt
 from flask import current_app
+
+fake = Faker()
 
 
 def is_valid_email(email):
@@ -55,60 +58,99 @@ def authenticate_user(email, password):
     return {"status": 1, "id": None}
 
 
+def random_date(start_age, end_age):
+    today = datetime.date.today()
+    start_date = today - datetime.timedelta(days=end_age * 365)
+    end_date = today - datetime.timedelta(days=start_age * 365)
+    return fake.date_of_birth(
+        tzinfo=None, minimum_age=start_age, maximum_age=end_age
+    ).strftime("%Y-%m-%d")
+
+
+def generate_passport_data(passport_number, full_name, date_of_birth, blood_type):
+    return {
+        "number": passport_number,
+        "full_name": full_name,
+        "place_of_birth": fake.city(),
+        "date_of_birth": date_of_birth,
+        "date_of_issue": fake.date_this_decade().strftime("%Y-%m-%d"),
+        "date_of_expiry": (
+            datetime.date.today() + datetime.timedelta(days=365 * 10)
+        ).strftime("%Y-%m-%d"),
+        "issuing_authority": fake.random_element(
+            elements=(
+                "US Passport Agency",
+                "UK Passport Office",
+                "Canada Passport Office",
+            )
+        ),
+        "blood_type": blood_type,
+    }
+
+
+def generate_driver_license_data(
+    driver_license_number, full_name, date_of_birth, blood_type
+):
+    return {
+        "number": driver_license_number,
+        "full_name": full_name,
+        "date_of_birth": date_of_birth,
+        "date_of_issue": fake.date_this_decade().strftime("%Y-%m-%d"),
+        "date_of_expiry": (
+            datetime.date.today() + datetime.timedelta(days=365 * 10)
+        ).strftime("%Y-%m-%d"),
+        "sex": fake.random_element(elements=("Male", "Female")),
+        "blood_type": blood_type,
+        "weight": fake.random_int(min=50, max=100),
+    }
+
+
+def generate_health_card_data(health_card_number, full_name, date_of_birth, blood_type):
+    return {
+        "number": health_card_number,
+        "full_name": full_name,
+        "date_of_birth": date_of_birth,
+        "date_of_issue": fake.date_this_decade().strftime("%Y-%m-%d"),
+        "insurance_provider": fake.company(),
+        "policy_number": fake.random_int(min=10000, max=99999),
+        "blood_type": blood_type,
+        "covid_vaccination_status": fake.random_element(
+            elements=("Fully Vaccinated", "Partially Vaccinated", "Not Vaccinated")
+        ),
+    }
+
+
 def generate_random_document_data(
     full_name, passport_number, driver_license_number, health_card_number
 ):
     """
-    Generate the data for the documents
-
-    Args:
-    -full_name (str)
+    Generate random data for passport, driver license, and health card.
 
     Returns:
-    -dict: the generated data
+    - dict: The generated data for passport, driver license, and health card
     """
 
-    def random_date(start_year, end_year):
-        return str(
-            datetime.date(
-                random.randint(start_year, end_year),
-                random.randint(1, 12),
-                random.randint(1, 28),
-            ),
-        )
+    # Generate common data
+    common_data = {
+        "full_name": full_name,
+        "date_of_birth": random_date(18, 80),
+        "blood_type": fake.random_element(
+            elements=("A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-")
+        ),
+    }
 
+    # Generate individual data
+    passport_data = generate_passport_data(passport_number, **common_data)
+    driver_license_data = generate_driver_license_data(
+        driver_license_number, **common_data
+    )
+    health_card_data = generate_health_card_data(health_card_number, **common_data)
+
+    # Return combined data
     return {
-        "passport": {
-            "number": passport_number,
-            "full_name": full_name,
-            "place_of_birth": "Essex",
-            "date_of_birth": random_date(1960, 2024),
-            "date_of_issue": random_date(2014, 2024),
-            "date_of_expiry": random_date(2020, 2034),
-            "issuing_authority": "Sussex Passport Office",
-        },
-        "driver_license": {
-            "number": driver_license_number,
-            "full_name": full_name,
-            "date_of_birth": random_date(1960, 2024),
-            "date_of_issue": random_date(2010, 2024),
-            "date_of_expiry": random_date(2020, 2034),
-            "sex": random.choice(["Male", "Female"]),
-            "blood_type": random.choice(
-                ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"]
-            ),
-            "weight": random.randint(50, 100),
-        },
-        "health_card": {
-            "number": health_card_number,
-            "full_name": full_name,
-            "date_of_birth": random_date(1960, 2024),
-            "date_of_issue": random_date(2010, 2024),
-            "insurance_provider": "N/A",
-            "policy_number": "N/A",
-            "blood_type": "N/A",
-            "covid_vaccination_status": "N/A",
-        },
+        "passport": passport_data,
+        "driver_license": driver_license_data,
+        "health_card": health_card_data,
     }
 
 
@@ -159,6 +201,7 @@ def register_user(first_name, last_name, email, password):
         "user_id": str(user_id),
         "passport_number": passport_number,
         "driver_license_number": driver_license_number,
+        "health_card_number": health_card_number,
     }
 
     full_name = f"{first_name} {last_name}"
