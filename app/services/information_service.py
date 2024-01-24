@@ -13,10 +13,9 @@ def get_property_taxes(account_id):
         'number': '532251286',
         'issued': '01 Jan 2024',
         'due': '10 Jan 2024',
-        'tax_rate': '18',
-        'value': '64,779',
+        'tax_rate': 2.5,
+        'value': 64779,
         'is_paid': False,
-        'amount': '6,853'
     }
 
     return property_taxes

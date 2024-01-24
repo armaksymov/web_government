@@ -100,7 +100,7 @@
 
                 <div class="property-info">
                     <span class="label">Value Assessment:</span>
-                    <span class="value">${{ property_taxes_data['value'] }}</span>
+                    <span class="value">${{ "{:,.2f}".format(property_taxes_data['value']) }}</span>
                 </div>
             </div>
             <button class="mt-4 col-12 btn-pay btn btn-success {% if property_taxes_data['is_paid'] %}paid{% endif %}"
@@ -108,7 +108,7 @@
                 {% if property_taxes_data['is_paid'] %}
                 <i class="bi bi-info-circle"></i> Already Paid
                 {% else %}
-                Pay ${{ property_taxes_data['amount'] }}
+                Pay ${{ "%.2f" | format(property_taxes_data['value'] * (property_taxes_data['tax_rate'] / 100)) }}
                 {% endif %}
             </button>
         </div>
