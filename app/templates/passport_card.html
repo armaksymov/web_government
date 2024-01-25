@@ -1,36 +1,37 @@
+<!-- Passport Document Card -->
+
 <link href="{{ url_for('static', filename='styles/card_styler.css') }}" rel="stylesheet">
 <script src="https://kit.fontawesome.com/aea9fedfee.js" crossorigin="anonymous"></script>
 
 <div class="container-fluid">
     <div class="row align-items-center">
-        <div class="card col-12 col-md-6 col-xl-3"
-            style="background: radial-gradient(circle at right top, #fffdf4, #b7badd);">
+        <div id="passport" class="card col-12 col-md-6 col-xl-3">
             <div class="card-body align-items-center">
 
                 <div class="col">
-                    <h2 class="mb-0" style="white-space: nowrap;">{{passport_type}} Passport</h2>
-                    <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['number'] }}</h6>
+                    <h2 class="mb-0 nowrap-item">{{passport_type}} Passport</h2>
+                    <h6 class="small nowrap-item">{{ documents_data['passport']['number'] }}</h6>
                 </div>
                 <i class="fa-solid fa-passport fs-1"></i>
             </div>
 
             <div class="card-body">
                 <div class="col">
-                    <h6 class="fw-bold" style="white-space: nowrap;">Full Name</h6>
-                    <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['full_name'] }}</h6>
+                    <h6 class="fw-bold nowrap-item">Full Name</h6>
+                    <h6 class="small nowrap-item">{{ documents_data['passport']['full_name'] }}</h6>
                 </div>
             </div>
 
             <div class="card-body">
                 <div class="row d-flex justify-content-center">
                     <div class="col">
-                        <h6 class="fw-bold" style="white-space: nowrap;">Place of Birth</h6>
-                        <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['place_of_birth']
+                        <h6 class="fw-bold nowrap-item">Place of Birth</h6>
+                        <h6 class="small nowrap-item">{{ documents_data['passport']['place_of_birth']
                             }}</h6>
                     </div>
                     <div class="col" style="text-wrap: nowrap; margin-left: 36px;">
-                        <h6 class="fw-bold" style="white-space: nowrap;">Date of Birth</h6>
-                        <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['date_of_birth'] }}
+                        <h6 class="fw-bold nowrap-item">Date of Birth</h6>
+                        <h6 class="small nowrap-item">{{ documents_data['passport']['date_of_birth'] }}
                         </h6>
                     </div>
                 </div>
@@ -39,13 +40,13 @@
             <div class="card-body">
                 <div class="row d-flex justify-content-center">
                     <div class="col">
-                        <h6 class="fw-bold" style="white-space: nowrap;">Issue Date</h6>
-                        <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['date_of_issue'] }}
+                        <h6 class="fw-bold nowrap-item">Issue Date</h6>
+                        <h6 class="small nowrap-item">{{ documents_data['passport']['date_of_issue'] }}
                         </h6>
                     </div>
                     <div class="col" style="text-wrap: nowrap; margin-left: 40px;">
-                        <h6 class="fw-bold" style="white-space: nowrap;">Expiry Date</h6>
-                        <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['date_of_expiry']
+                        <h6 class="fw-bold nowrap-item">Expiry Date</h6>
+                        <h6 class="small nowrap-item">{{ documents_data['passport']['date_of_expiry']
                             }}</h6>
                     </div>
                 </div>
@@ -54,8 +55,8 @@
             <div class="card-body">
                 <div class="row d-flex justify-content-center">
                     <div class="col">
-                        <h6 class="fw-bold" style="white-space: nowrap;">Issuing Authority</h6>
-                        <h6 class="small" style="white-space: nowrap;">{{
+                        <h6 class="fw-bold nowrap-item">Issuing Authority</h6>
+                        <h6 class="small nowrap-item">{{
                             documents_data['passport']['issuing_authority'] }}</h6>
                     </div>
                 </div>
