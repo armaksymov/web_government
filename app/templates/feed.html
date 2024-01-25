@@ -1,5 +1,3 @@
-<p class="h3 h2-sm h1-md mb-0">Welcome, {{Name}}</p>
-
 <script>
     const date = new Date();
 </script>
@@ -8,11 +6,13 @@
 
 <div>
     <section id="feed">
-        <div class="max-vh-75 w-100 d-flex justify-content-center align-items-center">
+        <div class="w-100 d-flex justify-content-center align-items-center">
             <div class="container-fluid">
-                <div class="row text-center align-items-center">
-                    <div id="news" class="col-12 col-md-10 col-lg-8">
-                        <div id="newsCarousel" class="carousel carousel-dark slide">
+                <div class="row align-items-center">
+                    <p class="h3 h2-sm h1-md mb-4">Welcome, {{Name}}</p>
+                    <p class="h4 h3-sm h2-md pt-2 mb-3">Recent News</p>
+                    <div id="news" class="col-12 mb-4 mx-md-0">
+                        <div id="newsCarousel" class="carousel carousel-dark slide" data-bs-ride="#newsCarousel">
                             <div class="carousel-indicators">
                                 <button type="button" data-bs-target="#newsCarousel" data-bs-slide-to="0" class="active"
                                     aria-current="true" aria-label="Slide 1"></button>
@@ -23,24 +23,33 @@
                             </div>
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <img src="{{ url_for('static', filename='images/logo.png') }}" class="d-block w-100"
-                                        alt="...">
+                                    <a href="https://www.canada.ca/en/immigration-refugees-citizenship/news/2024/01/canada-to-stabilize-growth-and-decrease-number-of-new-international-student-permits-issued-to-approximately-360000-for-2024.html">
+                                        <img class="d-block img-fluid w-100"
+                                             src="{{ url_for('static', filename='images/student_cap.jpg') }}"
+                                             alt="Student Cap News">
+                                    </a>
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="{{ url_for('static', filename='images/logo.png') }}" class="d-block w-100"
-                                        alt="...">
+                                    <a href="https://www.canada.ca/en/services/taxes/income-tax/personal-income-tax/get-ready-taxes.html">
+                                        <img class="d-block img-fluid w-100"
+                                             src="{{ url_for('static', filename='images/tax_season.jpg') }}"
+                                             alt="Tax Season">
+                                    </a>
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="{{ url_for('static', filename='images/logo.png') }}" class="d-block w-100"
-                                        alt="...">
+                                    <a href="https://www.csnpe-nslsc.canada.ca/en/home">
+                                        <img class="d-block img-fluid w-100"
+                                             src="{{ url_for('static', filename='images/student_loan.jpg') }}"
+                                             alt="...">
+                                    </a>
                                 </div>
                             </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#newsCarousel"
+                            <button class="pe-5 carousel-control-prev" type="button" data-bs-target="#newsCarousel"
                                 data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Previous</span>
                             </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#newsCarousel"
+                            <button class="ps-5 carousel-control-next" type="button" data-bs-target="#newsCarousel"
                                 data-bs-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Next</span>
@@ -48,31 +57,63 @@
                         </div>
                     </div>
 
-                    <div id="services" class="card col-12 col-md-10 col-lg-8">
-                        <p class="h2 pt-2 mb-3">Top Services</p>
-
-                        <div class="row mt-auto px-3 pb-3" style="align-items: center;">
-                            <a href="" class="col card px-3 pt-3 pb-2 me-3">
+                    <p class="h4 h3-sm h2-md pt-2 mb-3">Top Services</p>
+                    <div id="services" class="card text-white bg-dark col-12 mx-auto mx-md-0 d-none d-md-block">
+                        <div class="row mt-auto p-3 text-center" style="align-items: center;">
+                            <a href="" class="col card p-3 pb-1 me-3">
                                 <i class="fa-solid fa-car"></i>
-                                <p class="quick-action-text small fw-bold" style="margin-top: 12px;">
+                                <p class="quick-action-text fw-bold" style="margin-top: 12px;">
                                     Driver's License
                                 </p>
                             </a>
 
-                            <a href="" class="col card px-3 pt-3 pb-2 me-3">
+                            <a href="" class="col card p-3 pb-1 me-3">
                                 <i class="fa-solid fa-faucet-drip"></i>
-                                <p class="quick-action-text small fw-bold" style="margin-top: 12px;">
+                                <p class="quick-action-text fw-bold" style="margin-top: 12px;">
                                     Utility Bills
                                 </p>
                             </a>
 
-                            <a href="" class="col card px-3 pt-3 pb-2">
+                            <a href="" class="col card p-3 pb-1 me-3">
                                 <i class="fa-solid fa-graduation-cap"></i>
-                                <p class="quick-action-text small fw-bold" style="margin-top: 12px;">
-                                    Tuition Loan Repayment
+                                <p class="quick-action-text fw-bold" style="margin-top: 12px;">
+                                    Tuition Loan
+                                </p>
+                            </a>
+
+                            <a href="" class="col card p-3 pb-1">
+                                <i class="fa-solid fa-money-check-dollar"></i>
+                                <p class="quick-action-text fw-bold" style="margin-top: 12px;">
+                                    Tax Services
                                 </p>
                             </a>
                         </div>
+                    </div>
+
+                    <div id="services" class="btn-group-vertical col-12 mx-auto mx-md-0 d-block d-md-none">
+                        <a href="" class="col card p-2">
+                            <p class="quick-action-text fw-bold" style="margin-top: 12px;">
+                                <i class="fa-solid fa-car ps-3 pe-5"></i>Driver's License
+                            </p>
+                        </a>
+
+                        <a href="" class="col card p-2">
+                            <p class="quick-action-text fw-bold" style="margin-top: 12px;">
+                                <i class="fa-solid fa-faucet-drip ps-3 pe-5"></i>Utility Bills
+                            </p>
+                        </a>
+
+                        <a href="" class="col card p-2">
+                            <p class="quick-action-text fw-bold" style="margin-top: 12px;">
+                                <i class="fa-solid fa-graduation-cap ps-3 pe-5"></i>Loan Repayment
+                            </p>
+                        </a>
+
+                        <a href="" class="col card p-2">
+                            <p class="quick-action-text fw-bold" style="margin-top: 12px;">
+                                <i class="fa-solid fa-money-check-dollar ps-3 pe-5"></i>CRA Tax Services
+                            </p>
+                        </a>
                     </div>
                 </div>
             </div>
