@@ -8,12 +8,16 @@ from flask import jsonify
 from flask import render_template
 from flask import request
 from flask import session
+from flask_login import current_user, login_required, login_user, logout_user
 
 from app.services.auth_service import *
 from app.services.information_service import *
 
 main_blueprint = Blueprint('main', __name__)
 
+LOGIN_PAGE_URL = "login.html"
+SETUP_2FA_URL = "setup2fa.html"
+VERIFY_2FA_URL = "verify2fa.html"
 
 class Main:
     """
@@ -175,6 +179,26 @@ class Main:
         )
 
         return jsonify(response)
+
+    @staticmethod
+    @main_blueprint.route('/setup_2fa')
+    @login_required
+    def setup_2fa():
+        """
+
+        """
+
+        return render_template(SETUP_2FA_URL)
+
+    @staticmethod
+    @main_blueprint.route('/verify_2fa')
+    @login_required
+    def setup_2fa():
+        """
+
+        """
+
+        return render_template(VERIFY_2FA_URL)
 
     @staticmethod
     @main_blueprint.route('/license_and_registration')
