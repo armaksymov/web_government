@@ -76,13 +76,9 @@
                 <i class="bi bi-house icon-color fs-5"></i>
             </div>
             <!-- Bill details and payment button -->
-            <h4 class="mt-4 fw-bold card-text">Property Tax</h4>
+            <h4 class="mt-4 mb-1 fw-bold card-text">Property Tax</h4>
+            <h6 class="small text-muted">No. {{ property_taxes_data['number'] }}</h6>
             <div class="property-card">
-                <div class="property-info">
-                    <span class="label">Invoice Number:</span>
-                    <span class="value">{{ property_taxes_data['number'] }}</span>
-                </div>
-
                 <div class="property-info">
                     <span class="label">Invoice Date:</span>
                     <span class="value">{{ property_taxes_data['issued'] }}</span>
@@ -108,7 +104,7 @@
                 {% if property_taxes_data['is_paid'] %}
                 <i class="bi bi-info-circle"></i> Already Paid
                 {% else %}
-                Pay ${{ "%.2f" | format(property_taxes_data['value'] * (property_taxes_data['tax_rate'] / 100)) }}
+                Pay ${{ "{:,.2f}".format(property_taxes_data['value'] * (property_taxes_data['tax_rate'] / 100)) }}
                 {% endif %}
             </button>
         </div>

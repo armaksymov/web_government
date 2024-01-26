@@ -7,15 +7,18 @@ import logging
 
 from bson import ObjectId
 from flask import current_app
+from faker import Faker
+
+fake = Faker()
 
 def get_property_taxes(account_id):
     property_taxes = {
-        'number': '532251286',
-        'issued': '01 Jan 2024',
-        'due': '10 Jan 2024',
-        'tax_rate': 2.5,
-        'value': 64779,
-        'is_paid': False,
+        'number': fake.random_number(digits=9),
+        'issued': fake.date_between(start_date='-30d', end_date='today').strftime('%d %b %Y'),
+        'due': fake.date_between(start_date='today', end_date='+30d').strftime('%d %b %Y'),
+        'tax_rate': fake.pyfloat(left_digits=1, right_digits=2, positive=True, min_value=1, max_value=3),
+        'value': fake.random_number(digits=6),
+        'is_paid': fake.boolean(),
     }
 
     return property_taxes
@@ -40,16 +43,18 @@ def get_utility_bills(account_id):
 
     utility_bills = {
         'electricity': {
-            'due': '01 Jan 2024',
-            'issued': '01 Jan 2024',
-            'amount': '62.78',
-            'is_paid': False,
+            'number': fake.random_number(digits=9),
+            'due': fake.date_between(start_date='today', end_date='+30d').strftime('%d %b %Y'),
+            'issued': fake.date_between(start_date='-30d', end_date='today').strftime('%d %b %Y'),
+            'amount': "{:.2f}".format(fake.pydecimal(left_digits=2, right_digits=2, positive=True, min_value=40, max_value=80)),
+            'is_paid': fake.boolean(),
         },
         'internet_and_cable': {
-            'due': '01 Jan 2024',
-            'issued': '01 Jan 2024',
-            'amount': '81.83',
-            'is_paid': True,
+            'number': fake.random_number(digits=9),
+            'due': fake.date_between(start_date='today', end_date='+30d').strftime('%d %b %Y'),
+            'issued': fake.date_between(start_date='-30d', end_date='today').strftime('%d %b %Y'),
+            'amount': "{:.2f}".format(fake.pydecimal(left_digits=2, right_digits=2, positive=True, min_value=40, max_value=80)),
+            'is_paid': fake.boolean(),
         },
     }
 
