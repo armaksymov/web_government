@@ -78,13 +78,9 @@
                 <i class="bi bi-lightning-charge icon-color fs-5"></i>
             </div>
             <!-- Bill details and payment button for Electricity Bill -->
-            <h4 class="mt-4 fw-bold card-text">Electricity Bill</h4>
+            <h4 class="mt-4 mb-1 fw-bold card-text">Electricity Bill</h4>
+            <h6 class="small text-muted">No. {{ bills_data['electricity']['number'] }}</h6>
             <div class="property-card">
-                <div class="property-info">
-                    <span class="label">Invoice Number:</span>
-                    <span class="value">{{ bills_data['electricity']['number'] }}</span>
-                </div>
-
                 <div class="property-info">
                     <span class="label">Invoice Date:</span>
                     <span class="value">{{ bills_data['electricity']['issued'] }}</span>
@@ -119,13 +115,9 @@
                 <i class="bi bi-plug icon-color fs-5"></i>
             </div>
             <!-- Bill details and payment button for Internet & Cable Bill -->
-            <h4 class="mt-4 fw-bold card-text">Internet & Cable Bill</h4>
+            <h4 class="mt-4 mb-1 fw-bold card-text">Internet & Cable Bill</h4>
+            <h6 class="small text-muted">No. {{ bills_data['internet_and_cable']['number'] }}</h6>
             <div class="property-card">
-                <div class="property-info">
-                    <span class="label">Invoice Number:</span>
-                    <span class="value">{{ bills_data['internet_and_cable']['number'] }}</span>
-                </div>
-
                 <div class="property-info">
                     <span class="label">Invoice Date:</span>
                     <span class="value">{{ bills_data['internet_and_cable']['issued'] }}</span>
