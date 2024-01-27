@@ -1,8 +1,12 @@
 astroid==3.0.2
 bcrypt==4.1.2
-Faker==22.5.1
 Flask==3.0.0
 Flask-PyMongo==2.3.0
 pylint==3.0.3
 pymongo==4.6.1
 pytest==7.2.2
+Faker==22.5.1
+pyotp==2.9.0
+qrcode==7.4.2
+python-decouple==3.8
+flask-login==0.6.3
