@@ -388,4 +388,15 @@ def change_password(user_id, old_password, new_password):
 
     return {"status":0,"message":"Password changed successfully"}
 
+def delete_account(user_id):
+    users_collection = current_app.mongo.db.users
+    bills_collection = current_app.mongo.db.bills
+    user_details_collection = current_app.mongo.db.user_details
+    documents_collection = current_app.mongo.db.documents
 
+    users_collection.delete_one({"id": user_id})
+    bills_collection.delete_many({"user_id": user_id})
+    user_details_collection.delete_many({"user_id":user_id})
+    documents_collection.delete_many({"user_id":user_id})
+
+    return{"status":0,"message":"Account has been deleted successfully"}
