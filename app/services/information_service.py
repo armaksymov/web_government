@@ -18,7 +18,7 @@ def renew_license(account_id):
     new_expiry_date = fake.date_between(start_date="+1y", end_date="+2y").strftime("%d %b %Y")
 
     update_result = bills_collection.update_one(
-        {"account_id": account_id, "license": {"$exists": True}},
+        {"user_id": account_id, "license": {"$exists": True}},
         {
             "$set": {
                 "license.expiry_date": new_expiry_date,
@@ -34,14 +34,12 @@ def renew_license(account_id):
 
     return response
 
-
-
 def renew_registration(account_id):
     bills_collection = current_app.mongo.db.bills
     new_expiry_date = fake.date_between(start_date="+1y", end_date="+2y").strftime("%d %b %Y")
 
     update_result = bills_collection.update_one(
-        {"account_id": account_id, "registration": {"$exists": True}},
+        {"user_id": account_id, "registration": {"$exists": True}},
         {
             "$set": {
                 "registration.expiry_date": new_expiry_date,
@@ -63,125 +61,37 @@ def get_license_and_registration(account_id):
     bills_collection = current_app.mongo.db.bills
 
     existing_records = bills_collection.find_one(
-        {"account_id": account_id},
+        {"user_id": account_id},
         {"license": 1, "registration": 1, "_id": 0} 
     )
 
-    # Generate expiry date
-    expiry_date = fake.date_between(start_date="today", end_date="+365d")
-
-    # Generate issuance date before expiry date
-    issuance_date = fake.date_between(
-        start_date="-365d", end_date=expiry_date - timedelta(days=1)
-    )
-
-    # Generate renewal deadline after expiry date
-    renewal_deadline = fake.date_between(
-        start_date=expiry_date + timedelta(days=1),
-        end_date=expiry_date + timedelta(days=30),
-    )
-
-    # Generate renewal period based on expiry date
-    renewal_period = fake.random_element(elements=("1 year", "2 years", "3 years"))
-
-    # Adjust fee range based on renewal period
-    if renewal_period == "1 year":
-        min_fee, max_fee = 50, 100
-    elif renewal_period == "2 years":
-        min_fee, max_fee = 100, 150
-    else:
-        min_fee, max_fee = 150, 200
-
     if existing_records and "license" in existing_records and "registration" in existing_records:
-        return existing_records
+        return {
+            "license": existing_records["license"],
+            "registration": existing_records["registration"]
+        }
     else:
-        license_and_registration = {
-        "license": {
-            "number": fake.random_number(digits=9),
-            "is_paid": False,
-            "expiry_date": expiry_date.strftime("%d %b %Y"),
-            "renewal_fee": round(
-                fake.pyfloat(
-                    left_digits=3,
-                    right_digits=2,
-                    positive=True,
-                    min_value=min_fee,
-                    max_value=max_fee,
-                ),
-                -1,
-            ),
-            "renewal_period": renewal_period,
-            "renewal_deadline": renewal_deadline.strftime("%d %b %Y"),
-        },
-        "registration": {
-            "number": fake.random_number(digits=9),
-            "is_paid": False,
-            "make": fake.company(),
-            "year": fake.year(),
-            "plate_number": "".join(fake.random_letters(length=3)).upper()
-            + str(fake.random_int(min=1000, max=9999)),
-            "expiry_date": expiry_date.strftime("%d %b %Y"),
-            "renewal_fee": round(
-                fake.pyfloat(
-                    left_digits=3,
-                    right_digits=2,
-                    positive=True,
-                    min_value=min_fee,
-                    max_value=max_fee,
-                ),
-                -1,
-            ),
-            "renewal_period": renewal_period,
-            "renewal_deadline": renewal_deadline.strftime("%d %b %Y"),
-        },
-    }
+        logging.error(f"No license or registration data found for user_id: {account_id}")
+        return {
+            "error": "No license or registration data found."
+        }
 
-        bills_collection.update_one(
-            {"account_id": account_id},
-            {"$set": {"license": license_and_registration["license"],
-                      "registration": license_and_registration["registration"]}},
-            upsert=True
-        )
-
-        return license_and_registration
 
 
 
 def get_property_taxes(account_id):
     bills_collection = current_app.mongo.db.bills
 
-    existing_bills = bills_collection.find_one({"account_id": account_id})
+    existing_bills = bills_collection.find_one({"user_id": account_id})
     if existing_bills and "property_tax" in existing_bills:
         return existing_bills["property_tax"]
-    else:
-        property_tax = {
-        "number": fake.random_number(digits=9),
-        "issued": fake.date_between(start_date="-30d", end_date="today").strftime(
-            "%d %b %Y"
-        ),
-        "due": fake.date_between(start_date="today", end_date="+30d").strftime(
-            "%d %b %Y"
-        ),
-        "tax_rate": fake.pyfloat(
-            left_digits=1, right_digits=2, positive=True, min_value=1, max_value=3
-        ),
-        "value": fake.random_number(digits=6),
-        "is_paid": False,
-    }
-    bills_collection.update_one(
-        {"account_id": account_id},
-        {"$set": {"property_tax": property_tax}},
-        upsert=True
-    )
-
-    return property_tax
-
+   
 
 def pay_property_tax(account_id):
     bills_collection = current_app.mongo.db.bills
 
     bill_update_result = bills_collection.update_one(
-        {"account_id": account_id, "property_tax": {"$exists": True}},
+        {"user_id": account_id, "property_tax": {"$exists": True}},
         {"$set": {"property_tax.is_paid": True}}
     )
 
@@ -207,53 +117,10 @@ def get_utility_bills(account_id):
 
     bills_collection = current_app.mongo.db.bills
 
-    existing_bills = bills_collection.find_one({"account_id": account_id})
+    existing_bills = bills_collection.find_one({"user_id": account_id})
     if existing_bills:
         return existing_bills
-    else:
-        utility_bills = {
-        "electricity": {
-            "number": fake.random_number(digits=9),
-            "due": fake.date_between(start_date="today", end_date="+30d").strftime(
-                "%d %b %Y"
-            ),
-            "issued": fake.date_between(start_date="-30d", end_date="today").strftime(
-                "%d %b %Y"
-            ),
-            "amount": "{:.2f}".format(
-                fake.pydecimal(
-                    left_digits=2,
-                    right_digits=2,
-                    positive=True,
-                    min_value=40,
-                    max_value=80,
-                )
-            ),
-            "is_paid": False,
-        },
-        "internet_and_cable": {
-            "number": fake.random_number(digits=9),
-            "due": fake.date_between(start_date="today", end_date="+30d").strftime(
-                "%d %b %Y"
-            ),
-            "issued": fake.date_between(start_date="-30d", end_date="today").strftime(
-                "%d %b %Y"
-            ),
-            "amount": "{:.2f}".format(
-                fake.pydecimal(
-                    left_digits=2,
-                    right_digits=2,
-                    positive=True,
-                    min_value=40,
-                    max_value=80,
-                )
-            ),
-            "is_paid": False,
-        },
-    }
-        utility_bills['account_id'] = account_id
-        bills_collection.insert_one(utility_bills)
-        return utility_bills
+    
 
 
 def pay_utility_bill(account_id, bill_name):
@@ -270,7 +137,7 @@ def pay_utility_bill(account_id, bill_name):
 
     bills_collection = current_app.mongo.db.bills
     bill_update_result = bills_collection.update_one(
-        {"account_id": account_id, bill_name: {"$exists": True}},
+        {"user_id": account_id, bill_name: {"$exists": True}},
         {"$set": {f"{bill_name}.is_paid": True}}
     )
 

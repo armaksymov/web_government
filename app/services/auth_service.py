@@ -12,6 +12,8 @@ import datetime
 
 import bcrypt
 from flask import current_app
+from datetime import timedelta
+import logging
 
 fake = Faker()
 
@@ -153,6 +155,130 @@ def generate_random_document_data(
         "health_card": health_card_data,
     }
 
+def generate_random_bills_data(account_id):
+      # Generate expiry date
+    expiry_date = fake.date_between(start_date="today", end_date="+365d")
+
+    # Generate issuance date before expiry date
+    issuance_date = fake.date_between(
+        start_date="-365d", end_date=expiry_date - timedelta(days=1)
+    )
+
+    # Generate renewal deadline after expiry date
+    renewal_deadline = fake.date_between(
+        start_date=expiry_date + timedelta(days=1),
+        end_date=expiry_date + timedelta(days=30),
+    )
+
+    # Generate renewal period based on expiry date
+    renewal_period = fake.random_element(elements=("1 year", "2 years", "3 years"))
+
+    # Adjust fee range based on renewal period
+    if renewal_period == "1 year":
+        min_fee, max_fee = 50, 100
+    elif renewal_period == "2 years":
+        min_fee, max_fee = 100, 150
+    else:
+        min_fee, max_fee = 150, 200
+
+
+    bills = {
+        "user_id": account_id,
+        "electricity": {
+            "number": fake.random_number(digits=9),
+            "due": fake.date_between(start_date="today", end_date="+30d").strftime(
+                "%d %b %Y"
+            ),
+            "issued": fake.date_between(start_date="-30d", end_date="today").strftime(
+                "%d %b %Y"
+            ),
+            "amount": "{:.2f}".format(
+                fake.pydecimal(
+                    left_digits=2,
+                    right_digits=2,
+                    positive=True,
+                    min_value=40,
+                    max_value=80,
+                )
+            ),
+            "is_paid": False,
+        },
+        "internet_and_cable": {
+            "number": fake.random_number(digits=9),
+            "due": fake.date_between(start_date="today", end_date="+30d").strftime(
+                "%d %b %Y"
+            ),
+            "issued": fake.date_between(start_date="-30d", end_date="today").strftime(
+                "%d %b %Y"
+            ),
+            "amount": "{:.2f}".format(
+                fake.pydecimal(
+                    left_digits=2,
+                    right_digits=2,
+                    positive=True,
+                    min_value=40,
+                    max_value=80,
+                )
+            ),
+            "is_paid": False,
+        },
+        "property_tax":{
+            "number": fake.random_number(digits=9),
+        "issued": fake.date_between(start_date="-30d", end_date="today").strftime(
+            "%d %b %Y"
+        ),
+        "due": fake.date_between(start_date="today", end_date="+30d").strftime(
+            "%d %b %Y"
+        ),
+        "tax_rate": fake.pyfloat(
+            left_digits=1, right_digits=2, positive=True, min_value=1, max_value=3
+        ),
+        "value": fake.random_number(digits=6),
+        "is_paid": False,
+        },
+        "license": {
+            "number": fake.random_number(digits=9),
+            "is_paid": False,
+            "expiry_date": expiry_date.strftime("%d %b %Y"),
+            "renewal_fee": round(
+                fake.pyfloat(
+                    left_digits=3,
+                    right_digits=2,
+                    positive=True,
+                    min_value=min_fee,
+                    max_value=max_fee,
+                ),
+                -1,
+            ),
+            "renewal_period": renewal_period,
+            "renewal_deadline": renewal_deadline.strftime("%d %b %Y"),
+        },
+        "registration": {
+            "number": fake.random_number(digits=9),
+            "is_paid": False,
+            "make": fake.company(),
+            "year": fake.year(),
+            "plate_number": "".join(fake.random_letters(length=3)).upper()
+            + str(fake.random_int(min=1000, max=9999)),
+            "expiry_date": expiry_date.strftime("%d %b %Y"),
+            "renewal_fee": round(
+                fake.pyfloat(
+                    left_digits=3,
+                    right_digits=2,
+                    positive=True,
+                    min_value=min_fee,
+                    max_value=max_fee,
+                ),
+                -1,
+            ),
+            "renewal_period": renewal_period,
+            "renewal_deadline": renewal_deadline.strftime("%d %b %Y"),
+        },
+        }
+    return bills
+    
+
+
 
 def register_user(first_name, last_name, email, password):
     """
@@ -169,14 +295,17 @@ def register_user(first_name, last_name, email, password):
     """
 
     if not all([first_name, last_name, email, password]):
+        logging.error("Missing registration fields")
         return {"status": 2}  # status 2: missing fields
 
     if not is_valid_email(email):
-        return {"status": 3}  # status 3 : invalid email format
+        logging.error("Invalid email format: {}".format(email))
+        return {"status": 3}  # status 3: invalid email format
 
     users_collection = current_app.mongo.db.users
 
     if users_collection.find_one({"email": email}):
+        logging.error("Email already exists: {}".format(email))
         return {"status": 4, "id": None}  # status 4: email already exist
 
     hashed_password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
@@ -190,8 +319,24 @@ def register_user(first_name, last_name, email, password):
 
     try:
         user_id = users_collection.insert_one(user_account).inserted_id
-    except Exception:
+        logging.info("User account created successfully: {}".format(user_id))
+    except Exception as e:
+        logging.error("Error in creating user account: {}".format(e))
         return {"status": 5, "id": None}  # registration error
+
+    try:
+        utility_bills_data = generate_random_bills_data(str(user_id))
+
+        logging.debug("Type of utility_bills_data: {}".format(type(utility_bills_data)))
+        logging.debug("Content of utility_bills_data: {}".format(utility_bills_data))
+
+        bills_collection = current_app.mongo.db.bills
+        bills_collection.insert_one(utility_bills_data)
+        logging.info("Bills data inserted successfully for user_id: {}".format(user_id))
+    except Exception as e:
+        logging.error("Error in inserting bills data: {}".format(e))
+        return {"status": 5, "id": None}  # registration error
+
 
     passport_number = "P" + "".join(random.choices(string.digits, k=9))
     driver_license_number = "".join(random.choices(string.digits, k=9))
@@ -208,7 +353,6 @@ def register_user(first_name, last_name, email, password):
     document_data = generate_random_document_data(
         full_name, passport_number, driver_license_number, health_card_number
     )
-    # link the documents data to each user
     document_data["user_id"] = str(user_id)
 
     user_details_collection = current_app.mongo.db.user_details
@@ -217,9 +361,10 @@ def register_user(first_name, last_name, email, password):
     try:
         user_details_collection.insert_one(user_details)
         documents_collection.insert_one(document_data)
-    except Exception:
-        # roll back if details or documents insertion is failed
+        logging.info("User details and documents inserted successfully for user_id: {}".format(user_id))
+    except Exception as e:
         users_collection.delete_one({"_id": user_id})
+        logging.error("Error in inserting user details/documents, rollback initiated: {}".format(e))
         return {"status": 6, "id": None}  # error inserting user details
 
     return {"status": 0, "id": str(user_id)}

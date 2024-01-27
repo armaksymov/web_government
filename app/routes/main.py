@@ -190,6 +190,11 @@ class Main:
         """
 
         license_and_registration = get_license_and_registration(Main.ACCOUNT_ID)
+        account_id = session.get('account_id')
+        if account_id is None:
+            return 'Error: Account id is not set', 400
+
+        license_and_registration = get_license_and_registration(account_id)
 
         return render_template(
             "license_and_registration.html",
@@ -285,13 +290,22 @@ class Main:
     @staticmethod
     @main_blueprint.route("/renew_license", methods=["POST"])
     def renew_license():
-        response = renew_license(Main.ACCOUNT_ID)
+
+        account_id = session.get('account_id')
+        if account_id is None:
+            return 'Error: Account id is not set', 400
+        
+        response = renew_license(account_id)
 
         return jsonify(response)
 
     @staticmethod
     @main_blueprint.route("/renew_registration", methods=["POST"])
     def renew_registration():
-        response = renew_registration(Main.ACCOUNT_ID)
+        account_id = session.get('account_id')
+        if account_id is None:
+            return 'Error: Account id is not set', 400
+        
+        response = renew_registration(account_id)
 
         return jsonify(response)
