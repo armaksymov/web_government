@@ -39,13 +39,10 @@ class Main:
     def index_page():
         """
         Render the index.html template.
-
         Returns:
         - render_template: HTML response with the content of index.html.
         """
-
         session["account_id"] = request.args.get("id")
-
         return render_template("index.html")
 
     @staticmethod
