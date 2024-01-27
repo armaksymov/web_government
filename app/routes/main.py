@@ -186,9 +186,9 @@ class Main:
         - render_template: HTML response with the content of license_and_registration.html.
         """
 
-        utility_bills = get_utility_bills(Main.ACCOUNT_ID)
+        license_and_registration = get_license_and_registration(Main.ACCOUNT_ID)
 
-        return render_template('license_and_registration.html', bills_data=utility_bills)
+        return render_template('license_and_registration.html', license_and_registration_data=license_and_registration)
 
     @staticmethod
     @main_blueprint.route('/property_tax_payments')
@@ -256,5 +256,12 @@ class Main:
 
         data = request.get_json()
         response = pay_utility_bill(Main.ACCOUNT_ID, data['bill'])
+
+        return jsonify(response)
+    
+    @staticmethod
+    @main_blueprint.route('/renew_license', methods=['POST'])
+    def renew_license():
+        response = renew_license(Main.ACCOUNT_ID)
 
         return jsonify(response)

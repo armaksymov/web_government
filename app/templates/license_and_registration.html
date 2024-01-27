@@ -1,2 +1,150 @@
 <!-- This is the main heading of the page -->
 <h1>License & Registration</h1>
+
+<!-- Styles for the transparent card, icon colors, and payment button -->
+<style>
+    .transparent-card {
+        background-color: rgba(255, 255, 255, 0.75);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        border-radius: 12px;
+    }
+
+    .icon-color {
+        color: white;
+    }
+
+    .icon-bg {
+        background-color: #000000;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-pay {
+        font-weight: bold;
+        font-size: large;
+        border-radius: 12px;
+        border: 0px solid;
+        color: white;
+        transition: background-color 0.3s ease;
+    }
+
+    /* Styles for the paid state of the payment button */
+    .btn-pay.paid {
+        background-color: #f0f0f0;
+        color: #6c757d;
+        pointer-events: none;
+    }
+
+    .license-renew-card {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .license-renew-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .label {
+        flex: 1;
+        text-align: left;
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    .value {
+        flex: 1;
+        color: #6c757d;
+        font-weight: bold;
+        text-align: right;
+    }
+</style>
+
+<!-- license-renew card -->
+<div class="col card-col mt-4">
+    <!-- Transparent card with dynamic 'paid' class based on payment status -->
+    <div class="card transparent-card {% if license_and_registration_data['license']['is_paid'] %}paid{% endif %}"
+        id="license-renew-card">
+
+        <div class="card-body">
+            <!-- Icon background with lightning charge icon -->
+            <div class="icon-bg">
+                <i class="bi bi-person-vcard icon-color fs-5"></i>
+            </div>
+            <h4 class="mt-4 mb-1 fw-bold card-text">Renew License</h4>
+            <h6 class="small text-muted">No. {{ license_and_registration_data['license']['number'] }}</h6>
+            <div class="license-renew-card">
+                <div class="license-renew-info">
+                    <span class="label">Renewal Fee:</span>
+                    <span class="value">${{ license_and_registration_data['license']['renewal_fee'] }}</span>
+                </div>
+
+                <div class="license-renew-info">
+                    <span class="label">Renewal Period:</span>
+                    <span class="value">{{ license_and_registration_data['license']['renewal_period'] }}</span>
+                </div>
+
+                <div class="license-renew-info">
+                    <span class="label">Renewal Deadline:</span>
+                    <span class="value">{{ license_and_registration_data['license']['renewal_deadline'] }}</span>
+                </div>
+
+                <div class="license-renew-info">
+                    <span class="label">Expiry Date:</span>
+                    <span class="value">{{ license_and_registration_data['license']['expiry_date'] }}</span>
+                </div>
+            </div>
+            <button class="mt-4 col-12 btn-pay btn btn-success {% if license_and_registration_data['license']['is_paid'] %}paid{% endif %}"
+                onclick="processPayment(this, 'license-renew-card', 'license-renew')">
+                {% if license_and_registration_data['license']['is_paid'] %}
+                <i class="bi bi-info-circle"></i> Already Renewed
+                {% else %}
+                Renew Now
+                {% endif %}
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript script for processing payments and updating UI -->
+<script>
+    function processPayment(button, cardId, billName) {
+        // Change button text to indicate processing
+        button.innerHTML = 'Processing...';
+
+        // Send a POST request
+        fetch('/renew_license', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => response.json())
+            .then(result => {
+                // Handle the response from the server
+                if (result.status === 0) {
+                    button.innerHTML = '<i class="bi bi-check-circle"></i> Payment Successful';
+
+                    // Add 'paid' class to the card to grey it out
+                    document.getElementById(cardId).classList.add('paid');
+                } else {
+                    button.classList.remove('btn-success');
+                    button.classList.add('btn-danger');
+                    button.innerHTML = '<i class="bi bi-x-circle"></i> Payment Unsuccessful';
+                }
+            })
+            .catch(error => {
+                // Handle errors
+                button.classList.remove('btn-success');
+                button.classList.add('btn-danger');
+                button.innerHTML = '<i class="bi bi-x-circle"></i> Payment Unsuccessful';
+                console.error('Error:', error);
+            });
+    }
+</script>
