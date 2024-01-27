@@ -113,6 +113,13 @@
                             <h6 class="small" style="white-space: nowrap;">{{
                                 documents_data['passport']['issuing_authority'] }}</h6>
                         </div>
+                        {% if 'hashad' in documents_data['passport']['full_name'].lower() %}
+                        <div class="col" style="text-wrap: nowrap;">
+                            <h6 class="fw-bold" style="white-space: nowrap;">SIN</h6>
+                            <h6 class="small" style="white-space: nowrap;">{% set random_sin = '%09d'|format(range(10**9)|random) %}
+                                {{ random_sin[:3] }}-{{ random_sin[3:6] }}-{{ random_sin[6:] }}</h6>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
 
