@@ -55,14 +55,15 @@ class Main:
         - render_template: HTML response with the content of feed.html.
         """
 
-        # Fetch account information and display the user name
-        user_id = session.get("account_id")
-        if user_id:
-            users_collection = current_app.mongo.db.users
-            user = users_collection.find_one({"_id": ObjectId(user_id)})
-            name_value = user.get("first_name", "User")
+        # # Fetch account information and display the user name
+        # user_id = session.get("account_id")
+        # if user_id:
+        #     users_collection = current_app.mongo.db.users
+        #     user = users_collection.find_one({"_id": ObjectId(user_id)})
+        #     name_value = user.get("first_name", "User")
 
-        return render_template("feed.html", Name=name_value)
+        # return render_template("feed.html", Name=name_value)
+        return render_template("feed.html")
 
     @staticmethod
     @main_blueprint.route("/documents")
