@@ -1,11 +1,16 @@
 """
 This module defines the main blueprint for the Flask application.
 """
+from __future__ import annotations
+
+from flask import Blueprint
+from flask import jsonify
+from flask import render_template
+from flask import request
+from flask import session
 
 from app.services.auth_service import *
 from app.services.information_service import *
-from flask import Blueprint, request, render_template, jsonify
-from flask import session
 
 main_blueprint = Blueprint("main", __name__)
 
@@ -22,6 +27,7 @@ class Main:
     def landing_page():
         """
         Render the landing.html template.
+
         Returns:
         - render_template: HTML response with the content of landing.html.
         """
@@ -47,9 +53,16 @@ class Main:
 
         Returns:
         - render_template: HTML response with the content of feed.html.
-        """ 
-      
-        return render_template("feed.html")
+        """
+
+        # Fetch account information and display the user name
+        user_id = session.get("account_id")
+        if user_id:
+            users_collection = current_app.mongo.db.users
+            user = users_collection.find_one({"_id": ObjectId(user_id)})
+            name_value = user.get("first_name", "User")
+
+        return render_template("feed.html", Name=name_value)
 
     @staticmethod
     @main_blueprint.route("/documents")
@@ -60,7 +73,7 @@ class Main:
         Returns:
         - render_template: HTML response with the content of documents.html.
         """
-        account_id=session.get('account_id')
+        account_id = session.get("account_id")
         if account_id is None:
             return "Error: Account id is not set", 400
 
@@ -155,7 +168,10 @@ class Main:
 
         data = request.get_json()
         response = register_user(
-            data["first_name"], data["last_name"], data["email"], data["password"]
+            data["first_name"],
+            data["last_name"],
+            data["email"],
+            data["password"],
         )
 
         return jsonify(response)
@@ -170,7 +186,12 @@ class Main:
         - render_template: HTML response with the content of license_and_registration.html.
         """
 
-        return render_template("license_and_registration.html")
+        license_and_registration = get_license_and_registration(Main.ACCOUNT_ID)
+
+        return render_template(
+            "license_and_registration.html",
+            license_and_registration_data=license_and_registration,
+        )
 
     @staticmethod
     @main_blueprint.route("/property_tax_payments")
@@ -182,7 +203,40 @@ class Main:
         - render_template: HTML response with the content of property_tax_payments.html.
         """
 
-        return render_template("property_tax_payments.html")
+        account_id = session.get('account_id')
+        if account_id is None:
+            return 'Error: Account id is not set', 400
+
+        property_taxes = get_property_taxes(account_id)
+
+        return render_template(
+            "property_tax_payments.html", property_taxes_data=property_taxes
+        )
+
+    @staticmethod
+    @main_blueprint.route("/pay_property_tax", methods=["POST"])
+    def pay_property_tax():
+        """
+        Pay property tax based on the Account ID and provided JSON data.
+
+        Account ID stored in session
+
+        JSON Request:
+        - Utility Bill Information
+
+        Returns:
+        - jsonify: JSON response indicating the status of the bill payment.
+          Format: {"status": int, "id": str}
+        """
+
+        account_id = session.get('account_id')
+        if account_id is None:
+            return 'Error: Account id is not set', 400
+        
+        data = request.get_json()
+        response = pay_property_tax(account_id, data['bill'])
+
+        return jsonify(response)
 
     @staticmethod
     @main_blueprint.route("/utility_bill_payments")
@@ -193,15 +247,49 @@ class Main:
         Returns:
         - render_template: HTML response with the content of utility_bill_payments.html.
         """
+        account_id = session.get('account_id')
+        if account_id is None:
+            return 'Error: Account id is not set', 400
 
-        utility_bills = get_utility_bills(Main.ACCOUNT_ID)
+        utility_bills = get_utility_bills(account_id)
 
         return render_template("utility_bill_payments.html", bills_data=utility_bills)
 
     @staticmethod
     @main_blueprint.route("/pay_utility_bill", methods=["POST"])
     def pay_utility_bill():
+        """
+        Pay unility bill based on the Account ID and provided JSON data.
+
+        Account ID stored in session
+
+        JSON Request:
+        - Utility Bill Information
+
+        Returns:
+        - jsonify: JSON response indicating the status of the bill payment.
+          Format: {"status": int, "id": str}
+        """
+
+        account_id = session.get('account_id')
+        if account_id is None:
+            return 'Error: Account id is not set', 400
+        
         data = request.get_json()
-        response = pay_utility_bill(Main.ACCOUNT_ID, data["bill"])
+        response = pay_utility_bill(account_id, data['bill'])
+
+        return jsonify(response)
+
+    @staticmethod
+    @main_blueprint.route("/renew_license", methods=["POST"])
+    def renew_license():
+        response = renew_license(Main.ACCOUNT_ID)
+
+        return jsonify(response)
+
+    @staticmethod
+    @main_blueprint.route("/renew_registration", methods=["POST"])
+    def renew_registration():
+        response = renew_registration(Main.ACCOUNT_ID)
 
         return jsonify(response)

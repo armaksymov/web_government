@@ -2,15 +2,31 @@
 This module contains the implementation for the user authentication
 on login as well the user registration
 """
+from __future__ import annotations
+
 import re
+import string
+from faker import Faker
+import random
+import datetime
+
 import bcrypt
 from flask import current_app
-import random
-import string
-import datetime
+
+fake = Faker()
 
 
 def is_valid_email(email):
+    """
+    Email validation against the standard email regex
+
+    Args:
+    - email (string)
+
+    Returns:
+    - boolean: the boolean value representing the regex match
+    """
+
     email_regex = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
     return re.match(email_regex, email) is not None
 
@@ -41,47 +57,102 @@ def authenticate_user(email, password):
 
     return {"status": 1, "id": None}
 
-def generate_random_document_data(full_name,passport_number,driver_license_number):
-    """
-    Generate the data for the documents
 
-    Args:
-    -full_name (str)
+def random_date(start_age, end_age):
+    today = datetime.date.today()
+    start_date = today - datetime.timedelta(days=end_age * 365)
+    end_date = today - datetime.timedelta(days=start_age * 365)
+    return fake.date_of_birth(
+        tzinfo=None, minimum_age=start_age, maximum_age=end_age
+    ).strftime("%Y-%m-%d")
 
-    Returns:
-    -dict: the generated data
-    """
 
-    random_date = lambda start_year,end_year: str(datetime.date(
-        random.randint(start_year,end_year),
-        random.randint(1,12),
-        random.randint(1,28)
-    ))
-
-    return{
-        "passport": {
-            "number": passport_number,
-            "full_name": full_name,
-            "place_of_birth": "Essex",
-            "date_of_birth": random_date(1960, 2024),
-            "date_of_issue": random_date(2014, 2024),
-            "date_of_expiry": random_date(2020, 2034),
-            "issuing_authority": "Sussex Passport Office",
-        },
-        "driver_license": {
-            "number": driver_license_number,
-            "full_name": full_name,
-            "date_of_birth": random_date(1960, 2024),
-            "date_of_issue": random_date(2010, 2024),
-            "date_of_expiry": random_date(2020, 2034),
-            "sex": random.choice(["Male", "Female"]),
-            "blood_type": random.choice(["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"]),
-            "weight": random.randint(50, 100),
-        }
-
+def generate_passport_data(passport_number, full_name, date_of_birth, blood_type):
+    return {
+        "number": passport_number,
+        "full_name": full_name,
+        "place_of_birth": fake.city(),
+        "date_of_birth": date_of_birth,
+        "date_of_issue": fake.date_this_decade().strftime("%Y-%m-%d"),
+        "date_of_expiry": (
+            datetime.date.today() + datetime.timedelta(days=365 * 10)
+        ).strftime("%Y-%m-%d"),
+        "issuing_authority": fake.random_element(
+            elements=(
+                "US Passport Agency",
+                "UK Passport Office",
+                "Canada Passport Office",
+            )
+        ),
+        "blood_type": blood_type,
     }
 
-    
+
+def generate_driver_license_data(
+    driver_license_number, full_name, date_of_birth, blood_type
+):
+    return {
+        "number": driver_license_number,
+        "full_name": full_name,
+        "date_of_birth": date_of_birth,
+        "date_of_issue": fake.date_this_decade().strftime("%Y-%m-%d"),
+        "date_of_expiry": (
+            datetime.date.today() + datetime.timedelta(days=365 * 10)
+        ).strftime("%Y-%m-%d"),
+        "sex": fake.random_element(elements=("Male", "Female")),
+        "blood_type": blood_type,
+        "weight": fake.random_int(min=50, max=100),
+    }
+
+
+def generate_health_card_data(health_card_number, full_name, date_of_birth, blood_type):
+    return {
+        "number": health_card_number,
+        "full_name": full_name,
+        "date_of_birth": date_of_birth,
+        "date_of_issue": fake.date_this_decade().strftime("%Y-%m-%d"),
+        "insurance_provider": fake.company(),
+        "policy_number": fake.random_int(min=10000, max=99999),
+        "blood_type": blood_type,
+        "covid_vaccination_status": fake.random_element(
+            elements=("Fully Vaccinated", "Partially Vaccinated", "Not Vaccinated")
+        ),
+    }
+
+
+def generate_random_document_data(
+    full_name, passport_number, driver_license_number, health_card_number
+):
+    """
+    Generate random data for passport, driver license, and health card.
+
+    Returns:
+    - dict: The generated data for passport, driver license, and health card
+    """
+
+    # Generate common data
+    common_data = {
+        "full_name": full_name,
+        "date_of_birth": random_date(18, 80),
+        "blood_type": fake.random_element(
+            elements=("A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-")
+        ),
+    }
+
+    # Generate individual data
+    passport_data = generate_passport_data(passport_number, **common_data)
+    driver_license_data = generate_driver_license_data(
+        driver_license_number, **common_data
+    )
+    health_card_data = generate_health_card_data(health_card_number, **common_data)
+
+    # Return combined data
+    return {
+        "passport": passport_data,
+        "driver_license": driver_license_data,
+        "health_card": health_card_data,
+    }
+
 
 def register_user(first_name, last_name, email, password):
     """
@@ -121,19 +192,24 @@ def register_user(first_name, last_name, email, password):
         user_id = users_collection.insert_one(user_account).inserted_id
     except Exception:
         return {"status": 5, "id": None}  # registration error
-    
-    passport_number = "P" + ''.join(random.choices(string.digits, k=9))  
-    driver_license_number = ''.join(random.choices(string.digits, k=9))  
+
+    passport_number = "P" + "".join(random.choices(string.digits, k=9))
+    driver_license_number = "".join(random.choices(string.digits, k=9))
+    health_card_number = "".join(random.choices(string.digits, k=9))
 
     user_details = {
         "user_id": str(user_id),
-        "passport_number": passport_number, 
+        "passport_number": passport_number,
         "driver_license_number": driver_license_number,
+        "health_card_number": health_card_number,
     }
-    
+
     full_name = f"{first_name} {last_name}"
-    document_data = generate_random_document_data(full_name, passport_number, driver_license_number)
-    document_data['user_id'] = str(user_id)#link the documents data to each user
+    document_data = generate_random_document_data(
+        full_name, passport_number, driver_license_number, health_card_number
+    )
+    # link the documents data to each user
+    document_data["user_id"] = str(user_id)
 
     user_details_collection = current_app.mongo.db.user_details
     documents_collection = current_app.mongo.db.documents
@@ -142,7 +218,8 @@ def register_user(first_name, last_name, email, password):
         user_details_collection.insert_one(user_details)
         documents_collection.insert_one(document_data)
     except Exception:
-        users_collection.delete_one({"_id": user_id})#roll back if details or documents insertion is failed
-        return {"status": 6, "id": None}  #error inserting user details
+        # roll back if details or documents insertion is failed
+        users_collection.delete_one({"_id": user_id})
+        return {"status": 6, "id": None}  # error inserting user details
 
     return {"status": 0, "id": str(user_id)}
