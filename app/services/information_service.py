@@ -108,7 +108,13 @@ def get_utility_bills(account_id):
     1. A dictionary containing data on utility bills.
     """
 
-    utility_bills = {
+    bills_collection = current_app.mongo.db.bills
+
+    existing_bills = bills_collection.find_one({"account_id": account_id})
+    if existing_bills:
+        return existing_bills
+    else:
+        utility_bills = {
         "electricity": {
             "number": fake.random_number(digits=9),
             "due": fake.date_between(start_date="today", end_date="+30d").strftime(
@@ -126,7 +132,7 @@ def get_utility_bills(account_id):
                     max_value=80,
                 )
             ),
-            "is_paid": fake.boolean(),
+            "is_paid": False,
         },
         "internet_and_cable": {
             "number": fake.random_number(digits=9),
@@ -145,11 +151,12 @@ def get_utility_bills(account_id):
                     max_value=80,
                 )
             ),
-            "is_paid": fake.boolean(),
+            "is_paid": False,
         },
     }
-
-    return utility_bills
+        utility_bills['account_id'] = account_id
+        bills_collection.insert_one(utility_bills)
+        return utility_bills
 
 
 def pay_utility_bill(account_id, bill_name):
@@ -164,11 +171,19 @@ def pay_utility_bill(account_id, bill_name):
     1. A status code reflecting the success of bill payment.
     """
 
-    response = {
-        "status": 0,
-    }
+    bills_collection = current_app.mongo.db.bills
+    bill_update_result = bills_collection.update_one(
+        {"account_id": account_id, bill_name: {"$exists": True}},
+        {"$set": {f"{bill_name}.is_paid": True}}
+    )
+
+    if bill_update_result.modified_count > 0:
+        response = {"status": 0, "id": account_id}  # status 0 indicates success
+    else:
+        response = {"status": 1, "id": account_id}  # status 1 indicates failure
 
     return response
+
 
 
 def get_account_information(account_id):

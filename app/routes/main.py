@@ -233,8 +233,11 @@ class Main:
         Returns:
         - render_template: HTML response with the content of utility_bill_payments.html.
         """
+        account_id = session.get('account_id')
+        if account_id is None:
+            return 'Error: Account id is not set', 400
 
-        utility_bills = get_utility_bills(Main.ACCOUNT_ID)
+        utility_bills = get_utility_bills(account_id)
 
         return render_template('utility_bill_payments.html', bills_data=utility_bills)
 
@@ -254,8 +257,12 @@ class Main:
           Format: {"status": int, "id": str}
         """
 
+        account_id = session.get('account_id')
+        if account_id is None:
+            return 'Error: Account id is not set', 400
+        
         data = request.get_json()
-        response = pay_utility_bill(Main.ACCOUNT_ID, data['bill'])
+        response = pay_utility_bill(account_id, data['bill'])
 
         return jsonify(response)
     
