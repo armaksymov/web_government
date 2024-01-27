@@ -1,0 +1,90 @@
+<!-- Driver's License Document Card -->
+
+<script src="https://kit.fontawesome.com/aea9fedfee.js" crossorigin="anonymous"></script>
+
+<style>
+    /* Styling for all cards */
+    .card {
+        border: 0px solid;
+        border-radius: 12px;
+        width: 360px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* No wrap property for all cards */
+    .nowrap-item {
+        white-space: nowrap;
+    }
+
+    /* Styling for passport */
+    #passport {
+        background: radial-gradient(circle at right top, #fffdf4, #b7badd);
+    }
+
+    /* Styling for driver's license */
+    #license {
+        background: radial-gradient(circle at right top, #fdfff0, #b7ddd4);
+    }
+</style>
+
+<div id="license" class="card col-12 col-md-6 col-xl-3">
+    <div class="card-body align-items-center" style="margin-bottom: -26px;">
+
+        <div class="col">
+            <h2 class="mb-0 nowrap-item">Driver's License</h2>
+            <h6 class="small nowrap-item">{{ documents_data['driver_license']['number'] }}</h6>
+        </div>
+        <i class="bi bi-person-vcard fs-1"></i>
+    </div>
+
+    <div class="card-body" style="margin-bottom: -26px;">
+        <div class="col">
+            <h6 class="fw-bold nowrap-item">Full Name</h6>
+            <h6 class="small nowrap-item">{{ documents_data['driver_license']['full_name'] }}
+            </h6>
+        </div>
+    </div>
+
+    <div class="card-body" style="margin-bottom: -26px;">
+        <div class="col">
+            <h6 class="fw-bold nowrap-item">Date of Birth</h6>
+            <h6 class="small nowrap-item">{{ documents_data['driver_license']['date_of_birth']
+                }}</h6>
+        </div>
+    </div>
+
+    <div class="card-body" style="margin-bottom: -26px;">
+        <div class="row d-flex justify-content-center">
+            <div class="col">
+                <h6 class="fw-bold nowrap-item">Issue Date</h6>
+                <h6 class="small nowrap-item">{{
+                    documents_data['driver_license']['date_of_issue'] }}</h6>
+            </div>
+            <div class="col" style="margin-left: 40px;">
+                <h6 class="fw-bold nowrap-item">Expiry Date</h6>
+                <h6 class="small nowrap-item">{{
+                    documents_data['driver_license']['date_of_expiry'] }}</h6>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <h6 class="fw-bold nowrap-item">License Class</h6>
+                <h6 class="small nowrap-item">{{ documents_data['driver_license']['class'] }}
+                </h6>
+            </div>
+            <div class="col">
+                <h6 class="fw-bold nowrap-item">Sex</h6>
+                <h6 class="small nowrap-item">{{ documents_data['driver_license']['sex'] }}
+                </h6>
+            </div>
+            <div class="col">
+                <h6 class="fw-bold nowrap-item">Blood Type</h6>
+                <h6 class="small nowrap-item">{{ documents_data['driver_license']['blood_type']
+                    }}</h6>
+            </div>
+        </div>
+    </div>
+</div>
