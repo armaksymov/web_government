@@ -4,7 +4,7 @@
     body {
         overflow: hidden;
     }
-    
+
     .custom-container {
         padding-left: 0;
         padding-right: 0;
@@ -47,25 +47,40 @@
         text-decoration: none;
         color: black;
     }
+
+    .card-body {
+        padding: 0;
+    }
+
+    .news-card {
+        border-radius: 12px;
+        border: 0px solid;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 </style>
 
 <div class="container custom-container mt-4">
-    <h4>New Messages</h4>
+    <h4>Recent News</h4>
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
             <div class="swiper-slide card transparent-card">
                 <div class="card-body">
-                    <p class="fw-bold card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    <img class="news-card d-block img-fluid w-100"
+                        src="{{ url_for('static', filename='images/student_cap.jpg') }}">
                 </div>
             </div>
 
             <div class="swiper-slide card transparent-card">
                 <div class="card-body">
-                    <p class="fw-bold card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    <img class="news-card d-block img-fluid w-100"
+                        src="{{ url_for('static', filename='images/student_loan.jpg') }}">
+                </div>
+            </div>
+
+            <div class="swiper-slide card transparent-card">
+                <div class="card-body">
+                    <img class="news-card d-block img-fluid w-100"
+                        src="{{ url_for('static', filename='images/tax_season.jpg') }}">
                 </div>
             </div>
         </div>
