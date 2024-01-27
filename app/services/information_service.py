@@ -4,38 +4,57 @@
 from __future__ import annotations
 
 import logging
+from datetime import timedelta
 
 from bson import ObjectId
-from flask import current_app
 from faker import Faker
-from datetime import timedelta
+from flask import current_app
 
 fake = Faker()
 
 
 def renew_license(account_id):
+    """
+        A function stub "allowing" user to renew their driver's license
+    """
+
     response = {
-        "status": 0,
+        'status': 0,
     }
 
     return response
 
 
 def renew_registration(account_id):
+    """
+        A function stub "allowing" user to renew their registration
+    """
+
     response = {
-        "status": 0,
+        'status': 0,
     }
 
     return response
 
 
 def get_license_and_registration(account_id):
+    """
+        This method get_license_and_registration returns a dictionary with
+        data on user's license and registration.
+
+        Arguments:
+        1. account_id - Unique Internal Client Identifier within our system
+
+        Returns:
+        1. A dictionary with the data on user's license and registration.
+    """
+
     # Generate expiry date
-    expiry_date = fake.date_between(start_date="today", end_date="+365d")
+    expiry_date = fake.date_between(start_date='today', end_date='+365d')
 
     # Generate issuance date before expiry date
     issuance_date = fake.date_between(
-        start_date="-365d", end_date=expiry_date - timedelta(days=1)
+        start_date='-365d', end_date=expiry_date - timedelta(days=1),
     )
 
     # Generate renewal deadline after expiry date
@@ -45,22 +64,24 @@ def get_license_and_registration(account_id):
     )
 
     # Generate renewal period based on expiry date
-    renewal_period = fake.random_element(elements=("1 year", "2 years", "3 years"))
+    renewal_period = fake.random_element(
+        elements=('1 year', '2 years', '3 years'),
+    )
 
     # Adjust fee range based on renewal period
-    if renewal_period == "1 year":
+    if renewal_period == '1 year':
         min_fee, max_fee = 50, 100
-    elif renewal_period == "2 years":
+    elif renewal_period == '2 years':
         min_fee, max_fee = 100, 150
     else:
         min_fee, max_fee = 150, 200
 
     license_and_registration = {
-        "license": {
-            "number": fake.random_number(digits=9),
-            "is_paid": fake.boolean(),
-            "expiry_date": expiry_date.strftime("%d %b %Y"),
-            "renewal_fee": round(
+        'license': {
+            'number': fake.random_number(digits=9),
+            'is_paid': fake.boolean(),
+            'expiry_date': expiry_date.strftime('%d %b %Y'),
+            'renewal_fee': round(
                 fake.pyfloat(
                     left_digits=3,
                     right_digits=2,
@@ -70,18 +91,18 @@ def get_license_and_registration(account_id):
                 ),
                 -1,
             ),
-            "renewal_period": renewal_period,
-            "renewal_deadline": renewal_deadline.strftime("%d %b %Y"),
+            'renewal_period': renewal_period,
+            'renewal_deadline': renewal_deadline.strftime('%d %b %Y'),
         },
-        "registration": {
-            "number": fake.random_number(digits=9),
-            "is_paid": fake.boolean(),
-            "make": fake.company(),
-            "year": fake.year(),
-            "plate_number": "".join(fake.random_letters(length=3)).upper()
+        'registration': {
+            'number': fake.random_number(digits=9),
+            'is_paid': fake.boolean(),
+            'make': fake.company(),
+            'year': fake.year(),
+            'plate_number': ''.join(fake.random_letters(length=3)).upper()
             + str(fake.random_int(min=1000, max=9999)),
-            "expiry_date": expiry_date.strftime("%d %b %Y"),
-            "renewal_fee": round(
+            'expiry_date': expiry_date.strftime('%d %b %Y'),
+            'renewal_fee': round(
                 fake.pyfloat(
                     left_digits=3,
                     right_digits=2,
@@ -91,8 +112,8 @@ def get_license_and_registration(account_id):
                 ),
                 -1,
             ),
-            "renewal_period": renewal_period,
-            "renewal_deadline": renewal_deadline.strftime("%d %b %Y"),
+            'renewal_period': renewal_period,
+            'renewal_deadline': renewal_deadline.strftime('%d %b %Y'),
         },
     }
 
@@ -100,50 +121,73 @@ def get_license_and_registration(account_id):
 
 
 def get_property_taxes(account_id):
+    """
+        This method get_property_taxes returns a dictionary with property taxes information
+
+        Arguments:
+        1. account_id - Unique Internal Client Identifier within our system
+
+        Returns:
+        1. A dictionary with containing data on user's property taxes.
+    """
+
     bills_collection = current_app.mongo.db.bills
 
-    existing_bills = bills_collection.find_one({"account_id": account_id})
-    if existing_bills and "property_tax" in existing_bills:
-        return existing_bills["property_tax"]
+    existing_bills = bills_collection.find_one({'account_id': account_id})
+    if existing_bills and 'property_tax' in existing_bills:
+        return existing_bills['property_tax']
     else:
         property_tax = {
-        "number": fake.random_number(digits=9),
-        "issued": fake.date_between(start_date="-30d", end_date="today").strftime(
-            "%d %b %Y"
-        ),
-        "due": fake.date_between(start_date="today", end_date="+30d").strftime(
-            "%d %b %Y"
-        ),
-        "tax_rate": fake.pyfloat(
-            left_digits=1, right_digits=2, positive=True, min_value=1, max_value=3
-        ),
-        "value": fake.random_number(digits=6),
-        "is_paid": False,
-    }
+            'number': fake.random_number(digits=9),
+            'issued': fake.date_between(start_date='-30d', end_date='today').strftime(
+                '%d %b %Y',
+            ),
+            'due': fake.date_between(start_date='today', end_date='+30d').strftime(
+                '%d %b %Y',
+            ),
+            'tax_rate': fake.pyfloat(
+                left_digits=1, right_digits=2, positive=True, min_value=1, max_value=3,
+            ),
+            'value': fake.random_number(digits=6),
+            'is_paid': False,
+        }
     bills_collection.update_one(
-        {"account_id": account_id},
-        {"$set": {"property_tax": property_tax}},
-        upsert=True
+        {'account_id': account_id},
+        {'$set': {'property_tax': property_tax}},
+        upsert=True,
     )
 
     return property_tax
 
 
 def pay_property_tax(account_id):
+    """
+        This method pay_property_tax allows user to "make a payment"
+        and update records in the database.
+
+        Arguments:
+        1. account_id - Unique Internal Client Identifier within our system
+
+        Returns:
+        1. A status code confirming whether the payment went through.
+        2. account_id - Unique Internal Client Identifier within our system
+    """
+
     bills_collection = current_app.mongo.db.bills
 
     bill_update_result = bills_collection.update_one(
-        {"account_id": account_id, "property_tax": {"$exists": True}},
-        {"$set": {"property_tax.is_paid": True}}
+        {'account_id': account_id, 'property_tax': {'$exists': True}},
+        {'$set': {'property_tax.is_paid': True}},
     )
 
     if bill_update_result.modified_count > 0:
-        response = {"status": 0, "id": account_id}  # status 0 indicates success
+        # status 0 indicates success
+        response = {'status': 0, 'id': account_id}
     else:
-        response = {"status": 1, "id": account_id}  # status 1 indicates failure
+        # status 1 indicates failure
+        response = {'status': 1, 'id': account_id}
 
     return response
-
 
 
 def get_utility_bills(account_id):
@@ -159,50 +203,50 @@ def get_utility_bills(account_id):
 
     bills_collection = current_app.mongo.db.bills
 
-    existing_bills = bills_collection.find_one({"account_id": account_id})
+    existing_bills = bills_collection.find_one({'account_id': account_id})
     if existing_bills:
         return existing_bills
     else:
         utility_bills = {
-        "electricity": {
-            "number": fake.random_number(digits=9),
-            "due": fake.date_between(start_date="today", end_date="+30d").strftime(
-                "%d %b %Y"
-            ),
-            "issued": fake.date_between(start_date="-30d", end_date="today").strftime(
-                "%d %b %Y"
-            ),
-            "amount": "{:.2f}".format(
-                fake.pydecimal(
-                    left_digits=2,
-                    right_digits=2,
-                    positive=True,
-                    min_value=40,
-                    max_value=80,
-                )
-            ),
-            "is_paid": False,
-        },
-        "internet_and_cable": {
-            "number": fake.random_number(digits=9),
-            "due": fake.date_between(start_date="today", end_date="+30d").strftime(
-                "%d %b %Y"
-            ),
-            "issued": fake.date_between(start_date="-30d", end_date="today").strftime(
-                "%d %b %Y"
-            ),
-            "amount": "{:.2f}".format(
-                fake.pydecimal(
-                    left_digits=2,
-                    right_digits=2,
-                    positive=True,
-                    min_value=40,
-                    max_value=80,
-                )
-            ),
-            "is_paid": False,
-        },
-    }
+            'electricity': {
+                'number': fake.random_number(digits=9),
+                'due': fake.date_between(start_date='today', end_date='+30d').strftime(
+                    '%d %b %Y',
+                ),
+                'issued': fake.date_between(start_date='-30d', end_date='today').strftime(
+                    '%d %b %Y',
+                ),
+                'amount': '{:.2f}'.format(
+                    fake.pydecimal(
+                        left_digits=2,
+                        right_digits=2,
+                        positive=True,
+                        min_value=40,
+                        max_value=80,
+                    ),
+                ),
+                'is_paid': False,
+            },
+            'internet_and_cable': {
+                'number': fake.random_number(digits=9),
+                'due': fake.date_between(start_date='today', end_date='+30d').strftime(
+                    '%d %b %Y',
+                ),
+                'issued': fake.date_between(start_date='-30d', end_date='today').strftime(
+                    '%d %b %Y',
+                ),
+                'amount': '{:.2f}'.format(
+                    fake.pydecimal(
+                        left_digits=2,
+                        right_digits=2,
+                        positive=True,
+                        min_value=40,
+                        max_value=80,
+                    ),
+                ),
+                'is_paid': False,
+            },
+        }
         utility_bills['account_id'] = account_id
         bills_collection.insert_one(utility_bills)
         return utility_bills
@@ -222,17 +266,18 @@ def pay_utility_bill(account_id, bill_name):
 
     bills_collection = current_app.mongo.db.bills
     bill_update_result = bills_collection.update_one(
-        {"account_id": account_id, bill_name: {"$exists": True}},
-        {"$set": {f"{bill_name}.is_paid": True}}
+        {'account_id': account_id, bill_name: {'$exists': True}},
+        {'$set': {f"{bill_name}.is_paid": True}},
     )
 
     if bill_update_result.modified_count > 0:
-        response = {"status": 0, "id": account_id}  # status 0 indicates success
+        # status 0 indicates success
+        response = {'status': 0, 'id': account_id}
     else:
-        response = {"status": 1, "id": account_id}  # status 1 indicates failure
+        # status 1 indicates failure
+        response = {'status': 1, 'id': account_id}
 
     return response
-
 
 
 def get_account_information(account_id):
@@ -252,16 +297,16 @@ def get_account_information(account_id):
 
     users_collection = current_app.mongo.db.users
 
-    user = users_collection.find_one({"_id": account_id})
+    user = users_collection.find_one({'_id': account_id})
     if user:
         account_information = {
-            "status": 0,
-            "first_name": user.get("first_name", ""),
-            "last_name": user.get("last_name", ""),
-            "email": user.get("email", ""),
+            'status': 0,
+            'first_name': user.get('first_name', ''),
+            'last_name': user.get('last_name', ''),
+            'email': user.get('email', ''),
         }
     else:
-        account_information = {"status": 1}  # not found
+        account_information = {'status': 1}  # not found
     return account_information
 
 
@@ -283,23 +328,23 @@ def get_documents(account_id):
 
     if not ObjectId.is_valid(account_id):
         logging.error(f"Invalid account_id format: {account_id}")
-        return {"status": 1}
+        return {'status': 1}
 
     account_obj_id = ObjectId(account_id)
 
     doc = documents_collection.find_one(
-        {"user_id": str(account_obj_id)},
+        {'user_id': str(account_obj_id)},
     )  # get the documents for each user
     if doc:
         documents = {
-            "status": 0,
-            "passport": doc.get("passport", {}),
-            "driver_license": doc.get("driver_license", {}),
-            "health_card": doc.get("health_card", {}),
+            'status': 0,
+            'passport': doc.get('passport', {}),
+            'driver_license': doc.get('driver_license', {}),
+            'health_card': doc.get('health_card', {}),
         }
     else:
         logging.error(f"No documents found for user_id: {account_id}")
-        documents = {"status": 1}
+        documents = {'status': 1}
 
     return documents
 
@@ -317,19 +362,19 @@ def get_user_data(account_id):
     mongo_db = current_app.mongo
 
     users_collection = mongo_db.db.users  # get users collection
-    basic_info = users_collection.find_one({"_id": account_id})
+    basic_info = users_collection.find_one({'_id': account_id})
 
     user_details_collection = mongo_db.db.user_details  # get users_details collection
-    additional_info = user_details_collection.find_one({"user_id": account_id})
+    additional_info = user_details_collection.find_one({'user_id': account_id})
 
     if basic_info and additional_info:
-        basic_info.pop("_id", None)
-        additional_info.pop("_id", None)
-        additional_info.pop("user_id", None)  # remove the user ID
+        basic_info.pop('_id', None)
+        additional_info.pop('_id', None)
+        additional_info.pop('user_id', None)  # remove the user ID
 
         # merge both information
         user_data = {**basic_info, **additional_info}
 
         return user_data
     else:
-        return {"status": 1}
+        return {'status': 1}
