@@ -206,7 +206,11 @@ class Main:
         - render_template: HTML response with the content of property_tax_payments.html.
         """
 
-        property_taxes = get_property_taxes(Main.ACCOUNT_ID)
+        account_id = session.get('account_id')
+        if account_id is None:
+            return 'Error: Account id is not set', 400
+
+        property_taxes = get_property_taxes(account_id)
 
         return render_template(
             "property_tax_payments.html", property_taxes_data=property_taxes
@@ -228,7 +232,12 @@ class Main:
           Format: {"status": int, "id": str}
         """
 
-        response = pay_property_tax(Main.ACCOUNT_ID)
+        account_id = session.get('account_id')
+        if account_id is None:
+            return 'Error: Account id is not set', 400
+        
+        data = request.get_json()
+        response = pay_property_tax(account_id, data['bill'])
 
         return jsonify(response)
 
@@ -241,8 +250,11 @@ class Main:
         Returns:
         - render_template: HTML response with the content of utility_bill_payments.html.
         """
+        account_id = session.get('account_id')
+        if account_id is None:
+            return 'Error: Account id is not set', 400
 
-        utility_bills = get_utility_bills(Main.ACCOUNT_ID)
+        utility_bills = get_utility_bills(account_id)
 
         return render_template("utility_bill_payments.html", bills_data=utility_bills)
 
@@ -262,8 +274,12 @@ class Main:
           Format: {"status": int, "id": str}
         """
 
+        account_id = session.get('account_id')
+        if account_id is None:
+            return 'Error: Account id is not set', 400
+        
         data = request.get_json()
-        response = pay_utility_bill(Main.ACCOUNT_ID, data["bill"])
+        response = pay_utility_bill(account_id, data['bill'])
 
         return jsonify(response)
 
