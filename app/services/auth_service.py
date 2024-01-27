@@ -525,4 +525,36 @@ def register_user(first_name, last_name, email, password):
         logging.error("Error in inserting user details/documents, rollback initiated: {}".format(e))
         return {"status": 6, "id": None}  # error inserting user details
 
-    return {'status': 0, 'id': str(user_id)}
+    return {"status": 0, "id": str(user_id)}
+
+def change_password(user_id, old_password, new_password):
+    users_collection = current_app.mongo.db.users
+    user = users_collection.find_one({"_id":user_id})
+
+    if user is None:
+        return {"status":2,"message":"User not Found"}
+    
+    if not bcrypt.checkpw(old_password.encode('utf-8'),user['password']):
+        return {"status":3,"message": "Incorrect Old Password"}
+    
+    hashed_new_password = bcrypt.hashpw(new_password.encode('utf-8'),bcrypt.gensalt())
+
+    users_collection.update_one(
+        {"_id":user_id},
+        {"$set":{"password":hashed_new_password}}
+    )
+
+    return {"status":0,"message":"Password changed successfully"}
+
+def delete_account(user_id):
+    users_collection = current_app.mongo.db.users
+    bills_collection = current_app.mongo.db.bills
+    user_details_collection = current_app.mongo.db.user_details
+    documents_collection = current_app.mongo.db.documents
+
+    users_collection.delete_one({"id": user_id})
+    bills_collection.delete_many({"user_id": user_id})
+    user_details_collection.delete_many({"user_id":user_id})
+    documents_collection.delete_many({"user_id":user_id})
+
+    return{"status":0,"message":"Account has been deleted successfully"}
