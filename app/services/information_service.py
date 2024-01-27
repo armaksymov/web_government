@@ -14,22 +14,59 @@ fake = Faker()
 
 
 def renew_license(account_id):
-    response = {
-        "status": 0,
-    }
+    bills_collection = current_app.mongo.db.bills
+    new_expiry_date = fake.date_between(start_date="+1y", end_date="+2y").strftime("%d %b %Y")
+
+    update_result = bills_collection.update_one(
+        {"account_id": account_id, "license": {"$exists": True}},
+        {
+            "$set": {
+                "license.expiry_date": new_expiry_date,
+                "license.is_paid": True
+            }
+        }
+    )
+
+    if update_result.modified_count > 0:
+        response = {"status": 0, "id": account_id}  # status 0 indicates success
+    else:
+        response = {"status": 1, "id": account_id}  # status 1 indicates failure
 
     return response
+
 
 
 def renew_registration(account_id):
-    response = {
-        "status": 0,
-    }
+    bills_collection = current_app.mongo.db.bills
+    new_expiry_date = fake.date_between(start_date="+1y", end_date="+2y").strftime("%d %b %Y")
+
+    update_result = bills_collection.update_one(
+        {"account_id": account_id, "registration": {"$exists": True}},
+        {
+            "$set": {
+                "registration.expiry_date": new_expiry_date,
+                "registration.is_paid": True
+            }
+        }
+    )
+
+    if update_result.modified_count > 0:
+        response = {"status": 0, "id": account_id}  # status 0 indicates success
+    else:
+        response = {"status": 1, "id": account_id}  # status 1 indicates failure
 
     return response
 
 
+
 def get_license_and_registration(account_id):
+    bills_collection = current_app.mongo.db.bills
+
+    existing_records = bills_collection.find_one(
+        {"account_id": account_id},
+        {"license": 1, "registration": 1, "_id": 0} 
+    )
+
     # Generate expiry date
     expiry_date = fake.date_between(start_date="today", end_date="+365d")
 
@@ -55,10 +92,13 @@ def get_license_and_registration(account_id):
     else:
         min_fee, max_fee = 150, 200
 
-    license_and_registration = {
+    if existing_records and "license" in existing_records and "registration" in existing_records:
+        return existing_records
+    else:
+        license_and_registration = {
         "license": {
             "number": fake.random_number(digits=9),
-            "is_paid": fake.boolean(),
+            "is_paid": False,
             "expiry_date": expiry_date.strftime("%d %b %Y"),
             "renewal_fee": round(
                 fake.pyfloat(
@@ -75,7 +115,7 @@ def get_license_and_registration(account_id):
         },
         "registration": {
             "number": fake.random_number(digits=9),
-            "is_paid": fake.boolean(),
+            "is_paid": False,
             "make": fake.company(),
             "year": fake.year(),
             "plate_number": "".join(fake.random_letters(length=3)).upper()
@@ -96,7 +136,15 @@ def get_license_and_registration(account_id):
         },
     }
 
-    return license_and_registration
+        bills_collection.update_one(
+            {"account_id": account_id},
+            {"$set": {"license": license_and_registration["license"],
+                      "registration": license_and_registration["registration"]}},
+            upsert=True
+        )
+
+        return license_and_registration
+
 
 
 def get_property_taxes(account_id):
