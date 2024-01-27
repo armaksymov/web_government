@@ -1,118 +1,197 @@
-<script src="https://kit.fontawesome.com/aea9fedfee.js" crossorigin="anonymous"></script>
+<h1>Hello, {{Name}}! 👋</h1>
 
-<div>
-    <section id="feed">
-        <div class="w-100 d-flex justify-content-center align-items-center">
-            <div class="container-fluid">
-                <div class="row align-items-center">
-                    <p class="h3 h2-sm h1-md mb-4">Welcome, {{Name}} 👋</p>
-                    <p class="h4 h3-sm h2-md pt-2 mb-3">Recent News</p>
-                    <div id="news" class="col-12 mb-4 mx-md-0">
-                        <div id="newsCarousel" class="carousel carousel-dark slide" data-bs-ride="#newsCarousel">
-                            <div class="carousel-indicators">
-                                <button type="button" data-bs-target="#newsCarousel" data-bs-slide-to="0" class="active"
-                                    aria-current="true" aria-label="Slide 1"></button>
-                                <button type="button" data-bs-target="#newsCarousel" data-bs-slide-to="1"
-                                    aria-label="Slide 2"></button>
-                                <button type="button" data-bs-target="#newsCarousel" data-bs-slide-to="2"
-                                    aria-label="Slide 3"></button>
-                            </div>
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <a href="https://www.canada.ca/en/immigration-refugees-citizenship/news/2024/01/canada-to-stabilize-growth-and-decrease-number-of-new-international-student-permits-issued-to-approximately-360000-for-2024.html">
-                                        <img class="d-block img-fluid w-100"
-                                             src="{{ url_for('static', filename='images/student_cap.jpg') }}"
-                                             alt="Student Cap News">
-                                    </a>
-                                </div>
-                                <div class="carousel-item">
-                                    <a href="https://www.canada.ca/en/services/taxes/income-tax/personal-income-tax/get-ready-taxes.html">
-                                        <img class="d-block img-fluid w-100"
-                                             src="{{ url_for('static', filename='images/tax_season.jpg') }}"
-                                             alt="Tax Season">
-                                    </a>
-                                </div>
-                                <div class="carousel-item">
-                                    <a href="https://www.csnpe-nslsc.canada.ca/en/home">
-                                        <img class="d-block img-fluid w-100"
-                                             src="{{ url_for('static', filename='images/student_loan.jpg') }}"
-                                             alt="...">
-                                    </a>
-                                </div>
-                            </div>
-                            <button class="pe-5 carousel-control-prev" type="button" data-bs-target="#newsCarousel"
-                                data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="ps-5 carousel-control-next" type="button" data-bs-target="#newsCarousel"
-                                data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
-                        </div>
-                    </div>
+<style>
+    body {
+        overflow: hidden;
+    }
 
-                    <p class="h4 h3-sm h2-md pt-2 mb-3">Top Services</p>
-                    <div id="services" class="card text-white bg-dark col-12 mx-auto mx-md-0 d-none d-md-block">
-                        <div class="row mt-auto p-3 text-center" style="align-items: center;">
-                            <a href="" class="col card p-3 pb-1 me-3">
-                                <i class="fa-solid fa-car"></i>
-                                <p class="quick-action-text fw-bold" style="margin-top: 12px;">
-                                    Driver's License
-                                </p>
-                            </a>
+    .custom-container {
+        padding-left: 0;
+        padding-right: 0;
+    }
 
-                            <a href="" class="col card p-3 pb-1 me-3">
-                                <i class="fa-solid fa-faucet-drip"></i>
-                                <p class="quick-action-text fw-bold" style="margin-top: 12px;">
-                                    Utility Bills
-                                </p>
-                            </a>
+    .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-                            <a href="" class="col card p-3 pb-1 me-3">
-                                <i class="fa-solid fa-graduation-cap"></i>
-                                <p class="quick-action-text fw-bold" style="margin-top: 12px;">
-                                    Tuition Loan
-                                </p>
-                            </a>
+    .swiper-slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 
-                            <a href="" class="col card p-3 pb-1">
-                                <i class="fa-solid fa-money-check-dollar"></i>
-                                <p class="quick-action-text fw-bold" style="margin-top: 12px;">
-                                    Tax Services
-                                </p>
-                            </a>
-                        </div>
-                    </div>
+    .transparent-card {
+        background-color: rgba(255, 255, 255, 0.75);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        border-radius: 12px;
+        margin-bottom: 42px;
+    }
 
-                    <div id="services" class="btn-group-vertical col-12 mx-auto mx-md-0 d-block d-md-none">
-                        <a href="" class="col card link-underline link-underline-opacity-0 p-2">
-                            <p class="fs-5" style="margin-top: 12px;">
-                                <i class="fa-solid fa-car ps-3 pe-4"></i>Driver's License
-                            </p>
-                        </a>
+    .icon-bg {
+        background-color: #000000;
+        border-radius: 40%;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-                        <a href="" class="col card link-underline link-underline-opacity-0 p-2">
-                            <p class="fs-5" style="margin-top: 12px;">
-                                <i class="fa-solid fa-faucet-drip ps-3 pe-4"></i>Utility Bills
-                            </p>
-                        </a>
+    .icon-color {
+        color: white;
+    }
 
-                        <a href="" class="col card link-underline link-underline-opacity-0 p-2">
-                            <p class="fs-5" style="margin-top: 12px;">
-                                <i class="fa-solid fa-graduation-cap ps-3 pe-4"></i>Loan Repayment
-                            </p>
-                        </a>
+    .quick-action-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
 
-                        <a href="" class="col card link-underline link-underline-opacity-0 p-2">
-                            <p class="fs-5" style="margin-top: 12px;">
-                                <i class="fa-solid fa-money-check-dollar ps-3 pe-4"></i>CRA Tax Services
-                            </p>
-                        </a>
-                    </div>
+    .quick-action-text {
+        text-wrap: nowrap;
+        max-width: 128px;
+    }
+
+    .card-link {
+        text-decoration: none;
+        color: black;
+    }
+
+    .card-body {
+        padding: 0;
+    }
+
+    .news-card {
+        border-radius: 12px;
+        border: 0px solid;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .autoplay-progress {
+        position: absolute;
+        right: 1px;
+        z-index: 10;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: rgb(125, 192, 255);
+    }
+
+    .autoplay-progress svg {
+        --progress: 0;
+        position: absolute;
+        left: 0;
+        top: 0px;
+        z-index: 10;
+        width: 100%;
+        height: 100%;
+        stroke-width: 4px;
+        stroke: rgb(125, 192, 255);
+        fill: none;
+        stroke-dashoffset: calc(125.6 * (1 - var(--progress)));
+        stroke-dasharray: 125.6;
+        transform: rotate(-90deg);
+    }
+</style>
+
+<div class="container custom-container mt-4">
+    <h4>Recent News</h4>
+    <div class="mt-3 swiper mySwiper">
+        <div class="autoplay-progress m-1">
+            <svg viewBox="0 0 48 48">
+                <circle cx="24" cy="24" r="20"></circle>
+            </svg>
+            <span></span>
+        </div>
+        <div class="swiper-wrapper">
+            <div class="swiper-slide card transparent-card">
+                <div class="card-body">
+                    <img class="news-card d-block img-fluid w-100"
+                        src="{{ url_for('static', filename='images/student_cap.jpg') }}">
+                </div>
+            </div>
+
+            <div class="swiper-slide card transparent-card">
+                <div class="card-body">
+                    <img class="news-card d-block img-fluid w-100"
+                        src="{{ url_for('static', filename='images/student_loan.jpg') }}">
+                </div>
+            </div>
+
+            <div class="swiper-slide card transparent-card">
+                <div class="card-body">
+                    <img class="news-card d-block img-fluid w-100"
+                        src="{{ url_for('static', filename='images/tax_season.jpg') }}">
                 </div>
             </div>
         </div>
-    </section>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <div class="row mt-2" style="align-items: top;">
+        <a onclick="redirect_to('utility_bill_payments', 'services')" class="col card-link">
+            <div class="col quick-action-col quick-action">
+                <i class="icon-bg bi bi-lightbulb icon-color fs-1"></i>
+                <p class="quick-action-text small fw-bold" style="margin-top: 12px;">Utility Bills</p>
+            </div>
+        </a>
+
+        <a onclick="redirect_to('license_and_registration', 'services')" class="col card-link">
+            <div class="col quick-action-col quick-action">
+                <i class="icon-bg bi bi-car-front icon-color fs-1"></i>
+                <p class="quick-action-text small fw-bold" style="margin-top: 12px;">Renew License</p>
+            </div>
+        </a>
+
+        <a onclick="redirect_to('property_tax_payments', 'services')" class="col card-link">
+            <div class="col quick-action-col quick-action">
+                <i class="icon-bg bi bi-cash-stack icon-color fs-1"></i>
+                <p class="quick-action-text small fw-bold" style="margin-top: 12px;">Tax Payments</p>
+            </div>
+        </a>
+    </div>
 </div>
+
+<script>
+    var progressCircle = document.querySelector(".autoplay-progress svg");
+    var progressContent = document.querySelector(".autoplay-progress span");
+
+    var swiper = new Swiper(".mySwiper", {
+        effect: "coverflow",
+        slidesPerView: 1,
+        loop: true,
+        autoplay: {
+            delay: 4000,
+            disableOnInteraction: false,
+        },
+        coverflowEffect: {
+            rotate: 64,
+            depth: 100,
+            slideShadows: false,
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        on: {
+            autoplayTimeLeft(s, time, progress) {
+                progressCircle.style.setProperty("--progress", 1 - progress);
+                progressContent.textContent = `${Math.ceil(time / 1000)}s`;
+            }
+        }
+    });
+</script>

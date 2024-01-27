@@ -188,9 +188,12 @@ class Main:
         - render_template: HTML response with the content of license_and_registration.html.
         """
 
-        license_and_registration = get_license_and_registration(
-            Main.ACCOUNT_ID,
-        )
+        license_and_registration = get_license_and_registration(Main.ACCOUNT_ID)
+        account_id = session.get('account_id')
+        if account_id is None:
+            return 'Error: Account id is not set', 400
+
+        license_and_registration = get_license_and_registration(account_id)
 
         return render_template(
             'license_and_registration.html',
@@ -236,9 +239,8 @@ class Main:
         account_id = session.get('account_id')
         if account_id is None:
             return 'Error: Account id is not set', 400
-
-        data = request.get_json()
-        response = pay_property_tax(account_id, data['bill'])
+        
+        response = pay_property_tax(account_id)
 
         return jsonify(response)
 
@@ -287,33 +289,22 @@ class Main:
     @staticmethod
     @main_blueprint.route('/renew_license', methods=['POST'])
     def renew_license():
-        """
-        Renew driver's license based on the Account ID.
 
-        Account ID stored in session
-
-        Returns:
-        - jsonify: JSON response indicating the status of the bill payment.
-          Format: {"status": int, "id": str}
-        """
-
-        response = renew_license(Main.ACCOUNT_ID)
+        account_id = session.get('account_id')
+        if account_id is None:
+            return 'Error: Account id is not set', 400
+        
+        response = renew_license(account_id)
 
         return jsonify(response)
 
     @staticmethod
     @main_blueprint.route('/renew_registration', methods=['POST'])
     def renew_registration():
-        """
-        Renew car registration based on the Account ID.
-
-        Account ID stored in session
-
-        Returns:
-        - jsonify: JSON response indicating the status of the bill payment.
-          Format: {"status": int, "id": str}
-        """
-
-        response = renew_registration(Main.ACCOUNT_ID)
+        account_id = session.get('account_id')
+        if account_id is None:
+            return 'Error: Account id is not set', 400
+        
+        response = renew_registration(account_id)
 
         return jsonify(response)
