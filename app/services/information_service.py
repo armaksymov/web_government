@@ -21,6 +21,14 @@ def renew_license(account_id):
     return response
 
 
+def renew_registration(account_id):
+    response = {
+        "status": 0,
+    }
+
+    return response
+
+
 def get_license_and_registration(account_id):
     # Generate expiry date
     expiry_date = fake.date_between(start_date="today", end_date="+365d")
@@ -64,7 +72,28 @@ def get_license_and_registration(account_id):
             ),
             "renewal_period": renewal_period,
             "renewal_deadline": renewal_deadline.strftime("%d %b %Y"),
-        }
+        },
+        "registration": {
+            "number": fake.random_number(digits=9),
+            "is_paid": fake.boolean(),
+            "make": fake.company(),
+            "year": fake.year(),
+            "plate_number": "".join(fake.random_letters(length=3)).upper()
+            + str(fake.random_int(min=1000, max=9999)),
+            "expiry_date": expiry_date.strftime("%d %b %Y"),
+            "renewal_fee": round(
+                fake.pyfloat(
+                    left_digits=3,
+                    right_digits=2,
+                    positive=True,
+                    min_value=min_fee,
+                    max_value=max_fee,
+                ),
+                -1,
+            ),
+            "renewal_period": renewal_period,
+            "renewal_deadline": renewal_deadline.strftime("%d %b %Y"),
+        },
     }
 
     return license_and_registration
