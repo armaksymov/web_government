@@ -71,7 +71,13 @@ def get_license_and_registration(account_id):
 
 
 def get_property_taxes(account_id):
-    property_taxes = {
+    bills_collection = current_app.mongo.db.bills
+
+    existing_bills = bills_collection.find_one({"account_id": account_id})
+    if existing_bills and "property_tax" in existing_bills:
+        return existing_bills["property_tax"]
+    else:
+        property_tax = {
         "number": fake.random_number(digits=9),
         "issued": fake.date_between(start_date="-30d", end_date="today").strftime(
             "%d %b %Y"
@@ -83,18 +89,32 @@ def get_property_taxes(account_id):
             left_digits=1, right_digits=2, positive=True, min_value=1, max_value=3
         ),
         "value": fake.random_number(digits=6),
-        "is_paid": fake.boolean(),
+        "is_paid": False,
     }
+    bills_collection.update_one(
+        {"account_id": account_id},
+        {"$set": {"property_tax": property_tax}},
+        upsert=True
+    )
 
-    return property_taxes
+    return property_tax
 
 
 def pay_property_tax(account_id):
-    response = {
-        "status": 0,
-    }
+    bills_collection = current_app.mongo.db.bills
+
+    bill_update_result = bills_collection.update_one(
+        {"account_id": account_id, "property_tax": {"$exists": True}},
+        {"$set": {"property_tax.is_paid": True}}
+    )
+
+    if bill_update_result.modified_count > 0:
+        response = {"status": 0, "id": account_id}  # status 0 indicates success
+    else:
+        response = {"status": 1, "id": account_id}  # status 1 indicates failure
 
     return response
+
 
 
 def get_utility_bills(account_id):
