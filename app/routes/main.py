@@ -236,8 +236,7 @@ class Main:
         if account_id is None:
             return 'Error: Account id is not set', 400
         
-        data = request.get_json()
-        response = pay_property_tax(account_id, data['bill'])
+        response = pay_property_tax(account_id)
 
         return jsonify(response)
 
