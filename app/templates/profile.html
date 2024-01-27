@@ -1,4 +1,4 @@
-<h1>Profile</h1>
+<h1>Profile & Settings</h1>
 
 <style>
     body {
@@ -19,9 +19,81 @@
         border-radius: 12px;
         font-size: larger;
     }
+
+    .transparent-card {
+        background-color: rgba(255, 255, 255, 0.75);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        border-radius: 12px;
+        padding: 12px;
+    }
+
+    .card-link {
+        text-decoration: none;
+        color: black;
+    }
+
+    .separator {
+        border-top: 1px solid rgb(0, 0, 0, 0.1);
+        margin-top: 22px;
+        margin-bottom: 22px;
+    }
 </style>
 
-<div class="centered-div mt-4">
+<div class="d-flex justify-content-center align-items-center mt-4">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div id="notifications" class="transparent-card btn-group-vertical col-12 mx-auto mx-md-0 d-block mb-4">
+                <a href="" class="card-link col">
+                    <p class="fs-5" style="margin-top: 12px;">
+                        <i class="bi bi-envelope-fill ps-3 pe-4 fs-4"></i>Notifications
+                    </p>
+                </a>
+            </div>
+
+            <div id="profile" class="transparent-card btn-group-vertical col-12 mx-auto mx-md-0 d-block mb-4">
+                <a href="" class="card-link col">
+                    <p class="fs-5" style="margin-top: 12px;">
+                        <i class="bi bi-file-person-fill ps-3 pe-4 fs-4"></i>My Profile
+                    </p>
+                </a>
+
+                <div class="separator"></div>
+
+                <a href="" class="card-link col">
+                    <p class="fs-5" style="margin-top: 12px;">
+                        <i class="bi bi-gear-fill ps-3 pe-4 fs-4"></i>Application Settings
+                    </p>
+                </a>
+
+                <div class="separator"></div>
+
+                <a href="" class="card-link col">
+                    <p class="fs-5" style="margin-top: 12px;">
+                        <i class="bi bi-phone-fill ps-3 pe-4 fs-4"></i>My Sign-Ins and Devices
+                    </p>
+                </a>
+            </div>
+
+            <div id="profile" class="transparent-card btn-group-vertical col-12 mx-auto mx-md-0 d-block mb-4">
+                <a href="" class="card-link col">
+                    <p class="fs-5" style="margin-top: 12px;">
+                        <i class="bi bi-question-circle-fill ps-3 pe-4 fs-4"></i>F.A.Q.
+                    </p>
+                </a>
+
+                <div class="separator"></div>
+
+                <a href="" class="card-link col">
+                    <p class="fs-5" style="margin-top: 12px;">
+                        <i class="bi bi-life-preserver ps-3 pe-4 fs-4"></i>Contact Support
+                    </p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="centered-div">
     <a href="login" class="profile-btn">
         <button type="button" class="btn btn-dark profile-btn">Log Out</button>
     </a>
