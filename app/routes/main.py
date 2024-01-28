@@ -11,13 +11,13 @@ from flask import render_template
 from flask import request
 from flask import session
 from base64 import b32encode
-import time
 import pyotp
 
 from app.services.auth_service import authenticate_user
 from app.services.auth_service import register_user
 from app.services.auth_service import get_b64encoded_qr_image
 from app.services.auth_service import change_password
+from app.services.auth_service import delete_account
 from app.services.information_service import *
 
 main_blueprint = Blueprint("main", __name__)
@@ -350,5 +350,20 @@ class Main:
     def change_password():
         data = request.get_json()
         response = change_password(session.get("account_id"), data["old_pass"], data["new_pass"])
+
+        return jsonify(response)
+    
+
+    @staticmethod
+    @main_blueprint.route("/delete_account")
+    def delete_account_page():
+
+        return render_template("delete_account.html")
+    
+
+    @staticmethod
+    @main_blueprint.route("/delete_account", methods=["DELETE"])
+    def delete_account():
+        response = delete_account(session.get("account_id"))
 
         return jsonify(response)
