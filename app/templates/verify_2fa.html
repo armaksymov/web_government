@@ -26,14 +26,14 @@
 
 </head>
 
-<p id="ErrorPrompt" class="h6 text-center mb-4" style="color: #ac5754; display: none;"></p>
-
 <body style="background: radial-gradient(circle at left bottom, #fffff4, #ebfffd, #ecedff);">
     <div class="vh-100 w-100 d-flex justify-content-center">
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <div class="col-8 mx-auto">
-                    <input class="form-control" id="otp" type="text" placeholder="Enter OTP code" />
+                <div class="col-8 mx-auto mt-5 justify-content-center text-center">
+                    <p class="h2 mb-4">Enter Your One-Time Password</p>
+                    <p id="ErrorPrompt" class="h6 text-center mb-4" style="color: #ac5754; display: none;"></p>
+                    <input class="form-control mb-3" id="otp" type="text" placeholder="Enter OTP code" />
                     <button type="button" onclick="send2FAVerifyRequest()" class="btn btn-dark">Verify</button>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                     let errorMessage = "";
                     switch (result.status) {
                         case 1:
-                            errorMessage = "Incorrect OTP.";
+                            errorMessage = "Incorrect One-Time Password.";
                             break;
                         default:
                             errorMessage = "An unexpected error occurred. Please attempt the operation again later.";

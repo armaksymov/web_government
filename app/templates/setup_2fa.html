@@ -30,59 +30,54 @@
     <div class="vh-100 w-100 d-flex justify-content-center">
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <img class="col-12 mt-5 mx-auto w-75 rounded" src="data:image/png;base64, {{ qr }}">
-                <div class="col-8 mx-auto">
+                <img class="col-12 mt-5 mx-auto w-75 rounded mb-4" src="data:image/png;base64, {{ qr }}">
+                <div class="col-8 mx-auto mb-4">
                     <div class="input-group">
                         <input class="form-control" id="OTPcode" type="text" value={{ account_id }}>
-                        <button class="input-group-addon btn btn-dark" onclick="copyToClipboard()"><i class="fa-regular fa-copy"></i></button></input>
+                        <button class="input-group-addon btn btn-dark text-center" onclick="copyToClipboard('OTPcode')"><i
+                                class="fa-regular fa-copy"></i></button>
                     </div>
                 </div>
+
+                <a href="verify_2fa" class="btn btn-dark w-50">Verify 2FA</a>
             </div>
         </div>
     </div>
-    <a href="verify_2fa" class="link" style="color: #5464ac;">Verify 2FA</a>
 </body>
 
 <script>
-    (function () {
-        "use strict";
+    function copyToClipboard(elem) {
+        var target = document.getElementById(elem);
 
-        function copyToClipboard(elem) {
-            var target = elem;
+        // select the content
+        var currentFocus = document.activeElement;
 
-            // select the content
-            var currentFocus = document.activeElement;
+        target.focus();
+        target.setSelectionRange(0, target.value.length);
 
-            target.focus();
-            target.setSelectionRange(0, target.value.length);
+        // copy the selection
+        var succeed;
 
-            // copy the selection
-            var succeed;
+        try {
+            succeed = document.execCommand("copy");
+        } catch (e) {
+            console.warn(e);
 
-            try {
-                succeed = document.execCommand("copy");
-            } catch (e) {
-                console.warn(e);
-
-                succeed = false;
-            }
-
-            // Restore original focus
-            if (currentFocus && typeof currentFocus.focus === "function") {
-                currentFocus.focus();
-            }
-
-            if (succeed) {
-                $(".copied").animate({ top: -25, opacity: 0 }, 700, function () {
-                    $(this).css({ top: 0, opacity: 1 });
-                });
-            }
-
-            return succeed;
+            succeed = false;
         }
 
-        $("#copyButton, #copyTarget").on("click", function () {
-            copyToClipboard(document.getElementById("copyTarget"));
-        });
-    })();
+        // Restore original focus
+        if (currentFocus && typeof currentFocus.focus === "function") {
+            currentFocus.focus();
+        }
+
+        if (succeed) {
+            // Update the class name to match your HTML
+            $(".input-group").animate({ top: -25, opacity: 0 }, 700, function () {
+                $(this).css({ top: 0, opacity: 1 });
+            });
+        }
+
+        return succeed;
+    }
 </script>
