@@ -3,7 +3,7 @@ This module contains the implementation for the user authentication
 on login as well the user registration
 """
 from __future__ import annotations
-
+from bson import ObjectId
 import datetime
 import random
 import re
@@ -529,7 +529,7 @@ def register_user(first_name, last_name, email, password):
 
 def change_password(user_id, old_password, new_password):
     users_collection = current_app.mongo.db.users
-    user = users_collection.find_one({"_id":user_id})
+    user = users_collection.find_one({"_id":ObjectId(user_id)})
 
     if user is None:
         return {"status":2,"message":"User not Found"}
@@ -540,7 +540,7 @@ def change_password(user_id, old_password, new_password):
     hashed_new_password = bcrypt.hashpw(new_password.encode('utf-8'),bcrypt.gensalt())
 
     users_collection.update_one(
-        {"_id":user_id},
+        {"_id":ObjectId(user_id)},
         {"$set":{"password":hashed_new_password}}
     )
 
