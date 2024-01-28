@@ -30,6 +30,7 @@
             .then(response => response.json())
             .then(result => {
                 console.log(result.status)
+                window.location = "register"
             })
             .catch(error => {
                 // Handle errors
