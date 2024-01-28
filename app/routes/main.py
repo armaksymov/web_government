@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import qrcode
 
-from flask import Blueprint
+from flask import Blueprint, redirect
 from flask import jsonify
 from flask import render_template
 from flask import request
@@ -130,7 +130,7 @@ class Main:
     def setup_2fa():
         """ """
         session["account_id"] = request.args.get("id")
-        id = "wg" + b32encode(session["account_id"].encode()).decode("utf-8")
+        id = b32encode(("wg" + session["account_id"]).encode()).decode("utf-8")
 
         totp_auth = pyotp.totp.TOTP(id).provisioning_uri(
             name=request.args.get("full_name"), issuer_name="web.gov"
@@ -142,10 +142,29 @@ class Main:
 
     @staticmethod
     @main_blueprint.route("/verify_2fa")
-    def verify_2fa():
+    def verify_2fa_page():
         session["account_id"] = request.args.get("id")
 
         return render_template("verify_2fa.html")
+
+    @staticmethod
+    @main_blueprint.route("/verify_2fa", methods=["POST"])
+    def verify_2fa():
+        secret_key = b32encode(("wg" + session["account_id"]).encode()).decode("utf-8")
+        totp = pyotp.TOTP(secret_key)
+        data = request.get_json()
+        response = None
+
+        if totp.verify(data["otp"]):
+            response = {
+                "status": 0
+            }
+        else:
+            response = {
+                "status": 1
+            }
+        
+        return jsonify(response)
 
     @staticmethod
     @main_blueprint.route("/login", methods=["POST"])
