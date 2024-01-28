@@ -49,6 +49,7 @@ class Main:
         Returns:
         - render_template: HTML response with the content of index.html.
         """
+        
         return render_template("index.html")
 
     @staticmethod
