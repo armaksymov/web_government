@@ -1,0 +1,80 @@
+<h1>My Profile</h1>
+
+<style>
+    body {
+        overflow: hidden;
+    }
+
+    .transparent-card {
+        background-color: rgba(255, 255, 255, 0.75);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        border-radius: 12px;
+    }
+
+    .icon-color {
+        color: white;
+    }
+
+    .icon-bg {
+        background-color: #000000;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .property-card {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .property-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .label {
+        flex: 1;
+        text-align: left;
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    .value {
+        flex: 1;
+        color: #6c757d;
+        font-weight: bold;
+        text-align: right;
+    }
+</style>
+
+<div class="col card-col mt-4">
+    <div class="card transparent-card">
+        <div class="card-body">
+            <div class="icon-bg">
+                <i class="bi bi-person icon-color fs-5"></i>
+            </div>
+
+            <div class="property-card">
+                <div class="property-info">
+                    <span class="label">First Name:</span>
+                    <span class="value">{{ account_data['first_name'] }}</span>
+                </div>
+
+                <div class="property-info">
+                    <span class="label">Last Name:</span>
+                    <span class="value">{{ account_data['last_name'] }}</span>
+                </div>
+
+                <div class="property-info">
+                    <span class="label">Email Address:</span>
+                    <span class="value">{{ account_data['email'] }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -130,7 +130,7 @@ class Main:
     def setup_2fa():
         """ """
         session["account_id"] = request.args.get("id")
-        id = "wg" + b32encode(session['account_id'].encode()).decode("utf-8")
+        id = "wg" + b32encode(session["account_id"].encode()).decode("utf-8")
 
         totp_auth = pyotp.totp.TOTP(id).provisioning_uri(
             name=request.args.get("full_name"), issuer_name="web.gov"
@@ -139,7 +139,7 @@ class Main:
         qr_image = get_b64encoded_qr_image(totp_auth)
 
         return render_template("setup_2fa.html", qr=qr_image, account_id=id)
-    
+
     @staticmethod
     @main_blueprint.route("/verify_2fa")
     def verify_2fa():
@@ -336,30 +336,26 @@ class Main:
         response = renew_registration(account_id)
 
         return jsonify(response)
-    
 
     @staticmethod
     @main_blueprint.route("/change_password")
     def change_password_page():
-
         return render_template("change_password.html")
-    
 
     @staticmethod
     @main_blueprint.route("/change_password", methods=["PATCH"])
     def change_password():
         data = request.get_json()
-        response = change_password(session.get("account_id"), data["old_pass"], data["new_pass"])
+        response = change_password(
+            session.get("account_id"), data["old_pass"], data["new_pass"]
+        )
 
         return jsonify(response)
-    
 
     @staticmethod
     @main_blueprint.route("/delete_account")
     def delete_account_page():
-
         return render_template("delete_account.html")
-    
 
     @staticmethod
     @main_blueprint.route("/delete_account", methods=["DELETE"])
@@ -367,3 +363,9 @@ class Main:
         response = delete_account(session.get("account_id"))
 
         return jsonify(response)
+
+    @staticmethod
+    @main_blueprint.route("/my_profile")
+    def my_profile_page():
+        account_info = get_account_information(session.get("account_id"))
+        return render_template("my_profile.html", account_data=account_info)

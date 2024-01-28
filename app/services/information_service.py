@@ -191,7 +191,7 @@ def get_account_information(account_id):
 
     users_collection = current_app.mongo.db.users
 
-    user = users_collection.find_one({'_id': account_id})
+    user = users_collection.find_one({"_id":ObjectId(account_id)})
     if user:
         account_information = {
             'status': 0,
