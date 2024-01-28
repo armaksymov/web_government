@@ -143,7 +143,9 @@ class Main:
     @staticmethod
     @main_blueprint.route("/verify_2fa")
     def verify_2fa_page():
-        session["account_id"] = request.args.get("id")
+        if (request.args.get("id") != None):
+            # account_id is already assigned
+            session["account_id"] = request.args.get("id")
 
         return render_template("verify_2fa.html")
 
