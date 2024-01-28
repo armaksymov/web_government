@@ -59,9 +59,9 @@
 
                 <div class="separator"></div>
 
-                <a href="" class="card-link col">
+                <a onclick="redirect_to_page('change_password')" class="card-link col">
                     <p class="fs-5" style="margin-top: 12px;">
-                        <i class="bi bi-gear-fill ps-3 pe-4 fs-4"></i>Application Settings
+                        <i class="bi bi-key-fill ps-3 pe-4 fs-4"></i>Change Password
                     </p>
                 </a>
 
@@ -69,7 +69,7 @@
 
                 <a href="" class="card-link col">
                     <p class="fs-5" style="margin-top: 12px;">
-                        <i class="bi bi-phone-fill ps-3 pe-4 fs-4"></i>My Sign-Ins and Devices
+                        <i class="bi bi-key-fill ps-3 pe-4 fs-4"></i>Delete Account
                     </p>
                 </a>
             </div>
@@ -98,3 +98,10 @@
         <button type="button" class="btn btn-dark profile-btn">Log Out</button>
     </a>
 </div>
+
+<script>
+    function redirect_to_page(page) {
+        // Load dynamic content into the container
+        $('#container').load(page);
+    }
+</script>

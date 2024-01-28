@@ -17,6 +17,7 @@ import pyotp
 from app.services.auth_service import authenticate_user
 from app.services.auth_service import register_user
 from app.services.auth_service import get_b64encoded_qr_image
+from app.services.auth_service import change_password
 from app.services.information_service import *
 
 main_blueprint = Blueprint("main", __name__)
@@ -49,7 +50,7 @@ class Main:
         Returns:
         - render_template: HTML response with the content of index.html.
         """
-        
+
         return render_template("index.html")
 
     @staticmethod
@@ -333,5 +334,21 @@ class Main:
             return "Error: Account id is not set", 400
 
         response = renew_registration(account_id)
+
+        return jsonify(response)
+    
+
+    @staticmethod
+    @main_blueprint.route("/change_password")
+    def change_password_page():
+
+        return render_template("change_password.html")
+    
+
+    @staticmethod
+    @main_blueprint.route("/change_password", methods=["PATCH"])
+    def change_password():
+        data = request.get_json()
+        response = change_password(session.get("account_id"), data["old_pass"], data["new_pass"])
 
         return jsonify(response)
