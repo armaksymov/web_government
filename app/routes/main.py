@@ -128,7 +128,16 @@ class Main:
     @staticmethod
     @main_blueprint.route("/setup_2fa")
     def setup_2fa():
-        """ """
+        """
+        Sets up two-factor authentication (2FA) for the user.
+
+        This method generates a Time-based One-Time Password (TOTP) and
+        provides a QR code for the user to scan with their authenticator app.
+
+        Returns:
+        - Rendered template: HTML page for setting up 2FA with QR code.
+        """
+
         session["account_id"] = request.args.get("id")
         id = b32encode(("wg" + session["account_id"]).encode()).decode("utf-8")
 
@@ -144,6 +153,16 @@ class Main:
     @staticmethod
     @main_blueprint.route("/verify_2fa")
     def verify_2fa_page():
+        """
+        Renders the page for verifying two-factor authentication (2FA).
+
+        If the account_id is provided in the request arguments, it sets
+        the session's account_id to the provided value.
+
+        Returns:
+        - Rendered template: HTML page for verifying 2FA.
+        """
+
         if request.args.get("id") != None:
             # account_id is already assigned
             session["account_id"] = request.args.get("id")
@@ -153,6 +172,16 @@ class Main:
     @staticmethod
     @main_blueprint.route("/verify_2fa", methods=["POST"])
     def verify_2fa():
+        """
+        Verifies the two-factor authentication (2FA) code provided by the user.
+
+        This method compares the provided OTP (One-Time Password) with the
+        TOTP generated using the stored secret key.
+
+        Returns:
+        - JSON response: Status indicating the result of the verification.
+        """
+
         secret_key = b32encode(("wg" + session["account_id"]).encode()).decode("utf-8")
         totp = pyotp.TOTP(secret_key)
         data = request.get_json()
