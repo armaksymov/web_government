@@ -1,80 +1,99 @@
-<h1>My Profile</h1>
+<!DOCTYPE html>
+<html lang="en">
 
-<style>
-    body {
-        overflow: hidden;
-    }
+<head>
+    <!-- Metadata for character set and viewport -->
+    <meta charset="utf-8">
+    <title>My Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    .transparent-card {
-        background-color: rgba(255, 255, 255, 0.75);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        border-radius: 12px;
-    }
+    <!-- Custom styles -->
+    <style>
+        body {
+            overflow: hidden;
+        }
 
-    .icon-color {
-        color: white;
-    }
+        .transparent-card {
+            background-color: rgba(255, 255, 255, 0.75);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+        }
 
-    .icon-bg {
-        background-color: #000000;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+        .icon-color {
+            color: white;
+        }
 
-    .property-card {
-        display: flex;
-        flex-direction: column;
-    }
+        .icon-bg {
+            background-color: #000000;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    .property-info {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 10px;
-    }
+        .property-card {
+            display: flex;
+            flex-direction: column;
+        }
 
-    .label {
-        flex: 1;
-        text-align: left;
-        font-weight: bold;
-        margin-right: 10px;
-    }
+        .property-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
 
-    .value {
-        flex: 1;
-        color: #6c757d;
-        font-weight: bold;
-        text-align: right;
-    }
-</style>
+        .label {
+            flex: 1;
+            text-align: left;
+            font-weight: bold;
+            margin-right: 10px;
+        }
 
-<div class="col card-col mt-4">
-    <div class="card transparent-card">
-        <div class="card-body">
-            <div class="icon-bg">
-                <i class="bi bi-person icon-color fs-5"></i>
-            </div>
+        .value {
+            flex: 1;
+            color: #6c757d;
+            font-weight: bold;
+            text-align: right;
+        }
+    </style>
+</head>
 
-            <div class="property-card">
-                <div class="property-info">
-                    <span class="label">First Name:</span>
-                    <span class="value">{{ account_data['first_name'] }}</span>
+<body>
+    <!-- Profile Card Section -->
+    <div class="col card-col mt-4">
+        <div class="card transparent-card">
+            <div class="card-body">
+                <!-- Icon background with person icon -->
+                <div class="icon-bg">
+                    <i class="bi bi-person icon-color fs-5"></i>
                 </div>
 
-                <div class="property-info">
-                    <span class="label">Last Name:</span>
-                    <span class="value">{{ account_data['last_name'] }}</span>
-                </div>
+                <!-- Property card details -->
+                <div class="property-card">
+                    <!-- First Name -->
+                    <div class="property-info">
+                        <span class="label">First Name:</span>
+                        <span class="value">{{ account_data['first_name'] }}</span>
+                    </div>
 
-                <div class="property-info">
-                    <span class="label">Email Address:</span>
-                    <span class="value">{{ account_data['email'] }}</span>
+                    <!-- Last Name -->
+                    <div class="property-info">
+                        <span class="label">Last Name:</span>
+                        <span class="value">{{ account_data['last_name'] }}</span>
+                    </div>
+
+                    <!-- Email Address -->
+                    <div class="property-info">
+                        <span class="label">Email Address:</span>
+                        <span class="value">{{ account_data['email'] }}</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</body>
+
+</html>

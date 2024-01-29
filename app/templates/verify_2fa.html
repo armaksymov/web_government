@@ -13,6 +13,7 @@
     <!-- Linking Font Awesome -->
     <script src="https://kit.fontawesome.com/aea9fedfee.js" crossorigin="anonymous"></script>
 
+    <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <!-- Bootstrap CSS and Bootstrap Icons -->
@@ -23,7 +24,6 @@
     <!-- External library for touch gestures -->
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-
 </head>
 
 <body style="background: radial-gradient(circle at left bottom, #fffff4, #ebfffd, #ecedff);">
@@ -34,13 +34,18 @@
                     <div class="col-8 mx-auto justify-content-center text-center">
                         <p class="h2 mb-5">Enter Your One-Time Password</p>
 
+                        <!-- Error message prompt -->
                         <p id="ErrorPrompt" class="h6 text-center mb-4" style="color: #ac5754; display: none;"></p>
+
+                        <!-- OTP input field and verify button -->
                         <p class="display-3 mb-4"><i class="fa-solid fa-mobile-screen"></i></p>
                         <input class="form-control mb-4" id="otp" type="text" placeholder="Enter OTP code" />
                         <button type="button" onclick="send2FAVerifyRequest()" class="btn btn-dark mb-5">Verify</button>
                     </div>
                     <div class="col-10 mb-5">
-                        <p class="h6 text-center">To continue, please open your multi-factor authentication app locate the code for this application and insert the code in the field provided above.</p>
+                        <!-- Instructions for using OTP -->
+                        <p class="h6 text-center">To continue, please open your multi-factor authentication app locate
+                            the code for this application and insert the code in the field provided above.</p>
                     </div>
                 </div>
             </div>
@@ -48,9 +53,10 @@
     </div>
 </body>
 
+<!-- JavaScript for sending OTP verification request -->
 <script>
     function send2FAVerifyRequest() {
-        // Get email and password values
+        // Get OTP value
         var entered_otp_code = document.getElementById("otp").value;
         var ep = document.getElementById("ErrorPrompt");
 
@@ -69,10 +75,13 @@
         })
             .then(response => response.json())
             .then(result => {
+                // Handle response
                 if (result.status === 0) {
+                    // Redirect to dashboard on successful verification
                     window.location = "/dashboard"
                 }
                 else {
+                    // Display error message for unsuccessful verification
                     let errorMessage = "";
                     switch (result.status) {
                         case 1:
@@ -91,3 +100,5 @@
             });
     }
 </script>
+
+</html>

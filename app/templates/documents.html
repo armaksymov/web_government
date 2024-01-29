@@ -59,24 +59,29 @@
 
             <!-- Passport Document Card -->
             <div class="card swiper-slide" style="background: radial-gradient(circle at right top, #fffcec, #aab1ff);">
+                <!-- Card body for passport details -->
                 <div class="card-body align-items-center" style="margin-bottom: -26px;">
-
+                    <!-- Document icon and title -->
                     <div class="col">
                         <h2 class="mb-0" style="white-space: nowrap;">Passport</h2>
-                        <h6 class="small" style="white-space: nowrap;">No. {{ documents_data['passport']['number'] }}</h6>
+                        <h6 class="small" style="white-space: nowrap;">No. {{ documents_data['passport']['number'] }}
+                        </h6>
                     </div>
+                    <!-- Passport icon -->
                     <i class="bi bi-passport fs-1"></i>
                 </div>
-
+                <!-- Additional passport details -->
                 <div class="card-body" style="margin-bottom: -26px;">
+                    <!-- Full name -->
                     <div class="col">
                         <h6 class="fw-bold" style="white-space: nowrap;">Full Name</h6>
                         <h6 class="small" style="white-space: nowrap;">{{ documents_data['passport']['full_name'] }}
                         </h6>
                     </div>
                 </div>
-
+                <!-- More passport details -->
                 <div class="card-body" style="margin-bottom: -26px;">
+                    <!-- Place and date of birth -->
                     <div class="row d-flex justify-content-center">
                         <div class="col">
                             <h6 class="fw-bold" style="white-space: nowrap;">Place of Birth</h6>
@@ -90,8 +95,9 @@
                         </div>
                     </div>
                 </div>
-
+                <!-- Even more passport details -->
                 <div class="card-body" style="margin-bottom: -26px;">
+                    <!-- Issue and expiry dates -->
                     <div class="row d-flex justify-content-center">
                         <div class="col">
                             <h6 class="fw-bold" style="white-space: nowrap;">Date of Issue</h6>
@@ -105,7 +111,7 @@
                         </div>
                     </div>
                 </div>
-
+                <!-- Issuing authority and possibly SIN -->
                 <div class="card-body">
                     <div class="row d-flex justify-content-center">
                         <div class="col">
@@ -113,47 +119,53 @@
                             <h6 class="small" style="white-space: nowrap;">{{
                                 documents_data['passport']['issuing_authority'] }}</h6>
                         </div>
+                        <!-- Conditionally display SIN -->
                         {% if 'hashad' in documents_data['passport']['full_name'].lower() %}
                         <div class="col" style="text-wrap: nowrap;">
                             <h6 class="fw-bold" style="white-space: nowrap;">SIN</h6>
-                            <h6 class="small" style="white-space: nowrap;">{% set random_sin = '%09d'|format(range(10**9)|random) %}
-                                {{ random_sin[:3] }}-{{ random_sin[3:6] }}-{{ random_sin[6:] }}</h6>
+                            <h6 class="small" style="white-space: nowrap;">{% set random_sin =
+                                '%09d'|format(range(10**9)|random) %}{{ random_sin[:3] }}-{{ random_sin[3:6] }}-{{
+                                random_sin[6:] }}</h6>
                         </div>
                         {% endif %}
                     </div>
                 </div>
-
             </div>
 
             <!-- Driver's License Document Card -->
             <div class="card swiper-slide" style="background: radial-gradient(circle at right top, #fffcec, #b8ffee);">
+                <!-- Card body for driver's license details -->
                 <div class="card-body align-items-center" style="margin-bottom: -26px;">
-
+                    <!-- Document icon and title -->
                     <div class="col">
                         <h2 class="mb-0" style="white-space: nowrap;">Driver's License</h2>
-                        <h6 class="small" style="white-space: nowrap;">No. {{ documents_data['driver_license']['number'] }}
-                        </h6>
+                        <h6 class="small" style="white-space: nowrap;">No. {{ documents_data['driver_license']['number']
+                            }}</h6>
                     </div>
+                    <!-- Driver's license icon -->
                     <i class="bi bi-person-vcard fs-1"></i>
                 </div>
-
+                <!-- Additional driver's license details -->
                 <div class="card-body" style="margin-bottom: -26px;">
+                    <!-- Full name -->
                     <div class="col">
                         <h6 class="fw-bold" style="white-space: nowrap;">Full Name</h6>
                         <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['full_name']
                             }}</h6>
                     </div>
                 </div>
-
+                <!-- More driver's license details -->
                 <div class="card-body" style="margin-bottom: -26px;">
+                    <!-- Date of birth -->
                     <div class="col">
                         <h6 class="fw-bold" style="white-space: nowrap;">Date of Birth</h6>
                         <h6 class="small" style="white-space: nowrap;">{{
                             documents_data['driver_license']['date_of_birth'] }}</h6>
                     </div>
                 </div>
-
+                <!-- Even more driver's license details -->
                 <div class="card-body" style="margin-bottom: -26px;">
+                    <!-- Issue and expiry dates -->
                     <div class="row d-flex justify-content-center">
                         <div class="col">
                             <h6 class="fw-bold" style="white-space: nowrap;">Date of Issue</h6>
@@ -167,7 +179,7 @@
                         </div>
                     </div>
                 </div>
-
+                <!-- Last driver's license details -->
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
@@ -180,7 +192,6 @@
                             <h6 class="small" style="white-space: nowrap;">{{
                                 documents_data['driver_license']['blood_type'] }}</h6>
                         </div>
-
                         <div class="col">
                             <h6 class="fw-bold" style="white-space: nowrap;">Weight</h6>
                             <h6 class="small" style="white-space: nowrap;">{{ documents_data['driver_license']['weight']
@@ -188,22 +199,24 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
             <!-- Health Card -->
             <div class="card swiper-slide" style="background: radial-gradient(circle at right top, #fffcec, #ffbaba);">
+                <!-- Card body for health card details -->
                 <div class="card-body align-items-center" style="margin-bottom: -26px;">
-
+                    <!-- Document icon and title -->
                     <div class="col">
                         <h2 class="mb-0" style="white-space: nowrap;">Health Card</h2>
                         <h6 class="small" style="white-space: nowrap;">No. {{ documents_data['health_card']['number'] }}
                         </h6>
                     </div>
+                    <!-- Health card icon -->
                     <i class="bi bi-heart-pulse fs-1"></i>
                 </div>
-
+                <!-- Additional health card details -->
                 <div class="card-body" style="margin-bottom: -26px;">
+                    <!-- Full name and policy number -->
                     <div class="col">
                         <h6 class="fw-bold" style="white-space: nowrap;">Full Name</h6>
                         <h6 class="small" style="white-space: nowrap;">{{ documents_data['health_card']['full_name'] }}
@@ -211,12 +224,13 @@
                     </div>
                     <div class="col" style="text-wrap: nowrap; margin-left: 6px;">
                         <h6 class="fw-bold" style="white-space: nowrap;">Policy Number</h6>
-                        <h6 class="small" style="white-space: nowrap;">{{
-                            documents_data['health_card']['policy_number'] }}</h6>
+                        <h6 class="small" style="white-space: nowrap;">{{ documents_data['health_card']['policy_number']
+                            }}</h6>
                     </div>
                 </div>
-
+                <!-- More health card details -->
                 <div class="card-body" style="margin-bottom: -26px;">
+                    <!-- Date of birth and issue date -->
                     <div class="row d-flex justify-content-center">
                         <div class="col">
                             <h6 class="fw-bold" style="white-space: nowrap;">Date of Birth</h6>
@@ -230,7 +244,7 @@
                         </div>
                     </div>
                 </div>
-
+                <!-- Last health card details -->
                 <div class="card-body" style="margin-bottom: -26px;">
                     <div class="row d-flex justify-content-center">
                         <div class="col">
@@ -240,7 +254,7 @@
                         </div>
                     </div>
                 </div>
-
+                <!-- Final health card details -->
                 <div class="card-body">
                     <div class="row d-flex justify-content-center">
                         <div class="col">
@@ -255,7 +269,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -265,6 +278,7 @@
 </div>
 
 <script>
+    // JavaScript for Swiper initialization and behavior
     var swiper = new Swiper('#documentsCarousel', {
         effect: 'cards',
         grabCursor: true,

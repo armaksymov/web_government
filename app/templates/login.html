@@ -34,7 +34,9 @@
 </head>
 
 <body>
+    <!-- Login Section -->
     <section id="login" class="pageStyler">
+        <!-- Container for login -->
         <div class="container-fluid min-vh-100">
             <div
                 class="row gx-2 gx-md-3 gx-lg-4 gx-xl-5 mx-2 mx-md-3 mx-lg-4 mx-xl-5 d-flex justify-content-center align-items-center min-vh-100">
@@ -56,15 +58,15 @@
                         <div class="form-outline mb-4">
                             <label class="form-label fw-bolder" for="logFormEmail">Email Address</label>
                             <input type="email" id="logFormEmail" class="form-control transparent-input form-control-lg"
-                                placeholder="Enter your email address" required/>
+                                placeholder="Enter your email address" required />
                         </div>
 
                         <!-- Password Input -->
                         <div class="form-outline mb-2">
                             <label class="form-label fw-bolder" for="logFormPass">Password</label>
                             <input type="password" id="logFormPass"
-                                class="form-control transparent-input form-control-lg"
-                                placeholder="Enter your password" required/>
+                                class="form-control transparent-input form-control-lg" placeholder="Enter your password"
+                                required />
                         </div>
 
                         <!-- Login Button Section -->
@@ -88,7 +90,9 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- JavaScript for handling login -->
     <script>
+        // Function to handle login request
         function sendLoginRequest() {
             // Get email and password values
             var email = document.getElementById("logFormEmail").value;
@@ -113,8 +117,10 @@
                 .then(result => {
                     // Handle the response from the server
                     if (result.status === 0) {
+                        // Redirect to 2FA verification page
                         window.location = "/verify_2fa?id=" + result.id;
                     } else {
+                        // Display error message based on response status
                         let errorMessage = "";
                         switch (result.status) {
                             case 1:

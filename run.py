@@ -24,16 +24,17 @@ from flask_pymongo import PyMongo
 from app.routes.main import main_blueprint
 
 app = Flask(
-    __name__, template_folder='app/templates',
-    static_folder='app/static',
+    __name__,
+    template_folder="app/templates",
+    static_folder="app/static",
 )
 app.register_blueprint(main_blueprint)
-app.secret_key = 'ChuppapiMunyanyo'
+app.secret_key = "webgovLrXqtzUPGV"
 
 # MongoDB connection setup
-app.config['MONGO_URI'] = 'mongodb://localhost:27017/web_government'
+app.config["MONGO_URI"] = "mongodb://localhost:27017/web_government"
 mongo = PyMongo(app)
 app.mongo = mongo
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)

@@ -7,16 +7,19 @@
         overflow: hidden;
     }
 
+    /* Styles for transparent card */
     .transparent-card {
         background-color: rgba(255, 255, 255, 0.75);
         border: 1px solid rgba(0, 0, 0, 0.05);
         border-radius: 12px;
     }
 
+    /* Styles for icon colors */
     .icon-color {
         color: white;
     }
 
+    /* Styles for icon background */
     .icon-bg {
         background-color: #000000;
         border-radius: 50%;
@@ -27,6 +30,7 @@
         justify-content: center;
     }
 
+    /* Styles for payment button */
     .btn-pay {
         font-weight: bold;
         font-size: large;
@@ -43,11 +47,13 @@
         pointer-events: none;
     }
 
+    /* Styles for license-renew card */
     .license-renew-card {
         display: flex;
         flex-direction: column;
     }
 
+    /* Styles for license-renew info */
     .license-renew-info {
         display: flex;
         justify-content: space-between;
@@ -55,6 +61,7 @@
         margin-top: 10px;
     }
 
+    /* Styles for label */
     .label {
         flex: 1;
         text-align: left;
@@ -62,6 +69,7 @@
         margin-right: 10px;
     }
 
+    /* Styles for value */
     .value {
         flex: 1;
         color: #6c757d;
@@ -69,6 +77,7 @@
         text-align: right;
     }
 
+    /* Styles for scrollable section */
     .scrollable-section {
         max-height: calc(100vh - 180px);
         overflow-y: auto;
@@ -85,6 +94,7 @@
     }
 </style>
 
+<!-- Container for scrollable section -->
 <div class="scrollable-section">
     <!-- license-renew card -->
     <div class="col card-col mt-4">
@@ -97,29 +107,33 @@
                 <div class="icon-bg">
                     <i class="bi bi-person-vcard icon-color fs-5"></i>
                 </div>
+                <!-- Title and details for license renewal -->
                 <h4 class="mt-4 mb-1 fw-bold card-text">Renew License</h4>
                 <h6 class="small text-muted">No. {{ license_and_registration_data['license']['number'] }}</h6>
+                <!-- License renewal details -->
                 <div class="license-renew-card">
+                    <!-- Renewal Fee -->
                     <div class="license-renew-info">
                         <span class="label">Renewal Fee:</span>
                         <span class="value">${{ license_and_registration_data['license']['renewal_fee'] }}</span>
                     </div>
-
+                    <!-- Renewal Period -->
                     <div class="license-renew-info">
                         <span class="label">Renewal Period:</span>
                         <span class="value">{{ license_and_registration_data['license']['renewal_period'] }}</span>
                     </div>
-
+                    <!-- Renewal Deadline -->
                     <div class="license-renew-info">
                         <span class="label">Renewal Deadline:</span>
                         <span class="value">{{ license_and_registration_data['license']['renewal_deadline'] }}</span>
                     </div>
-
+                    <!-- Expiry Date -->
                     <div class="license-renew-info">
                         <span class="label">Expiry Date:</span>
                         <span class="value">{{ license_and_registration_data['license']['expiry_date'] }}</span>
                     </div>
                 </div>
+                <!-- Payment button for license renewal -->
                 <button
                     class="mt-4 col-12 btn-pay btn btn-success {% if license_and_registration_data['license']['is_paid'] %}paid{% endif %}"
                     onclick="processPayment(this, 'license-renew-card', 'license-renew')">
@@ -144,48 +158,54 @@
                 <div class="icon-bg">
                     <i class="bi bi-car-front icon-color fs-5"></i>
                 </div>
+                <!-- Title and details for registration renewal -->
                 <h4 class="mt-4 mb-1 fw-bold card-text">Renew Registration</h4>
                 <h6 class="small text-muted">No. {{ license_and_registration_data['registration']['number'] }}</h6>
-
+                <!-- Vehicle details for registration renewal -->
                 <h5 class="mt-4 mb-1 fw-bold card-text">Vehicle Details</h5>
                 <div class="license-renew-card mb-4">
+                    <!-- Vehicle Make -->
                     <div class="license-renew-info">
                         <span class="label">Make:</span>
                         <span class="value" style="white-space: nowrap;">{{
                             license_and_registration_data['registration']['make'] }}</span>
                     </div>
+                    <!-- Vehicle Year -->
                     <div class="license-renew-info">
                         <span class="label">Year:</span>
                         <span class="value">{{ license_and_registration_data['registration']['year'] }}</span>
                     </div>
+                    <!-- License Plate Number -->
                     <div class="license-renew-info">
                         <span class="label" style="white-space: nowrap;">License Plate Number:</span>
                         <span class="value">{{ license_and_registration_data['registration']['plate_number'] }}</span>
                     </div>
                 </div>
-
+                <!-- Registration renewal details -->
                 <div class="license-renew-card">
+                    <!-- Renewal Fee -->
                     <div class="license-renew-info">
                         <span class="label">Renewal Fee:</span>
                         <span class="value">${{ license_and_registration_data['registration']['renewal_fee'] }}</span>
                     </div>
-
+                    <!-- Renewal Period -->
                     <div class="license-renew-info">
                         <span class="label">Renewal Period:</span>
                         <span class="value">{{ license_and_registration_data['registration']['renewal_period'] }}</span>
                     </div>
-
+                    <!-- Renewal Deadline -->
                     <div class="license-renew-info">
                         <span class="label">Renewal Deadline:</span>
                         <span class="value">{{ license_and_registration_data['registration']['renewal_deadline']
                             }}</span>
                     </div>
-
+                    <!-- Expiry Date -->
                     <div class="license-renew-info">
                         <span class="label">Expiry Date:</span>
                         <span class="value">{{ license_and_registration_data['registration']['expiry_date'] }}</span>
                     </div>
                 </div>
+                <!-- Payment button for registration renewal -->
                 <button
                     class="mt-4 col-12 btn-pay btn btn-success {% if license_and_registration_data['registration']['is_paid'] %}paid{% endif %}"
                     onclick="processPayment(this, 'registration-renew-card', 'registration-renew')">
@@ -208,7 +228,7 @@
 
         switch (cardId) {
             case 'registration-renew-card':
-                // Send a POST request
+                // Send a POST request for registration renewal
                 fetch('/renew_registration', {
                     method: 'POST',
                     headers: {
@@ -238,7 +258,7 @@
                     });
                 break;
             case 'license-renew-card':
-                // Send a POST request
+                // Send a POST request for license renewal
                 fetch('/renew_license', {
                     method: 'POST',
                     headers: {

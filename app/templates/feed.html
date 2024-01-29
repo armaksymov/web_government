@@ -1,15 +1,20 @@
 <h1>Hello, {{Name}}! 👋</h1>
 
 <style>
+    /* CSS styles for the webpage */
+
+    /* Hide overflow to prevent scrolling */
     body {
         overflow: hidden;
     }
 
+    /* Custom container styles */
     .custom-container {
         padding-left: 0;
         padding-right: 0;
     }
 
+    /* Styles for swiper slide */
     .swiper-slide {
         text-align: center;
         font-size: 18px;
@@ -19,6 +24,7 @@
         align-items: center;
     }
 
+    /* Styles for images within swiper slide */
     .swiper-slide img {
         display: block;
         width: 100%;
@@ -26,6 +32,7 @@
         object-fit: cover;
     }
 
+    /* Transparent card styles */
     .transparent-card {
         background-color: rgba(255, 255, 255, 0.75);
         border: 1px solid rgba(0, 0, 0, 0.05);
@@ -33,6 +40,7 @@
         margin-bottom: 42px;
     }
 
+    /* Icon background styles */
     .icon-bg {
         background-color: #000000;
         border-radius: 40%;
@@ -43,10 +51,12 @@
         justify-content: center;
     }
 
+    /* Icon color styles */
     .icon-color {
         color: white;
     }
 
+    /* Quick action column styles */
     .quick-action-col {
         display: flex;
         flex-direction: column;
@@ -54,25 +64,30 @@
         text-align: center;
     }
 
+    /* Quick action text styles */
     .quick-action-text {
         text-wrap: nowrap;
         max-width: 128px;
     }
 
+    /* Card link styles */
     .card-link {
         text-decoration: none;
         color: black;
     }
 
+    /* Card body styles */
     .card-body {
         padding: 0;
     }
 
+    /* News card styles */
     .news-card {
         border-radius: 12px;
         border: 0px solid;
     }
 
+    /* Autoplay progress styles */
     .autoplay-progress {
         position: absolute;
         right: 1px;
@@ -86,6 +101,7 @@
         color: rgb(125, 192, 255);
     }
 
+    /* Autoplay progress svg styles */
     .autoplay-progress svg {
         --progress: 0;
         position: absolute;
@@ -104,15 +120,19 @@
 </style>
 
 <div class="container custom-container mt-4">
+    <!-- Recent News section -->
     <h4>Recent News</h4>
     <div class="mt-3 swiper mySwiper">
+        <!-- Autoplay progress circle -->
         <div class="autoplay-progress m-1">
             <svg viewBox="0 0 48 48">
                 <circle cx="24" cy="24" r="20"></circle>
             </svg>
             <span></span>
         </div>
+        <!-- Swiper wrapper for slides -->
         <div class="swiper-wrapper">
+            <!-- Swiper slides with transparent cards -->
             <div class="swiper-slide card transparent-card">
                 <div class="card-body">
                     <img class="news-card d-block img-fluid w-100"
@@ -134,9 +154,11 @@
                 </div>
             </div>
         </div>
+        <!-- Swiper pagination -->
         <div class="swiper-pagination"></div>
     </div>
 
+    <!-- Quick action links -->
     <div class="row mt-2" style="align-items: top;">
         <a onclick="redirect_to('utility_bill_payments', 'services')" class="col card-link">
             <div class="col quick-action-col quick-action">
@@ -162,6 +184,7 @@
 </div>
 
 <script>
+    // JavaScript for Swiper initialization and progress
     var progressCircle = document.querySelector(".autoplay-progress svg");
     var progressContent = document.querySelector(".autoplay-progress span");
 

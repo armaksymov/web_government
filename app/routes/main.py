@@ -3,22 +3,21 @@ This module defines the main blueprint for the Flask application.
 """
 from __future__ import annotations
 
-import qrcode
-
-from flask import Blueprint, redirect
-from flask import jsonify
-from flask import render_template
-from flask import request
-from flask import session
-from base64 import b32encode
 import pyotp
 
-from app.services.auth_service import authenticate_user
-from app.services.auth_service import register_user
-from app.services.auth_service import get_b64encoded_qr_image
-from app.services.auth_service import change_password
-from app.services.auth_service import delete_account
+from flask import session
+from flask import jsonify
+from flask import request
+from flask import Blueprint
+from base64 import b32encode
+from flask import render_template
+
 from app.services.information_service import *
+from app.services.auth_service import register_user
+from app.services.auth_service import delete_account
+from app.services.auth_service import change_password
+from app.services.auth_service import authenticate_user
+from app.services.auth_service import get_b64encoded_qr_image
 
 main_blueprint = Blueprint("main", __name__)
 
@@ -81,6 +80,7 @@ class Main:
         Returns:
         - render_template: HTML response with the content of documents.html.
         """
+
         account_id = session.get("account_id")
         if account_id is None:
             return "Error: Account id is not set", 400
@@ -144,7 +144,7 @@ class Main:
     @staticmethod
     @main_blueprint.route("/verify_2fa")
     def verify_2fa_page():
-        if (request.args.get("id") != None):
+        if request.args.get("id") != None:
             # account_id is already assigned
             session["account_id"] = request.args.get("id")
 
@@ -159,14 +159,10 @@ class Main:
         response = None
 
         if totp.verify(data["otp"]):
-            response = {
-                "status": 0
-            }
+            response = {"status": 0}
         else:
-            response = {
-                "status": 1
-            }
-        
+            response = {"status": 1}
+
         return jsonify(response)
 
     @staticmethod
@@ -340,6 +336,13 @@ class Main:
     @staticmethod
     @main_blueprint.route("/renew_license", methods=["POST"])
     def renew_license():
+        """
+        Renew the user's license.
+
+        Returns:
+        - Flask Response: JSON response with the status of the license renewal operation.
+        """
+
         account_id = session.get("account_id")
         if account_id is None:
             return "Error: Account id is not set", 400
@@ -351,6 +354,13 @@ class Main:
     @staticmethod
     @main_blueprint.route("/renew_registration", methods=["POST"])
     def renew_registration():
+        """
+        Renew the user's registration.
+
+        Returns:
+        - Flask Response: JSON response with the status of the registration renewal operation.
+        """
+
         account_id = session.get("account_id")
         if account_id is None:
             return "Error: Account id is not set", 400
@@ -362,11 +372,25 @@ class Main:
     @staticmethod
     @main_blueprint.route("/change_password")
     def change_password_page():
+        """
+        Render the change password page.
+
+        Returns:
+        - Flask Response: Rendered HTML template for the change password page.
+        """
+
         return render_template("change_password.html")
 
     @staticmethod
     @main_blueprint.route("/change_password", methods=["PATCH"])
     def change_password():
+        """
+        Change the user's password.
+
+        Returns:
+        - Flask Response: JSON response with the status of the password change operation.
+        """
+
         data = request.get_json()
         response = change_password(
             session.get("account_id"), data["old_pass"], data["new_pass"]
@@ -377,11 +401,25 @@ class Main:
     @staticmethod
     @main_blueprint.route("/delete_account")
     def delete_account_page():
+        """
+        Render the delete account page.
+
+        Returns:
+        - Flask Response: Rendered HTML template for the delete account page.
+        """
+
         return render_template("delete_account.html")
 
     @staticmethod
     @main_blueprint.route("/delete_account", methods=["DELETE"])
     def delete_account():
+        """
+        Delete the user's account.
+
+        Returns:
+        - Flask Response: JSON response with the status of the account deletion operation.
+        """
+
         response = delete_account(session.get("account_id"))
 
         return jsonify(response)
@@ -389,5 +427,12 @@ class Main:
     @staticmethod
     @main_blueprint.route("/my_profile")
     def my_profile_page():
+        """
+        Render the user's profile page.
+
+        Returns:
+        - Flask Response: Rendered HTML template for the user's profile page.
+        """
+
         account_info = get_account_information(session.get("account_id"))
         return render_template("my_profile.html", account_data=account_info)

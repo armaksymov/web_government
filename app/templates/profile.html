@@ -1,115 +1,142 @@
-<h1>Profile & Settings</h1>
+<!DOCTYPE html>
+<html lang="en">
 
-<style>
-    body {
-        overflow: hidden;
+<head>
+    <!-- Metadata for character set and viewport -->
+    <meta charset="utf-8">
+    <title>Profile & Settings</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    }
+    <!-- Custom styles -->
+    <style>
+        body {
+            overflow: hidden;
+        }
 
-    .centered-div {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0;
-    }
+        .centered-div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
 
-    .profile-btn {
-        width: 100%;
-        height: 60px;
-        border-radius: 12px;
-        font-size: larger;
-    }
+        .profile-btn {
+            width: 100%;
+            height: 60px;
+            border-radius: 12px;
+            font-size: larger;
+        }
 
-    .transparent-card {
-        background-color: rgba(255, 255, 255, 0.75);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        border-radius: 12px;
-        padding: 12px;
-    }
+        .transparent-card {
+            background-color: rgba(255, 255, 255, 0.75);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            padding: 12px;
+        }
 
-    .card-link {
-        text-decoration: none;
-        color: black;
-    }
+        .card-link {
+            text-decoration: none;
+            color: black;
+        }
 
-    .separator {
-        border-top: 1px solid rgb(0, 0, 0, 0.1);
-        margin-top: 22px;
-        margin-bottom: 22px;
-    }
-</style>
+        .separator {
+            border-top: 1px solid rgb(0, 0, 0, 0.1);
+            margin-top: 22px;
+            margin-bottom: 22px;
+        }
+    </style>
+</head>
 
-<div class="d-flex justify-content-center align-items-center mt-4">
-    <div class="container-fluid">
-        <div class="row align-items-center">
-            <div id="notifications" class="transparent-card btn-group-vertical col-12 mx-auto mx-md-0 d-block mb-4">
-                <a href="" class="card-link col">
-                    <p class="fs-5" style="margin-top: 12px;">
-                        <i class="bi bi-envelope-fill ps-3 pe-4 fs-4"></i>Notifications
-                    </p>
-                </a>
-            </div>
+<body>
+    <div class="d-flex justify-content-center align-items-center mt-4">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <!-- Notifications Section -->
+                <div id="notifications" class="transparent-card btn-group-vertical col-12 mx-auto mx-md-0 d-block mb-4">
+                    <a href="" class="card-link col">
+                        <p class="fs-5" style="margin-top: 12px;">
+                            <i class="bi bi-envelope-fill ps-3 pe-4 fs-4"></i>Notifications
+                        </p>
+                    </a>
+                </div>
 
-            <div id="profile" class="transparent-card btn-group-vertical col-12 mx-auto mx-md-0 d-block mb-4">
-                <a onclick="redirect_to_page('my_profile')" class="card-link col">
-                    <p class="fs-5" style="margin-top: 12px;">
-                        <i class="bi bi-file-person-fill ps-3 pe-4 fs-4"></i>My Profile
-                    </p>
-                </a>
+                <!-- Profile Section -->
+                <div id="profile" class="transparent-card btn-group-vertical col-12 mx-auto mx-md-0 d-block mb-4">
+                    <!-- My Profile -->
+                    <a onclick="redirect_to_page('my_profile')" class="card-link col">
+                        <p class="fs-5" style="margin-top: 12px;">
+                            <i class="bi bi-file-person-fill ps-3 pe-4 fs-4"></i>My Profile
+                        </p>
+                    </a>
 
-                <div class="separator"></div>
+                    <!-- Separator -->
+                    <div class="separator"></div>
 
-                <a onclick="redirect_to_page('change_password')" class="card-link col">
-                    <p class="fs-5" style="margin-top: 12px;">
-                        <i class="bi bi-key-fill ps-3 pe-4 fs-4"></i>Change Password
-                    </p>
-                </a>
+                    <!-- Change Password -->
+                    <a onclick="redirect_to_page('change_password')" class="card-link col">
+                        <p class="fs-5" style="margin-top: 12px;">
+                            <i class="bi bi-key-fill ps-3 pe-4 fs-4"></i>Change Password
+                        </p>
+                    </a>
 
-                <div class="separator"></div>
+                    <!-- Separator -->
+                    <div class="separator"></div>
 
-                <a onclick="redirect_to_page('delete_account')" class="card-link col">
-                    <p class="fs-5" style="margin-top: 12px;">
-                        <i class="bi bi-trash3-fill ps-3 pe-4 fs-4"></i>Delete Account
-                    </p>
-                </a>
-            </div>
+                    <!-- Delete Account -->
+                    <a onclick="redirect_to_page('delete_account')" class="card-link col">
+                        <p class="fs-5" style="margin-top: 12px;">
+                            <i class="bi bi-trash3-fill ps-3 pe-4 fs-4"></i>Delete Account
+                        </p>
+                    </a>
+                </div>
 
-            <div id="profile" class="transparent-card btn-group-vertical col-12 mx-auto mx-md-0 d-block mb-4">
-                <a href="" class="card-link col">
-                    <p class="fs-5" style="margin-top: 12px;">
-                        <i class="bi bi-question-circle-fill ps-3 pe-4 fs-4"></i>F.A.Q.
-                    </p>
-                </a>
+                <!-- Additional Links Section -->
+                <div id="profile" class="transparent-card btn-group-vertical col-12 mx-auto mx-md-0 d-block mb-4">
+                    <!-- F.A.Q. -->
+                    <a href="" class="card-link col">
+                        <p class="fs-5" style="margin-top: 12px;">
+                            <i class="bi bi-question-circle-fill ps-3 pe-4 fs-4"></i>F.A.Q.
+                        </p>
+                    </a>
 
-                <div class="separator"></div>
+                    <!-- Separator -->
+                    <div class="separator"></div>
 
-                <a href="" class="card-link col">
-                    <p class="fs-5" style="margin-top: 12px;">
-                        <i class="bi bi-life-preserver ps-3 pe-4 fs-4"></i>Contact Support
-                    </p>
-                </a>
+                    <!-- Contact Support -->
+                    <a href="" class="card-link col">
+                        <p class="fs-5" style="margin-top: 12px;">
+                            <i class="bi bi-life-preserver ps-3 pe-4 fs-4"></i>Contact Support
+                        </p>
+                    </a>
 
-                <div class="separator"></div>
+                    <!-- Separator -->
+                    <div class="separator"></div>
 
-                <a href="https://github.com/armaksymov/web_government/releases" class="card-link col">
-                    <p class="fs-5" style="margin-top: 12px;">
-                        <i class="bi bi-arrow-repeat ps-3 pe-4 fs-4"></i>Check for App Updates
-                    </p>
-                </a>
+                    <!-- Check for App Updates -->
+                    <a href="https://github.com/armaksymov/web_government/releases" class="card-link col">
+                        <p class="fs-5" style="margin-top: 12px;">
+                            <i class="bi bi-arrow-repeat ps-3 pe-4 fs-4"></i>Check for App Updates
+                        </p>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="centered-div">
-    <a href="login" class="profile-btn">
-        <button type="button" class="btn btn-dark profile-btn">Log Out</button>
-    </a>
-</div>
+    <!-- Log Out Button -->
+    <div class="centered-div">
+        <a href="login" class="profile-btn">
+            <button type="button" class="btn btn-dark profile-btn">Log Out</button>
+        </a>
+    </div>
 
-<script>
-    function redirect_to_page(page) {
-        // Load dynamic content into the container
-        $('#container').load(page);
-    }
-</script>
+    <!-- JavaScript script for redirecting to pages -->
+    <script>
+        function redirect_to_page(page) {
+            // Load dynamic content into the container
+            $('#container').load(page);
+        }
+    </script>
+</body>
+
+</html>
