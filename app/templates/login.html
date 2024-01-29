@@ -76,7 +76,7 @@
                         <!-- Register Link Section -->
                         <div class="d-flex justify-content-center text-center text-lg-start pt-2">
                             <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="register"
-                                    class="link" style="color: #5464ac;">Sign Up here</a>.</p>
+                                    class="link" style="color: #5464ac;">Sign Up Here</a>.</p>
                         </div>
                     </form>
                 </div>
@@ -113,7 +113,7 @@
                 .then(result => {
                     // Handle the response from the server
                     if (result.status === 0) {
-                        window.location = "/dashboard?id=" + result.id;
+                        window.location = "/verify_2fa?id=" + result.id;
                     } else {
                         let errorMessage = "";
                         switch (result.status) {

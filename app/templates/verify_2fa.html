@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Metadata for character set and viewport -->
+    <meta charset="utf-8">
+    <title>web.gov</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/logo.png') }}">
+
+    <!-- Linking Font Awesome -->
+    <script src="https://kit.fontawesome.com/aea9fedfee.js" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- Bootstrap CSS and Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- External library for touch gestures -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+</head>
+
+<body style="background: radial-gradient(circle at left bottom, #fffff4, #ebfffd, #ecedff);">
+    <div class="vh-100 w-100 d-flex justify-content-center align-items-center">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="row justify-content-center mt-5">
+                    <div class="col-8 mx-auto justify-content-center text-center">
+                        <p class="h2 mb-5">Enter Your One-Time Password</p>
+
+                        <p id="ErrorPrompt" class="h6 text-center mb-4" style="color: #ac5754; display: none;"></p>
+                        <p class="display-3 mb-4"><i class="fa-solid fa-mobile-screen"></i></p>
+                        <input class="form-control mb-4" id="otp" type="text" placeholder="Enter OTP code" />
+                        <button type="button" onclick="send2FAVerifyRequest()" class="btn btn-dark mb-5">Verify</button>
+                    </div>
+                    <div class="col-10 mb-5">
+                        <p class="h6 text-center">To continue, please open your multi-factor authentication app locate the code for this application and insert the code in the field provided above.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    function send2FAVerifyRequest() {
+        // Get email and password values
+        var entered_otp_code = document.getElementById("otp").value;
+        var ep = document.getElementById("ErrorPrompt");
+
+        // Create an object with the data
+        var data = {
+            otp: entered_otp_code
+        };
+
+        // Send a POST request
+        fetch('/verify_2fa', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.status === 0) {
+                    window.location = "/dashboard"
+                }
+                else {
+                    let errorMessage = "";
+                    switch (result.status) {
+                        case 1:
+                            errorMessage = "Incorrect One-Time Password.";
+                            break;
+                        default:
+                            errorMessage = "An unexpected error occurred. Please attempt the operation again later.";
+                    }
+                    ep.textContent = errorMessage;
+                    ep.style.display = "block";
+                }
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('Error:', error);
+            });
+    }
+</script>

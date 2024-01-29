@@ -1,0 +1,40 @@
+<h1>Delete Account</h1>
+
+<div class="container">
+    <p class="mt-4 h6 mb-4 fs-2" style="color: #ac5754;">
+        <i class="bi bi-exclamation-circle-fill"></i> - Deleting your account
+        is an irreversible action with significant consequences. By
+        proceeding with this step, you acknowledge and accept that all data associated with your account will be
+        permanently
+        lost. This includes but is not limited to personal information, preferences, settings, and any content you have
+        created or uploaded. Please be aware that this process is irrecoverable, and once completed, it cannot be
+        undone.
+        Take the time to consider the implications before proceeding.
+    </p>
+</div>
+
+<div class="d-flex justify-content-center text-center text-lg-start mt-4 pt-2">
+    <button type="button" class="btn btn-dark btn-lg px-4 custom-button" onclick="sendDeleteRequest()">I Know What I Am
+        Doing</button>
+</div>
+
+<script>
+    function sendDeleteRequest() {
+        // Send a DELETE request
+        fetch('/delete_account', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => response.json())
+            .then(result => {
+                console.log(result.status)
+                window.location = "register"
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('Error:', error);
+            });
+    }
+</script>

@@ -51,7 +51,7 @@
             </div>
 
             <div id="profile" class="transparent-card btn-group-vertical col-12 mx-auto mx-md-0 d-block mb-4">
-                <a href="" class="card-link col">
+                <a onclick="redirect_to_page('my_profile')" class="card-link col">
                     <p class="fs-5" style="margin-top: 12px;">
                         <i class="bi bi-file-person-fill ps-3 pe-4 fs-4"></i>My Profile
                     </p>
@@ -59,17 +59,17 @@
 
                 <div class="separator"></div>
 
-                <a href="" class="card-link col">
+                <a onclick="redirect_to_page('change_password')" class="card-link col">
                     <p class="fs-5" style="margin-top: 12px;">
-                        <i class="bi bi-gear-fill ps-3 pe-4 fs-4"></i>Application Settings
+                        <i class="bi bi-key-fill ps-3 pe-4 fs-4"></i>Change Password
                     </p>
                 </a>
 
                 <div class="separator"></div>
 
-                <a href="" class="card-link col">
+                <a onclick="redirect_to_page('delete_account')" class="card-link col">
                     <p class="fs-5" style="margin-top: 12px;">
-                        <i class="bi bi-phone-fill ps-3 pe-4 fs-4"></i>My Sign-Ins and Devices
+                        <i class="bi bi-trash3-fill ps-3 pe-4 fs-4"></i>Delete Account
                     </p>
                 </a>
             </div>
@@ -88,6 +88,14 @@
                         <i class="bi bi-life-preserver ps-3 pe-4 fs-4"></i>Contact Support
                     </p>
                 </a>
+
+                <div class="separator"></div>
+
+                <a href="https://github.com/armaksymov/web_government/releases" class="card-link col">
+                    <p class="fs-5" style="margin-top: 12px;">
+                        <i class="bi bi-arrow-repeat ps-3 pe-4 fs-4"></i>Check for App Updates
+                    </p>
+                </a>
             </div>
         </div>
     </div>
@@ -98,3 +106,10 @@
         <button type="button" class="btn btn-dark profile-btn">Log Out</button>
     </a>
 </div>
+
+<script>
+    function redirect_to_page(page) {
+        // Load dynamic content into the container
+        $('#container').load(page);
+    }
+</script>

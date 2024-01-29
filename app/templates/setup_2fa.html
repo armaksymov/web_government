@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Metadata for character set and viewport -->
+    <meta charset="utf-8">
+    <title>web.gov</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/logo.png') }}">
+
+    <!-- Linking Font Awesome -->
+    <script src="https://kit.fontawesome.com/aea9fedfee.js" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- Bootstrap CSS and Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- External library for touch gestures -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+</head>
+
+<body style="background: radial-gradient(circle at left bottom, #fffff4, #ebfffd, #ecedff);">
+    <div class="vh-100 w-100 d-flex justify-content-center align-items-center">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="row justify-content-center mt-5">
+                    
+                    <div class="col-8 mx-auto justify-content-center text-center">
+                        <p class="h2 text-center mb-5">Set Up Two Factor Authentication</p>
+                    </div>
+
+                    <img class="col-12 mx-auto w-75 rounded mb-4" src="data:image/png;base64, {{ qr }}">
+                    <div class="col-8 mx-auto mb-4">
+                        <div class="input-group">
+                            <input class="form-control" id="OTPcode" type="text" value={{ account_id }}>
+                            <button class="input-group-addon btn btn-dark text-center"
+                                onclick="copyToClipboard('OTPcode')"><i class="fa-regular fa-copy"></i></button>
+                        </div>
+                    </div>
+
+                    <a href="verify_2fa" class="btn btn-dark w-50 mb-5">Verify 2FA</a>
+                </div>
+                
+                <div class="col-10 mb-5 mx-auto">
+                    <p class="h6 text-center">To set up 2FA, please open your multi-factor authentication app and scan the provided QR-code or insert the code manually.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    function copyToClipboard(elem) {
+        var target = document.getElementById(elem);
+
+        // select the content
+        var currentFocus = document.activeElement;
+
+        target.focus();
+        target.setSelectionRange(0, target.value.length);
+
+        // copy the selection
+        var succeed;
+
+        try {
+            succeed = document.execCommand("copy");
+        } catch (e) {
+            console.warn(e);
+
+            succeed = false;
+        }
+
+        // Restore original focus
+        if (currentFocus && typeof currentFocus.focus === "function") {
+            currentFocus.focus();
+        }
+
+        if (succeed) {
+            // Update the class name to match your HTML
+            $(".input-group").animate({ top: -25, opacity: 0 }, 700, function () {
+                $(this).css({ top: 0, opacity: 1 });
+            });
+        }
+
+        return succeed;
+    }
+</script>

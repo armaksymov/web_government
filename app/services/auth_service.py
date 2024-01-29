@@ -9,6 +9,13 @@ import random
 import re
 import string
 
+
+from io import BytesIO
+import qrcode
+from base64 import b64encode
+from base64 import b32encode
+from bson import ObjectId
+
 import bcrypt
 from faker import Faker
 from flask import current_app
@@ -16,6 +23,18 @@ from datetime import timedelta
 import logging
 
 fake = Faker()
+
+
+def get_b64encoded_qr_image(data):
+        print(data)
+        qr = qrcode.QRCode(version=1, box_size=10, border=5)
+        qr.add_data(data)
+        qr.make(fit=True)
+        img = qr.make_image(fill_color='black', back_color='white')
+        buffered = BytesIO()
+        img.save(buffered)
+        return b64encode(buffered.getvalue()).decode("utf-8")
+        # return b64encode(buffered.getvalue()).decode("utf-8")
 
 
 def is_valid_email(email):
@@ -529,7 +548,7 @@ def register_user(first_name, last_name, email, password):
 
 def change_password(user_id, old_password, new_password):
     users_collection = current_app.mongo.db.users
-    user = users_collection.find_one({"_id":user_id})
+    user = users_collection.find_one({"_id":ObjectId(user_id)})
 
     if user is None:
         return {"status":2,"message":"User not Found"}
@@ -540,7 +559,7 @@ def change_password(user_id, old_password, new_password):
     hashed_new_password = bcrypt.hashpw(new_password.encode('utf-8'),bcrypt.gensalt())
 
     users_collection.update_one(
-        {"_id":user_id},
+        {"_id":ObjectId(user_id)},
         {"$set":{"password":hashed_new_password}}
     )
 
@@ -552,7 +571,7 @@ def delete_account(user_id):
     user_details_collection = current_app.mongo.db.user_details
     documents_collection = current_app.mongo.db.documents
 
-    users_collection.delete_one({"id": user_id})
+    users_collection.delete_one({"_id":ObjectId(user_id)})
     bills_collection.delete_many({"user_id": user_id})
     user_details_collection.delete_many({"user_id":user_id})
     documents_collection.delete_many({"user_id":user_id})
