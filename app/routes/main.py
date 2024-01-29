@@ -30,8 +30,8 @@ class Main:
     ACCOUNT_ID = None
 
     @staticmethod
-    @main_blueprint.route("/options", methods=["OPTIONS"])
-    def my_options_route():
+    @main_blueprint.route("/", methods=["OPTIONS"])
+    def options():
         """
         Handles the OPTIONS request for a specific route.
 
