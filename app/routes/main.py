@@ -30,6 +30,34 @@ class Main:
     ACCOUNT_ID = None
 
     @staticmethod
+    @main_blueprint.route("/options", methods=["OPTIONS"])
+    def my_options_route():
+        """
+        Handles the OPTIONS request for a specific route.
+
+        This method provides information about the supported HTTP methods
+        for a particular route and any additional headers that can be used.
+
+        Returns:
+        - Response object: Response with the allowed methods and headers.
+        """
+
+        allowed_methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
+        allowed_headers = ["Content-Type", "Authorization"]
+
+        response_headers = {
+            "Allow": ", ".join(allowed_methods),
+            "Access-Control-Allow-Methods": ", ".join(allowed_methods),
+            "Access-Control-Allow-Headers": ", ".join(allowed_headers),
+        }
+
+        return (
+            jsonify({"message": "OPTIONS request handled successfully"}),
+            200,
+            response_headers,
+        )
+
+    @staticmethod
     @main_blueprint.route("/")
     def landing_page():
         """
