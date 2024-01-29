@@ -297,7 +297,7 @@ class Main:
         )
 
     @staticmethod
-    @main_blueprint.route("/pay_property_tax", methods=["POST"])
+    @main_blueprint.route("/pay_property_tax", methods=["PUT"])
     def pay_property_tax():
         """
         Pay property tax based on the Account ID and provided JSON data.
@@ -338,7 +338,7 @@ class Main:
         return render_template("utility_bill_payments.html", bills_data=utility_bills)
 
     @staticmethod
-    @main_blueprint.route("/pay_utility_bill", methods=["POST"])
+    @main_blueprint.route("/pay_utility_bill", methods=["PUT"])
     def pay_utility_bill():
         """
         Pay unility bill based on the Account ID and provided JSON data.
