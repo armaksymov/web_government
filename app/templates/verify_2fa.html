@@ -27,14 +27,21 @@
 </head>
 
 <body style="background: radial-gradient(circle at left bottom, #fffff4, #ebfffd, #ecedff);">
-    <div class="vh-100 w-100 d-flex justify-content-center">
+    <div class="vh-100 w-100 d-flex justify-content-center align-items-center">
         <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="col-8 mx-auto mt-5 justify-content-center text-center">
-                    <p class="h2 mb-4">Enter Your One-Time Password</p>
-                    <p id="ErrorPrompt" class="h6 text-center mb-4" style="color: #ac5754; display: none;"></p>
-                    <input class="form-control mb-3" id="otp" type="text" placeholder="Enter OTP code" />
-                    <button type="button" onclick="send2FAVerifyRequest()" class="btn btn-dark">Verify</button>
+            <div class="card">
+                <div class="row justify-content-center mt-5">
+                    <div class="col-8 mx-auto justify-content-center text-center">
+                        <p class="h2 mb-5">Enter Your One-Time Password</p>
+
+                        <p id="ErrorPrompt" class="h6 text-center mb-4" style="color: #ac5754; display: none;"></p>
+                        <p class="display-3 mb-4"><i class="fa-solid fa-mobile-screen"></i></p>
+                        <input class="form-control mb-4" id="otp" type="text" placeholder="Enter OTP code" />
+                        <button type="button" onclick="send2FAVerifyRequest()" class="btn btn-dark mb-5">Verify</button>
+                    </div>
+                    <div class="col-10 mb-5">
+                        <p class="h6 text-center">To continue, please open your multi-factor authentication app locate the code for this application and insert the code in the field provided above.</p>
+                    </div>
                 </div>
             </div>
         </div>

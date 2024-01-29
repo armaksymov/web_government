@@ -129,16 +129,16 @@ class Main:
     @main_blueprint.route("/setup_2fa")
     def setup_2fa():
         """ """
-        # session["account_id"] = request.args.get("id")
-        # id = b32encode(("wg" + session["account_id"]).encode()).decode("utf-8")
+        session["account_id"] = request.args.get("id")
+        id = b32encode(("wg" + session["account_id"]).encode()).decode("utf-8")
 
-        # totp_auth = pyotp.totp.TOTP(id).provisioning_uri(
-        #     name=request.args.get("full_name"), issuer_name="web.gov"
-        # )
+        totp_auth = pyotp.totp.TOTP(id).provisioning_uri(
+            name=request.args.get("full_name"), issuer_name="web.gov"
+        )
 
-        # qr_image = get_b64encoded_qr_image(totp_auth)
+        qr_image = get_b64encoded_qr_image(totp_auth)
 
-        # return render_template("setup_2fa.html", qr=qr_image, account_id=id)
+        return render_template("setup_2fa.html", qr=qr_image, account_id=id)
         return render_template("setup_2fa.html")
 
     @staticmethod
