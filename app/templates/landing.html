@@ -71,7 +71,7 @@
     <!-- Introduction section -->
     <section id="intro">
         <div class="container-fluid d-flex flex-wrap w-100 min-vh-60 py-5 justify-content-center align-items-center">
-            <div class="row mt-5 mx-1 mx-sm-2 mx-md-3 mx-lg-3 gx-5 justify-content-center">
+            <div class="row mt-5 mx-1 mx-sm-2 mx-md-3 mx-lg-3 gx-5 justify-content-center align-items-center">
 
                 <!-- Introduction text -->
                 <div class="col-12 col-md-10 col-lg-5 mb-5 mx-auto">
@@ -91,9 +91,12 @@
                 </div>
 
                 <!-- Placeholder for wireframe -->
-                <div class="col-12 col-lg-7 mb-5 mx-auto">
+                <div class="col-12 col-md-10 col-lg-5 mb-5 mx-auto">
                     <div class="text-center">
-                        <p class="h1 text-center">Add wireframe here.</p>
+                        <video controls width="400" autoplay muted>
+                            <source src="{{ url_for('static', filename='videos/project demo.mp4') }}" type="video/mp4">
+                            <p>Sorry, Your Browser Doesn't Support Embedded Videos</p>
+                        </video>
                     </div>
                 </div>
             </div>
